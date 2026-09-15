@@ -4,252 +4,525 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Convergent Energy Core</title>
+<title>8 Converging Rays</title>
 
 <style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+    html, body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
 
-html,
-body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-}
+    body {
+        background:
+            radial-gradient(circle at center,
+                #14234d 0%,
+                #071027 35%,
+                #020510 75%,
+                #000000 100%);
 
-body {
-    background:
-        radial-gradient(
-            circle at center,
-            #07182a 0%,
-            #020712 45%,
-            #010309 100%
+        position: relative;
+    }
+
+    /* =========================
+       CENTER BUTTON
+       ========================= */
+
+    #centerButton {
+        position: absolute;
+
+        left: 50%;
+        top: 50%;
+
+        width: 170px;
+        height: 170px;
+
+        transform: translate(-50%, -50%);
+
+        border-radius: 50%;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        font-family: Arial, sans-serif;
+        font-size: 21px;
+        font-weight: bold;
+        color: white;
+
+        background:
+            radial-gradient(circle,
+                #304cff 0%,
+                #172bb7 45%,
+                #08134f 75%,
+                #02051c 100%);
+
+        border: 3px solid #6c9cff;
+
+        box-shadow:
+            0 0 15px #3266ff,
+            0 0 40px #1c49d8,
+            inset 0 0 25px rgba(150,190,255,0.5);
+
+        z-index: 10;
+
+        transition: transform 0.25s ease;
+    }
+
+    #centerButton:hover {
+        transform: translate(-50%, -50%) scale(1.06);
+    }
+
+
+    /* =========================
+       ROTATING HOVER RING
+       ========================= */
+
+    #centerButton::after {
+        content: "";
+
+        position: absolute;
+
+        width: 190px;
+        height: 190px;
+
+        border-radius: 50%;
+
+        border: 3px solid transparent;
+
+        border-top-color: white;
+        border-right-color: #4ca3ff;
+
+        opacity: 0;
+
+        pointer-events: none;
+    }
+
+    #centerButton:hover::after {
+        opacity: 1;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+
+    /* =========================
+       RAYS
+       ========================= */
+
+    .ray {
+        position: absolute;
+
+        height: 4px;
+
+        transform-origin: left center;
+
+        border-radius: 100px;
+
+        background: linear-gradient(
+            to right,
+            transparent,
+            #4da3ff 30%,
+            white 100%
         );
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+        box-shadow:
+            0 0 7px #4da3ff,
+            0 0 15px #1684ff,
+            0 0 25px rgba(70,150,255,0.8);
 
-    font-family: Arial, Helvetica, sans-serif;
+        opacity: 0;
+
+        z-index: 5;
+
+        pointer-events: none;
+    }
+
+
+    /* =========================
+       RAY ANIMATION
+       ========================= */
+
+    .ray.active {
+        animation: rayTravel 1.8s cubic-bezier(.2,.7,.3,1) forwards;
+    }
+
+    @keyframes rayTravel {
+
+        0% {
+            width: 0;
+            opacity: 0;
+        }
+
+        12% {
+            opacity: 1;
+        }
+
+        75% {
+            opacity: 1;
+        }
+
+        100% {
+            width: var(--ray-length);
+            opacity: 0;
+        }
+    }
+
+
+    /* =========================
+       BUTTON SHINE
+       ========================= */
+
+    #centerButton.shine {
+        animation: shine 0.8s ease-out;
+    }
+
+    @keyframes shine {
+
+        0% {
+            box-shadow:
+                0 0 15px #3266ff,
+                0 0 40px #1c49d8;
+        }
+
+        40% {
+            box-shadow:
+                0 0 30px white,
+                0 0 70px white,
+                0 0 130px #348cff,
+                0 0 200px #1760ff,
+                inset 0 0 35px white;
+        }
+
+        100% {
+            box-shadow:
+                0 0 15px #3266ff,
+                0 0 40px #1c49d8;
+        }
+    }
+
+
+    /* =========================
+       CENTER FLASH
+       ========================= */
+
+    #flash {
+        position: absolute;
+
+        left: 50%;
+        top: 50%;
+
+        width: 15px;
+        height: 15px;
+
+        border-radius: 50%;
+
+        background: white;
+
+        transform:
+            translate(-50%, -50%)
+            scale(0);
+
+        opacity: 0;
+
+        z-index: 20;
+
+        pointer-events: none;
+    }
+
+    #flash.active {
+        animation: flash 0.65s ease-out;
+    }
+
+    @keyframes flash {
+
+        0% {
+            transform:
+                translate(-50%, -50%)
+                scale(0);
+
+            opacity: 1;
+
+            box-shadow:
+                0 0 10px white,
+                0 0 30px white;
+        }
+
+        45% {
+            transform:
+                translate(-50%, -50%)
+                scale(5);
+
+            opacity: 0.8;
+
+            box-shadow:
+                0 0 40px white,
+                0 0 100px #4d91ff;
+        }
+
+        100% {
+            transform:
+                translate(-50%, -50%)
+                scale(9);
+
+            opacity: 0;
+        }
+    }
+
+</style>
+</head>
+
+<body>
+
+<div id="centerButton">
+    START
+</div>
+
+<div id="flash"></div>
+
+
+<script>
+
+const button = document.getElementById("centerButton");
+const flash = document.getElementById("flash");
+
+let rays = [];
+
+
+/* ==========================================
+   CREATE ONE RAY
+   ========================================== */
+
+function createRay(x, y, delay) {
+
+    const ray = document.createElement("div");
+
+    ray.className = "ray";
+
+    document.body.appendChild(ray);
+
+    rays.push({
+        element: ray,
+        x: x,
+        y: y,
+        delay: delay
+    });
 }
 
 
-/* =========================================
-   BACKGROUND
-========================================= */
+/* ==========================================
+   FIND THE POINT WHERE A RAY HITS
+   THE CIRCULAR BUTTON
+   ========================================== */
 
-.background {
-    position: fixed;
-    inset: 0;
+function calculateRays() {
 
-    background:
-        radial-gradient(
-            circle at center,
-            rgba(0, 180, 255, 0.08),
-            transparent 35%
+    const oldRays = document.querySelectorAll(".ray");
+
+    oldRays.forEach(ray => ray.remove());
+
+    rays = [];
+
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    const buttonRect = button.getBoundingClientRect();
+
+    const cx = buttonRect.left + buttonRect.width / 2;
+    const cy = buttonRect.top + buttonRect.height / 2;
+
+    const radius = buttonRect.width / 2;
+
+
+    /*
+       8 starting points:
+
+       1. Top-left corner
+       2. Top-center
+       3. Top-right corner
+       4. Right-center
+       5. Bottom-right corner
+       6. Bottom-center
+       7. Bottom-left corner
+       8. Left-center
+    */
+
+    const points = [
+
+        { x: 0,      y: 0 },
+
+        { x: width/2, y: 0 },
+
+        { x: width,  y: 0 },
+
+        { x: width,  y: height/2 },
+
+        { x: width,  y: height },
+
+        { x: width/2, y: height },
+
+        { x: 0,      y: height },
+
+        { x: 0,      y: height/2 }
+
+    ];
+
+
+    points.forEach((point, index) => {
+
+        const dx = cx - point.x;
+        const dy = cy - point.y;
+
+        const distance = Math.sqrt(
+            dx * dx + dy * dy
         );
 
-    pointer-events: none;
-}
+        /*
+           Find the point where the ray reaches
+           the circular edge of the button.
+        */
+
+        const endX =
+            cx - (dx / distance) * radius;
+
+        const endY =
+            cy - (dy / distance) * radius;
 
 
-/* =========================================
-   CANVAS
-========================================= */
-
-#energyCanvas {
-    position: fixed;
-    inset: 0;
-
-    width: 100%;
-    height: 100%;
-
-    pointer-events: none;
-}
+        const rayDX = endX - point.x;
+        const rayDY = endY - point.y;
 
 
-/* =========================================
-   CENTER BUTTON
-========================================= */
-
-.core {
-    position: relative;
-
-    width: 170px;
-    height: 170px;
-
-    border-radius: 50%;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    z-index: 10;
-
-    cursor: pointer;
-}
-
-
-/* Actual button */
-
-.core-button {
-
-    width: 135px;
-    height: 135px;
-
-    border-radius: 50%;
-
-    border: 2px solid rgba(90, 220, 255, 0.8);
-
-    color: white;
-
-    font-size: 15px;
-    font-weight: bold;
-
-    letter-spacing: 4px;
-
-    background:
-        radial-gradient(
-            circle at 35% 30%,
-            #66eaff 0%,
-            #0788d1 25%,
-            #03416b 60%,
-            #01111e 100%
+        const rayLength = Math.sqrt(
+            rayDX * rayDX +
+            rayDY * rayDY
         );
 
-    box-shadow:
-        0 0 15px rgba(0, 190, 255, .55),
-        0 0 35px rgba(0, 160, 255, .3),
-        inset 0 0 25px rgba(255,255,255,.15);
 
-    transition:
-        transform .25s ease,
-        box-shadow .25s ease;
+        const angle =
+            Math.atan2(rayDY, rayDX)
+            * 180 / Math.PI;
+
+
+        const ray = document.createElement("div");
+
+        ray.className = "ray";
+
+        ray.style.left = point.x + "px";
+        ray.style.top = point.y + "px";
+
+        ray.style.setProperty(
+            "--ray-length",
+            rayLength + "px"
+        );
+
+        ray.style.transform =
+            `rotate(${angle}deg)`;
+
+
+        /*
+           Small stagger so all 8 rays don't
+           look exactly identical.
+        */
+
+        ray.style.animationDelay =
+            (index * 0.04) + "s";
+
+
+        document.body.appendChild(ray);
+
+        rays.push(ray);
+    });
 }
 
 
-/* Hover */
+/* ==========================================
+   START THE RAY ANIMATION
+   ========================================== */
 
-.core:hover .core-button {
+function startAnimation() {
 
-    transform: scale(1.06);
+    calculateRays();
 
-    box-shadow:
-        0 0 20px #00d9ff,
-        0 0 50px rgba(0, 200, 255, .8),
-        0 0 100px rgba(0, 150, 255, .45),
-        inset 0 0 35px rgba(255,255,255,.25);
+    /*
+       Force browser to recognize the
+       newly-created rays before animation.
+    */
+
+    requestAnimationFrame(() => {
+
+        const allRays =
+            document.querySelectorAll(".ray");
+
+        allRays.forEach(ray => {
+            ray.classList.add("active");
+        });
+
+    });
+
+
+    /*
+       The rays take 1.8 seconds.
+
+       Then the button shines.
+    */
+
+    setTimeout(() => {
+
+        button.classList.add("shine");
+
+        flash.classList.add("active");
+
+        setTimeout(() => {
+
+            button.classList.remove("shine");
+            flash.classList.remove("active");
+
+        }, 800);
+
+    }, 1800);
+
 }
 
 
-/* =========================================
-   INNER CORE
-========================================= */
+/* ==========================================
+   START WHEN PAGE OPENS
+   ========================================== */
 
-.core-button::before {
+window.addEventListener("load", () => {
 
-    content: "";
+    startAnimation();
 
-    position: absolute;
-
-    width: 105px;
-    height: 105px;
-
-    border-radius: 50%;
-
-    border: 1px solid rgba(180,245,255,.3);
-
-    box-shadow:
-        inset 0 0 25px rgba(0,220,255,.35);
-
-    pointer-events: none;
-}
+});
 
 
-/* =========================================
-   BUTTON IMPACT SHINE
-========================================= */
+/* ==========================================
+   RECALCULATE IF WINDOW IS RESIZED
+   ========================================== */
 
-.core.shine .core-button {
+window.addEventListener("resize", () => {
 
-    animation: coreImpact .75s ease-out;
-}
+    calculateRays();
 
-
-@keyframes coreImpact {
-
-    0% {
-
-        transform: scale(1);
-
-        box-shadow:
-            0 0 15px #00cfff,
-            0 0 35px #008cff;
-    }
-
-    25% {
-
-        transform: scale(1.13);
-
-        box-shadow:
-            0 0 30px white,
-            0 0 70px #00eaff,
-            0 0 140px #008cff,
-            0 0 220px rgba(0,150,255,.8);
-    }
-
-    55% {
-
-        transform: scale(1.08);
-
-        box-shadow:
-            0 0 25px #00eaff,
-            0 0 70px #00bfff,
-            0 0 130px #007cff;
-    }
-
-    100% {
-
-        transform: scale(1);
-
-        box-shadow:
-            0 0 15px rgba(0,190,255,.55),
-            0 0 35px rgba(0,160,255,.3);
-    }
-}
+});
 
 
-/* =========================================
-   OUTER HOVER RING
-========================================= */
+</script>
 
-.hover-ring {
-
-    position: absolute;
-
-    width: 180px;
-    height: 180px;
-
-    border-radius: 50%;
-
-    border: 2px solid transparent;
-
-    pointer-events: none;
-
-    opacity: 0;
-
-    transition: opacity .25s ease;
-}
-
-
-.hover-ring::before {
-
-    content: "";
-
-    position:
+</body>
+</html>
 ```
