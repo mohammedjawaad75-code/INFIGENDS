@@ -3,791 +3,1000 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>INFIGENDS</title>
 
 <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
-html, body {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
+html,body{
+  width:100%;
+  height:100%;
+  overflow:hidden;
 }
 
-body {
-  background: #000;
-  font-family: Arial, Helvetica, sans-serif;
-  color: white;
+body{
+  background:#000;
+  color:#fff;
+  font-family:Arial,Helvetica,sans-serif;
 }
 
-/* =========================================
+/* =====================================================
    PAGES
-========================================= */
+===================================================== */
 
-.page {
-  position: absolute;
-  inset: 0;
+.page{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+
+  opacity:0;
+  visibility:hidden;
+
+  transition:
+    opacity 1.1s ease,
+    visibility 1.1s ease;
 
   background:
     radial-gradient(
-      circle at 50% 48%,
-      rgba(25, 65, 105, 0.22) 0%,
-      transparent 22%
+      circle at 50% 50%,
+      rgba(20,75,125,.22),
+      transparent 25%
     ),
     radial-gradient(
       circle at 50% 50%,
-      #10233b 0%,
-      #071321 28%,
-      #020810 64%,
+      #0d2035 0%,
+      #06111f 30%,
+      #02070e 65%,
       #000 100%
     );
-
-  opacity: 0;
-  visibility: hidden;
-
-  transition:
-    opacity 1s ease,
-    visibility 1s ease;
 }
 
-.page.active {
-  opacity: 1;
-  visibility: visible;
+.page.active{
+  opacity:1;
+  visibility:visible;
 }
 
-/* =========================================
-   ATMOSPHERE
-========================================= */
+/* cinematic vignette */
 
-body::before {
-  content: "";
+.page::after{
+  content:"";
+  position:absolute;
+  inset:0;
 
-  position: fixed;
-  inset: 0;
+  pointer-events:none;
 
-  pointer-events: none;
-
-  z-index: 2;
+  z-index:50;
 
   background:
     radial-gradient(
-      circle at 50% 50%,
-      rgba(70, 150, 230, 0.055),
-      transparent 32%
-    ),
-    radial-gradient(
-      circle at 50% 0%,
-      rgba(100, 170, 255, 0.035),
-      transparent 42%
+      ellipse at center,
+      transparent 42%,
+      rgba(0,0,0,.48) 100%
     );
-
-  mix-blend-mode: screen;
 }
 
-body::after {
-  content: "";
+/* moving atmosphere */
 
-  position: fixed;
-  inset: 0;
+#home::before,
+#awakening::before{
+  content:"";
 
-  pointer-events: none;
+  position:absolute;
 
-  z-index: 100;
+  width:75vmax;
+  height:75vmax;
+
+  left:50%;
+  top:50%;
+
+  transform:
+    translate(-50%,-50%);
+
+  border-radius:50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(90,180,255,.055),
+      transparent 58%
+    );
+
+  filter:blur(8px);
+
+  animation:
+    atmosphere 8s ease-in-out infinite;
+
+  pointer-events:none;
+}
+
+@keyframes atmosphere{
+
+  0%,100%{
+    transform:
+      translate(-50%,-50%)
+      scale(.9);
+
+    opacity:.55;
+  }
+
+  50%{
+    transform:
+      translate(-50%,-50%)
+      scale(1.08);
+
+    opacity:1;
+  }
+
+}
+
+/* =====================================================
+   CONTROLS
+===================================================== */
+
+.back,
+.credits{
+  z-index:80;
+
+  position:absolute;
+  top:24px;
+
+  border:
+    1px solid rgba(170,220,255,.22);
+
+  background:
+    rgba(2,9,17,.42);
+
+  color:
+    rgba(240,250,255,.92);
+
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+
+  cursor:pointer;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.08),
+    0 10px 35px rgba(0,0,0,.3),
+    0 0 25px rgba(50,150,255,.035);
+
+  transition:
+    all .35s ease;
+}
+
+.back{
+
+  left:24px;
+
+  width:44px;
+  height:44px;
+
+  border-radius:50%;
+
+  font-size:25px;
+  font-weight:200;
+}
+
+.credits{
+
+  right:24px;
+
+  padding:12px 19px;
+
+  border-radius:30px;
+
+  font-size:10px;
+
+  letter-spacing:3px;
+}
+
+.back:hover,
+.credits:hover{
+
+  border-color:
+    rgba(190,235,255,.72);
+
+  background:
+    rgba(10,30,50,.58);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.14),
+    0 0 35px rgba(70,170,255,.18),
+    0 10px 35px rgba(0,0,0,.3);
+
+  transform:
+    translateY(-1px);
+}
+
+/* =====================================================
+   CREDITS PANEL
+===================================================== */
+
+.credits-panel{
+
+  z-index:90;
+
+  position:absolute;
+
+  top:80px;
+  right:24px;
+
+  width:
+    min(320px,calc(100vw - 48px));
+
+  padding:25px 24px;
+
+  border:
+    1px solid rgba(170,220,255,.22);
+
+  border-radius:18px;
 
   background:
     linear-gradient(
-      rgba(255, 255, 255, 0.012) 1px,
-      transparent 1px
+      145deg,
+      rgba(15,40,65,.78),
+      rgba(1,7,14,.9)
     );
 
-  background-size: 100% 4px;
+  backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px);
 
-  opacity: 0.12;
-}
+  text-align:center;
 
-/* =========================================
-   FIRST PAGE
-========================================= */
+  opacity:0;
+  visibility:hidden;
 
-#home {
-  display: flex;
+  transform:
+    translateY(-12px)
+    scale(.97);
 
-  align-items: center;
-  justify-content: center;
-}
-
-canvas {
-  position: absolute;
-
-  inset: 0;
-
-  width: 100%;
-  height: 100%;
-
-  pointer-events: none;
-}
-
-/* =========================================
-   CENTER AREA
-========================================= */
-
-.center-wrap {
-  position: relative;
-
-  width: 180px;
-  height: 180px;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  z-index: 5;
-}
-
-.center-wrap::before {
-  content: "";
-
-  position: absolute;
-
-  width: 205px;
-  height: 205px;
-
-  border-radius: 50%;
-
-  border:
-    1px solid rgba(100, 180, 255, 0.06);
+  transition:.35s ease;
 
   box-shadow:
-    0 0 55px rgba(50, 145, 230, 0.06),
-    inset 0 0 35px rgba(80, 170, 255, 0.035);
-
-  animation:
-    ambientPulse 4s ease-in-out infinite;
+    0 25px 80px rgba(0,0,0,.6),
+    0 0 45px rgba(60,160,255,.09),
+    inset 0 1px 0 rgba(255,255,255,.07);
 }
 
-.center-wrap::after {
-  content: "";
+.credits-panel.show{
 
-  position: absolute;
+  opacity:1;
 
-  width: 178px;
-  height: 178px;
+  visibility:visible;
 
-  border-radius: 50%;
-
-  border:
-    1px solid rgba(180, 225, 255, 0.045);
-
-  transform: rotate(25deg);
+  transform:
+    translateY(0)
+    scale(1);
 }
 
-@keyframes ambientPulse {
+.credits-panel strong{
 
-  0%,
-  100% {
-    transform: scale(0.97);
-    opacity: 0.65;
-  }
+  display:block;
 
-  50% {
-    transform: scale(1.035);
-    opacity: 1;
-  }
-}
+  font-size:13px;
 
-/* =========================================
-   MAIN BUTTON
-========================================= */
+  letter-spacing:5px;
 
-.button {
-  position: relative;
+  font-weight:400;
 
-  width: 136px;
-  height: 136px;
-
-  border-radius: 50%;
-
-  border:
-    1px solid rgba(150, 210, 255, 0.42);
-
-  background:
-    radial-gradient(
-      circle at 42% 35%,
-      #17385a 0%,
-      #0c223a 45%,
-      #050e19 100%
-    );
-
-  color: white;
-
-  font-size: 14px;
-
-  letter-spacing: 2px;
-
-  font-weight: 600;
-
-  cursor: pointer;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  box-shadow:
-    0 0 20px rgba(65, 150, 255, 0.16),
-    inset 0 0 25px rgba(100, 190, 255, 0.08);
-
-  transition:
-    transform 0.35s ease,
-    box-shadow 0.35s ease;
-
-  z-index: 3;
-
-  overflow: hidden;
+  margin-bottom:12px;
 
   text-shadow:
-    0 0 12px rgba(220, 245, 255, 0.28);
+    0 0 20px rgba(180,230,255,.35);
 }
 
-.button:hover {
+.credits-panel span{
 
-  transform: scale(1.045);
+  font-size:13px;
+
+  color:
+    rgba(225,240,250,.72);
+
+  letter-spacing:.5px;
+}
+
+/* =====================================================
+   HOME
+===================================================== */
+
+#home{
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+}
+
+#rays{
+
+  position:absolute;
+
+  inset:0;
+
+  width:100%;
+  height:100%;
+
+  pointer-events:none;
+
+  z-index:5;
+}
+
+/* =====================================================
+   CENTER ENERGY
+===================================================== */
+
+.center-wrap{
+
+  position:relative;
+
+  width:220px;
+  height:220px;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  z-index:20;
+}
+
+.center-wrap::before,
+.center-wrap::after{
+
+  content:"";
+
+  position:absolute;
+
+  border-radius:50%;
+
+  pointer-events:none;
+}
+
+.center-wrap::before{
+
+  width:205px;
+  height:205px;
+
+  border:
+    1px solid rgba(100,190,255,.11);
 
   box-shadow:
-    0 0 34px rgba(75, 170, 255, 0.34),
-    inset 0 0 30px rgba(100, 190, 255, 0.12);
+    0 0 45px rgba(50,160,255,.08),
+    inset 0 0 45px rgba(70,170,255,.045);
+
+  animation:
+    ringPulse 4s ease-in-out infinite;
 }
 
-.button::before {
-  content: "";
+.center-wrap::after{
 
-  position: absolute;
+  width:184px;
+  height:184px;
 
-  inset: 2px;
+  border:
+    1px dashed rgba(150,215,255,.055);
 
-  border-radius: 50%;
+  animation:
+    slowSpin 16s linear infinite;
+}
+
+@keyframes ringPulse{
+
+  0%,100%{
+    transform:scale(.94);
+    opacity:.55;
+  }
+
+  50%{
+    transform:scale(1.045);
+    opacity:1;
+  }
+
+}
+
+@keyframes slowSpin{
+
+  to{
+    transform:rotate(360deg);
+  }
+
+}
+
+/* =====================================================
+   OUTER ENERGY ORBIT
+===================================================== */
+
+.energy-orbit{
+
+  position:absolute;
+
+  width:235px;
+  height:235px;
+
+  border-radius:50%;
+
+  border:1px solid transparent;
+
+  pointer-events:none;
+
+  animation:
+    slowSpin 24s linear infinite reverse;
+}
+
+.energy-orbit::before{
+
+  content:"";
+
+  position:absolute;
+
+  inset:-1px;
+
+  border-radius:50%;
+
+  border-top:
+    1px solid rgba(130,210,255,.15);
+
+  border-left:
+    1px solid rgba(130,210,255,.035);
+}
+
+.energy-orbit::after{
+
+  content:"";
+
+  position:absolute;
+
+  width:4px;
+  height:4px;
+
+  border-radius:50%;
+
+  background:#fff;
+
+  top:-2px;
+  left:50%;
+
+  box-shadow:
+    0 0 12px 4px rgba(150,220,255,.55);
+}
+
+/* =====================================================
+   MAIN BUTTON
+===================================================== */
+
+.button{
+
+  position:relative;
+
+  width:140px;
+  height:140px;
+
+  border-radius:50%;
+
+  border:
+    1px solid rgba(175,225,255,.45);
+
+  color:#fff;
+
+  cursor:pointer;
+
+  font-size:13px;
+
+  font-weight:500;
+
+  letter-spacing:2.8px;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  z-index:25;
+
+  overflow:hidden;
 
   background:
-    linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.13),
-      transparent 30%,
-      transparent 70%,
-      rgba(80, 170, 255, 0.06)
+    radial-gradient(
+      circle at 37% 28%,
+      rgba(105,190,255,.42) 0%,
+      rgba(30,80,125,.55) 18%,
+      rgba(8,28,48,.98) 58%,
+      #02080e 100%
     );
 
-  pointer-events: none;
-}
+  box-shadow:
 
-.button::after {
-  content: "";
+    0 0 25px rgba(50,160,255,.18),
 
-  position: absolute;
+    0 0 75px rgba(40,130,220,.07),
 
-  width: 42%;
-  height: 42%;
+    inset 0 0 35px rgba(110,200,255,.13),
 
-  left: 15%;
-  top: 10%;
+    inset 0 1px 1px rgba(255,255,255,.18);
 
-  border-radius: 50%;
-
-  background:
-    rgba(190, 230, 255, 0.055);
-
-  filter: blur(12px);
-
-  pointer-events: none;
-}
-
-/* =========================================
-   BUTTON SHINE
-========================================= */
-
-.button.shine {
-  animation:
-    impact 0.8s ease-out;
-}
-
-@keyframes impact {
-
-  0% {
-
-    box-shadow:
-      0 0 20px rgba(65, 150, 255, 0.16),
-      inset 0 0 25px rgba(100, 190, 255, 0.08);
-  }
-
-  35% {
-
-    box-shadow:
-      0 0 85px 25px rgba(150, 220, 255, 0.85),
-      0 0 150px 55px rgba(60, 150, 255, 0.35),
-      inset 0 0 55px white;
-  }
-
-  100% {
-
-    box-shadow:
-      0 0 25px rgba(65, 150, 255, 0.22),
-      inset 0 0 25px rgba(100, 190, 255, 0.08);
-  }
-}
-
-/* =========================================
-   ORBIT
-========================================= */
-
-.orbit {
-
-  position: absolute;
-
-  width: 162px;
-  height: 162px;
-
-  border-radius: 50%;
-
-  border: 1px solid transparent;
-
-  pointer-events: none;
-
-  opacity: 0;
+  text-shadow:
+    0 0 14px rgba(220,245,255,.45);
 
   transition:
-    opacity 0.2s ease;
+    transform .4s cubic-bezier(.2,.8,.2,1),
+    box-shadow .4s ease;
+}
+
+.button:hover{
+
+  transform:scale(1.055);
 
   box-shadow:
-    0 0 25px rgba(70, 165, 255, 0.08);
+
+    0 0 35px rgba(70,180,255,.38),
+
+    0 0 100px rgba(40,140,240,.14),
+
+    inset 0 0 45px rgba(130,215,255,.2),
+
+    inset 0 1px 1px rgba(255,255,255,.22);
 }
 
-.center-wrap:hover .orbit {
-  opacity: 1;
+.button::before{
+
+  content:"";
+
+  position:absolute;
+
+  width:65%;
+  height:65%;
+
+  left:3%;
+  top:-8%;
+
+  border-radius:50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(225,248,255,.16),
+      transparent 67%
+    );
+
+  filter:blur(5px);
 }
 
-.orbit::before {
+.button::after{
 
-  content: "";
+  content:"";
 
-  position: absolute;
+  position:absolute;
 
-  inset: -1px;
+  inset:8px;
 
-  border-radius: 50%;
+  border-radius:50%;
 
   border:
-    1px solid rgba(130, 205, 255, 0.25);
+    1px solid rgba(210,240,255,.07);
+}
+
+/* =====================================================
+   ORBITING BALL
+===================================================== */
+
+.orbit{
+
+  position:absolute;
+
+  width:166px;
+  height:166px;
+
+  border-radius:50%;
+
+  opacity:0;
+
+  pointer-events:none;
+
+  transition:
+    opacity .25s ease;
+
+  z-index:22;
+}
+
+.center-wrap:hover .orbit{
+  opacity:1;
+}
+
+.orbit::before{
+
+  content:"";
+
+  position:absolute;
+
+  inset:-1px;
+
+  border-radius:50%;
+
+  border:
+    1px solid rgba(130,205,255,.25);
 
   border-top-color:
-    rgba(255, 255, 255, 0.75);
+    rgba(255,255,255,.9);
 
   border-right-color:
-    rgba(90, 175, 255, 0.5);
+    rgba(90,175,255,.62);
+
+  box-shadow:
+    0 0 15px rgba(80,180,255,.08);
 
   animation:
-    spin 2.8s linear infinite;
+    spin 2.5s linear infinite;
 }
 
-.orbit::after {
+.orbit::after{
 
-  content: "";
+  content:"";
 
-  position: absolute;
+  position:absolute;
 
-  inset: 18px;
+  inset:16px;
 
-  border-radius: 50%;
+  border-radius:50%;
 
   border:
-    1px dashed rgba(140, 205, 255, 0.06);
+    1px dashed rgba(140,210,255,.07);
 
   animation:
-    orbitDash 9s linear infinite reverse;
+    spin 7s linear infinite reverse;
 }
 
-@keyframes orbitDash {
+.ball{
 
-  to {
-    transform: rotate(360deg);
-  }
-}
+  position:absolute;
 
-.ball {
+  width:9px;
+  height:9px;
 
-  position: absolute;
+  border-radius:50%;
 
-  width: 10px;
-  height: 10px;
+  background:#fff;
 
-  border-radius: 50%;
-
-  background: white;
-
-  left: 50%;
-  top: -5px;
+  left:50%;
+  top:-5px;
 
   transform:
     translateX(-50%);
 
   box-shadow:
-    0 0 10px 3px rgba(180, 225, 255, 0.9);
+
+    0 0 12px 4px rgba(180,230,255,.95),
+
+    0 0 30px rgba(90,190,255,.45);
 }
 
-@keyframes spin {
+@keyframes spin{
 
-  to {
-    transform: rotate(360deg);
+  to{
+    transform:rotate(360deg);
   }
 
 }
 
-/* =========================================
-   BACK BUTTON
-========================================= */
-
-.back {
-
-  position: absolute;
-
-  top: 24px;
-  left: 24px;
-
-  width: 42px;
-  height: 42px;
-
-  border-radius: 50%;
-
-  border:
-    1px solid rgba(160, 210, 255, 0.28);
-
-  background:
-    rgba(3, 10, 18, 0.55);
-
-  backdrop-filter:
-    blur(8px);
-
-  color:
-    rgba(255, 255, 255, 0.9);
-
-  font-size: 25px;
-
-  font-weight: 300;
-
-  cursor: pointer;
-
-  transition:
-    0.3s ease;
-
-  z-index: 20;
-
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.045),
-    0 8px 30px rgba(0, 0, 0, 0.22);
-
-  text-shadow:
-    0 0 10px rgba(180, 225, 255, 0.3);
-}
-
-.back:hover {
-
-  border-color:
-    rgba(180, 225, 255, 0.75);
-
-  box-shadow:
-    0 0 22px rgba(70, 160, 255, 0.22);
-}
-
-/* =========================================
-   CREDITS
-========================================= */
-
-.credits {
-
-  position: absolute;
-
-  top: 24px;
-  right: 24px;
-
-  padding: 11px 17px;
-
-  border-radius: 20px;
-
-  border:
-    1px solid rgba(160, 210, 255, 0.28);
-
-  background:
-    rgba(3, 10, 18, 0.55);
-
-  backdrop-filter:
-    blur(8px);
-
-  color:
-    rgba(255, 255, 255, 0.9);
-
-  cursor: pointer;
-
-  font-size: 11px;
-
-  letter-spacing: 2px;
-
-  transition:
-    0.3s ease;
-
-  z-index: 20;
-
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.045),
-    0 8px 30px rgba(0, 0, 0, 0.22);
-
-  text-shadow:
-    0 0 10px rgba(180, 225, 255, 0.18);
-}
-
-.credits:hover {
-
-  border-color:
-    rgba(180, 225, 255, 0.75);
-
-  box-shadow:
-    0 0 22px rgba(70, 160, 255, 0.22);
-}
-
-/* =========================================
-   CREDITS PANEL
-========================================= */
-
-.credits-panel {
-
-  position: absolute;
-
-  top: 78px;
-  right: 24px;
-
-  width:
-    min(300px, calc(100vw - 48px));
-
-  padding: 22px;
-
-  border:
-    1px solid rgba(160, 210, 255, 0.25);
-
-  border-radius: 14px;
-
-  background:
-    rgba(2, 9, 17, 0.86);
-
-  backdrop-filter:
-    blur(15px);
-
-  text-align: center;
-
-  opacity: 0;
-
-  visibility: hidden;
-
-  transform:
-    translateY(-8px);
-
-  transition:
-    0.35s ease;
-
-  z-index: 30;
-
-  box-shadow:
-    0 20px 70px rgba(0, 0, 0, 0.55),
-    0 0 35px rgba(55, 145, 220, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.045);
-}
-
-.credits-panel.show {
-
-  opacity: 1;
-
-  visibility: visible;
-
-  transform:
-    translateY(0);
-}
-
-.credits-panel strong {
-
-  display: block;
-
-  font-size: 12px;
-
-  letter-spacing: 3px;
-
-  margin-bottom: 12px;
-
-  text-shadow:
-    0 0 16px rgba(180, 225, 255, 0.18);
-}
-
-.credits-panel span {
-
-  font-size: 13px;
-
-  color:
-    rgba(255, 255, 255, 0.75);
-}
-
-/* =========================================
-   SECOND PAGE
-========================================= */
-
-#awakening {
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  text-align: center;
-}
-
-#awakening::before {
-
-  content: "";
-
-  position: absolute;
-
-  width:
-    min(70vw, 700px);
-
-  height:
-    min(70vw, 700px);
-
-  border-radius: 50%;
-
-  border:
-    1px solid rgba(120, 195, 255, 0.035);
-
-  box-shadow:
-    0 0 100px rgba(60, 150, 230, 0.055),
-    inset 0 0 100px rgba(60, 150, 230, 0.025);
+/* =====================================================
+   BUTTON IMPACT
+===================================================== */
+
+.button.shine{
 
   animation:
-    awakeningGlow 6s ease-in-out infinite;
-
-  pointer-events: none;
+    impact .9s ease-out;
 }
 
-@keyframes awakeningGlow {
+@keyframes impact{
 
-  0%,
-  100% {
-    transform: scale(0.94);
-    opacity: 0.45;
+  0%{
+
+    transform:scale(1);
+
+    filter:brightness(1);
+
+    box-shadow:
+      0 0 25px rgba(50,160,255,.18),
+      inset 0 0 35px rgba(110,200,255,.13);
   }
 
-  50% {
-    transform: scale(1.02);
-    opacity: 0.85;
+  22%{
+
+    transform:scale(1.09);
+
+    filter:brightness(1.7);
+
+    box-shadow:
+
+      0 0 45px 10px
+      rgba(150,225,255,.65),
+
+      0 0 110px 35px
+      rgba(70,165,255,.35),
+
+      inset 0 0 60px #fff;
   }
+
+  48%{
+
+    transform:scale(1.035);
+
+    filter:brightness(1.25);
+  }
+
+  100%{
+
+    transform:scale(1);
+
+    filter:brightness(1);
+
+    box-shadow:
+
+      0 0 28px rgba(50,160,255,.2),
+
+      inset 0 0 35px rgba(110,200,255,.13);
+  }
+
 }
 
-/* =========================================
-   TITLE
-========================================= */
+/* =====================================================
+   SECOND PAGE
+===================================================== */
 
-.title-box {
+#awakening{
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  text-align:center;
+}
+
+/* title container */
+
+#awakening .title-box{
+
+  position:relative;
+
+  z-index:20;
+
+  opacity:0;
 
   transform:
-    translateY(18px);
-
-  opacity: 0;
+    translateY(28px)
+    scale(.97);
 
   transition:
-    opacity 1.3s ease,
-    transform 1.3s ease;
+
+    opacity 1.4s ease,
+
+    transform
+    1.4s cubic-bezier(.2,.8,.2,1);
 }
 
-#awakening.active .title-box {
+#awakening.active .title-box{
 
-  opacity: 1;
+  opacity:1;
 
   transform:
-    translateY(0);
+    translateY(0)
+    scale(1);
 }
 
-h1 {
+/* giant halo */
+
+#awakening .title-box::before{
+
+  content:"";
+
+  position:absolute;
+
+  width:
+    min(80vw,800px);
+
+  height:
+    min(45vw,450px);
+
+  left:50%;
+  top:50%;
+
+  transform:
+    translate(-50%,-50%);
+
+  border-radius:50%;
+
+  background:
+    radial-gradient(
+      ellipse,
+      rgba(70,165,255,.08),
+      transparent 68%
+    );
+
+  filter:blur(18px);
+
+  z-index:-1;
+}
+
+/* title underline */
+
+#awakening .title-box::after{
+
+  content:"";
+
+  position:absolute;
+
+  left:50%;
+
+  bottom:-58px;
+
+  width:
+    min(55vw,420px);
+
+  height:1px;
+
+  transform:
+    translateX(-50%)
+    scaleX(0);
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(190,230,255,.45),
+      transparent
+    );
+
+  box-shadow:
+    0 0 18px rgba(100,190,255,.2);
+
+  transition:
+    transform 1.7s ease .45s;
+}
+
+#awakening.active
+.title-box::after{
+
+  transform:
+    translateX(-50%)
+    scaleX(1);
+}
+
+/* =====================================================
+   TITLE
+===================================================== */
+
+h1{
 
   font-size:
-    clamp(48px, 9vw, 105px);
+    clamp(48px,9.5vw,112px);
+
+  line-height:1;
+
+  font-weight:200;
 
   letter-spacing:
-    clamp(8px, 2.5vw, 28px);
-
-  font-weight: 300;
+    clamp(7px,2.4vw,29px);
 
   margin-left:
-    clamp(8px, 2.5vw, 28px);
+    clamp(7px,2.4vw,29px);
+
+  color:#f4fbff;
 
   text-shadow:
-    0 0 12px rgba(190, 225, 255, 0.12),
-    0 0 45px rgba(80, 170, 255, 0.11);
+
+    0 0 10px
+    rgba(210,240,255,.28),
+
+    0 0 45px
+    rgba(75,170,255,.18),
+
+    0 0 100px
+    rgba(50,140,230,.09);
 }
 
-/* =========================================
+/* =====================================================
    STATEMENT
-========================================= */
+===================================================== */
 
-.statement {
+.statement{
 
-  margin-top: 25px;
+  margin-top:28px;
 
   font-size:
-    clamp(12px, 1.5vw, 18px);
+    clamp(11px,1.45vw,18px);
 
   letter-spacing:
-    clamp(4px, 1vw, 11px);
+    clamp(4px,1vw,12px);
+
+  margin-left:
+    clamp(4px,1vw,12px);
 
   color:
-    rgba(215, 235, 255, 0.72);
-
-  margin-left:
-    clamp(4px, 1vw, 11px);
+    rgba(220,239,252,.73);
 
   text-shadow:
-    0 0 18px rgba(140, 205, 255, 0.12);
+    0 0 18px rgba(120,200,255,.16);
 }
 
-/* =========================================
+#awakening
+.title-box
+.statement::before,
+#awakening
+.title-box
+.statement::after{
+
+  content:"";
+
+  display:inline-block;
+
+  width:28px;
+
+  height:1px;
+
+  vertical-align:middle;
+
+  margin:
+    0 14px 3px;
+
+  background:
+    rgba(180,225,255,.35);
+
+  box-shadow:
+    0 0 12px rgba(100,190,255,.18);
+}
+
+/* =====================================================
    MOBILE
-========================================= */
+===================================================== */
 
-@media (max-width: 600px) {
+@media(max-width:600px){
 
-  .back {
-    left: 15px;
-    top: 15px;
+  .back{
+    top:15px;
+    left:15px;
   }
 
-  .credits {
-    right: 15px;
-    top: 15px;
+  .credits{
+    top:15px;
+    right:15px;
   }
 
-  .credits-panel {
-    right: 15px;
-    top: 68px;
+  .credits-panel{
+    top:68px;
+    right:15px;
   }
 
+  .center-wrap{
+    transform:scale(.92);
+  }
+
+  #awakening
+  .title-box
+  .statement::before,
+
+  #awakening
+  .title-box
+  .statement::after{
+
+    width:14px;
+
+    margin:
+      0 7px 3px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- =========================================
-     PAGE 1
-========================================= -->
+<!-- =====================================================
+     FIRST PAGE
+===================================================== -->
 
 <section
   id="home"
@@ -809,11 +1018,16 @@ h1 {
     id="panelHome"
   >
     <strong>INFIGENDS</strong>
-    <span>all credits goes to mdju</span>
+
+    <span>
+      all credits goes to mdju
+    </span>
   </div>
 
-  <!-- Center Button -->
+  <!-- Center -->
   <div class="center-wrap">
+
+    <div class="energy-orbit"></div>
 
     <div class="orbit">
       <div class="ball"></div>
@@ -831,16 +1045,16 @@ h1 {
 </section>
 
 
-<!-- =========================================
-     PAGE 2
-========================================= -->
+<!-- =====================================================
+     SECOND PAGE
+===================================================== -->
 
 <section
   id="awakening"
   class="page"
 >
 
-  <!-- Back Arrow -->
+  <!-- Back arrow -->
   <button
     class="back"
     id="backAwakening"
@@ -862,10 +1076,13 @@ h1 {
     id="panelAwakening"
   >
     <strong>INFIGENDS</strong>
-    <span>all credits goes to mdju</span>
+
+    <span>
+      all credits goes to mdju
+    </span>
   </div>
 
-  <!-- Title and Statement -->
+  <!-- Title -->
   <div class="title-box">
 
     <h1>
@@ -883,9 +1100,9 @@ h1 {
 
 <script>
 
-/* =========================================
-   CANVAS
-========================================= */
+/* =====================================================
+   ELEMENTS
+===================================================== */
 
 const canvas =
   document.getElementById("rays");
@@ -903,57 +1120,62 @@ const begin =
   document.getElementById("begin");
 
 
-let w;
-let h;
-let dpr;
-
-
-/* =========================================
+/* =====================================================
    RAY SETTINGS
-========================================= */
+===================================================== */
 
-const DURATION = 2800;
+let w=0;
+let h=0;
+let dpr=1;
 
-const ARRIVAL = 0.62;
+const DURATION=2800;
 
-const RADIUS = 68;
+/*
+  All rays reach the button
+  at the same moment.
+*/
+const ARRIVAL=.62;
 
-let cycleStart =
+/*
+  Button radius.
+*/
+const RADIUS=70;
+
+let cycleStart=
   performance.now();
 
-let hasShined =
-  false;
+let hasShined=false;
 
 
-/* =========================================
+/* =====================================================
    RESIZE
-========================================= */
+===================================================== */
 
-function resize() {
+function resize(){
 
-  dpr =
+  dpr=
     Math.min(
       window.devicePixelRatio || 1,
       2
     );
 
-  w =
+  w=
     window.innerWidth;
 
-  h =
+  h=
     window.innerHeight;
 
-  canvas.width =
-    w * dpr;
+  canvas.width=
+    w*dpr;
 
-  canvas.height =
-    h * dpr;
+  canvas.height=
+    h*dpr;
 
-  canvas.style.width =
-    w + "px";
+  canvas.style.width=
+    w+"px";
 
-  canvas.style.height =
-    h + "px";
+  canvas.style.height=
+    h+"px";
 
   ctx.setTransform(
     dpr,
@@ -973,9 +1195,9 @@ window.addEventListener(
 resize();
 
 
-/* =========================================
-   FIND BUTTON BOUNDARY
-========================================= */
+/* =====================================================
+   BUTTON BOUNDARY
+===================================================== */
 
 function endpoint(
   x,
@@ -983,40 +1205,69 @@ function endpoint(
   cx,
   cy,
   r
-) {
+){
 
-  const dx =
-    cx - x;
+  const dx=
+    cx-x;
 
-  const dy =
-    cy - y;
+  const dy=
+    cy-y;
 
-  const len =
+  const len=
     Math.hypot(
       dx,
       dy
     );
 
-  return {
+  return{
 
     x:
-      cx -
-      (dx / len) * r,
+      cx-
+      (dx/len)*r,
 
     y:
-      cy -
-      (dy / len) * r
+      cy-
+      (dy/len)*r
 
   };
-
 }
 
 
-/* =========================================
-   DRAW 8 RAYS
-========================================= */
+/* =====================================================
+   SHINE
+===================================================== */
 
-function draw(now) {
+function shine(){
+
+  begin.classList.remove(
+    "shine"
+  );
+
+  /*
+    Restart animation.
+  */
+  void begin.offsetWidth;
+
+  begin.classList.add(
+    "shine"
+  );
+
+  setTimeout(
+    ()=>{
+      begin.classList.remove(
+        "shine"
+      );
+    },
+    900
+  );
+}
+
+
+/* =====================================================
+   DRAW RAYS
+===================================================== */
+
+function draw(now){
 
   ctx.clearRect(
     0,
@@ -1027,146 +1278,153 @@ function draw(now) {
 
 
   /*
-    Only draw rays
-    on the first page.
+    Don't draw rays on page 2.
   */
 
-  if (
+  if(
     !home.classList.contains(
       "active"
     )
-  ) {
+  ){
 
     requestAnimationFrame(
       draw
     );
 
     return;
-
   }
 
 
-  let elapsed =
-    now - cycleStart;
+  let elapsed=
+    now-cycleStart;
 
 
   /*
-    Restart animation.
+    Restart cycle.
   */
 
-  if (
-    elapsed >= DURATION
-  ) {
+  if(
+    elapsed>=DURATION
+  ){
 
-    cycleStart =
+    cycleStart=
       now;
 
-    elapsed = 0;
+    elapsed=0;
 
-    hasShined =
-      false;
-
+    hasShined=false;
   }
 
 
   /*
-    Animation progress.
+    Overall progress.
   */
 
-  const p =
+  const p=
     Math.min(
-      elapsed / DURATION,
+      elapsed/DURATION,
       1
     );
 
 
   /*
-    Travel until 62%.
+    Ray movement.
   */
 
-  const travel =
+  const travel=
     Math.min(
-      p / ARRIVAL,
+      p/ARRIVAL,
       1
     );
 
 
   /*
-    Fade after arrival.
+    Rays fade after
+    reaching the button.
   */
 
-  const fade =
-    p > ARRIVAL
+  const fade=
+    p>ARRIVAL
 
-      ? 1 -
-        (p - ARRIVAL) /
-        (1 - ARRIVAL)
+      ?
 
-      : 1;
+      1-
+      (p-ARRIVAL)/
+      (1-ARRIVAL)
+
+      :
+
+      1;
 
 
   /*
-    Button shines at
-    exact ray arrival.
+    EXACT IMPACT.
   */
 
-  if (
-    p >= ARRIVAL &&
+  if(
+    p>=ARRIVAL &&
     !hasShined
-  ) {
+  ){
 
-    hasShined =
-      true;
+    hasShined=true;
 
     shine();
-
   }
 
 
-  const cx =
-    w / 2;
+  /*
+    Center.
+  */
 
-  const cy =
-    h / 2;
+  const cx=
+    w/2;
+
+  const cy=
+    h/2;
 
 
   /*
-    EXACTLY 8 RAYS:
+    EXACTLY 8 RAYS.
 
-    4 CORNERS
-
-    4 SIDE CENTERS
+    4 corners
+    +
+    4 side centers
   */
 
-  const origins = [
+  const origins=[
 
-    [0, 0],
+    [0,0],
 
-    [w, 0],
+    [w,0],
 
-    [0, h],
+    [0,h],
 
-    [w, h],
+    [w,h],
 
-    [0, cy],
+    [0,cy],
 
-    [w, cy],
+    [w,cy],
 
-    [cx, 0],
+    [cx,0],
 
-    [cx, h]
+    [cx,h]
 
   ];
 
 
-  ctx.lineCap =
+  ctx.lineCap=
     "round";
 
 
   origins.forEach(
-    ([ox, oy]) => {
+    ([ox,oy])=>{
 
-      const e =
+      /*
+        Find where the ray
+        meets the button.
+      */
+
+      const e=
         endpoint(
           ox,
           oy,
@@ -1176,22 +1434,65 @@ function draw(now) {
         );
 
 
-      const x =
-        ox +
-        (e.x - ox) *
-        travel;
-
-      const y =
-        oy +
-        (e.y - oy) *
-        travel;
-
-
       /*
-        Ray gradient.
+        Current ray position.
       */
 
-      const grad =
+      const x=
+        ox+
+        (e.x-ox)*
+        travel;
+
+      const y=
+        oy+
+        (e.y-oy)*
+        travel;
+
+
+      /* -----------------------------------------
+         SOFT ENERGY AURA
+      ----------------------------------------- */
+
+      ctx.beginPath();
+
+      ctx.moveTo(
+        ox,
+        oy
+      );
+
+      ctx.lineTo(
+        x,
+        y
+      );
+
+      ctx.strokeStyle=
+        `rgba(
+          80,
+          180,
+          255,
+          ${.045*fade}
+        )`;
+
+      ctx.lineWidth=8;
+
+      ctx.shadowBlur=22;
+
+      ctx.shadowColor=
+        `rgba(
+          70,
+          170,
+          255,
+          ${.18*fade}
+        )`;
+
+      ctx.stroke();
+
+
+      /* -----------------------------------------
+         SHARP RAY
+      ----------------------------------------- */
+
+      const grad=
         ctx.createLinearGradient(
           ox,
           oy,
@@ -1203,20 +1504,30 @@ function draw(now) {
       grad.addColorStop(
         0,
         `rgba(
-          130,
+          120,
           205,
           255,
-          ${0.05 * fade}
+          ${.025*fade}
         )`
       );
 
       grad.addColorStop(
-        0.7,
+        .55,
         `rgba(
-          180,
-          225,
+          145,
+          215,
           255,
-          ${0.45 * fade}
+          ${.20*fade}
+        )`
+      );
+
+      grad.addColorStop(
+        .88,
+        `rgba(
+          205,
+          238,
+          255,
+          ${.58*fade}
         )`
       );
 
@@ -1226,27 +1537,9 @@ function draw(now) {
           255,
           255,
           255,
-          ${0.95 * fade}
+          ${.98*fade}
         )`
       );
-
-
-      ctx.strokeStyle =
-        grad;
-
-      ctx.shadowBlur =
-        10;
-
-      ctx.shadowColor =
-        `rgba(
-          110,
-          195,
-          255,
-          ${0.5 * fade}
-        )`;
-
-      ctx.lineWidth =
-        1.4;
 
 
       ctx.beginPath();
@@ -1261,85 +1554,63 @@ function draw(now) {
         y
       );
 
+      ctx.strokeStyle=
+        grad;
+
+      ctx.lineWidth=
+        1.35;
+
+      ctx.shadowBlur=9;
+
+      ctx.shadowColor=
+        `rgba(
+          120,
+          210,
+          255,
+          ${.55*fade}
+        )`;
+
       ctx.stroke();
 
     }
   );
 
 
-  ctx.shadowBlur =
-    0;
+  ctx.shadowBlur=0;
 
 
   requestAnimationFrame(
     draw
   );
-
 }
 
 
-/* =========================================
-   SHINE
-========================================= */
-
-function shine() {
-
-  begin.classList.remove(
-    "shine"
-  );
-
-  /*
-    Restart CSS animation.
-  */
-
-  void begin.offsetWidth;
-
-  begin.classList.add(
-    "shine"
-  );
-
-
-  setTimeout(
-    () => {
-
-      begin.classList.remove(
-        "shine"
-      );
-
-    },
-    850
-  );
-
-}
-
-
-/* Start ray animation */
+/* Start rays */
 
 requestAnimationFrame(
   draw
 );
 
 
-/* =========================================
-   OPEN SECOND PAGE
-========================================= */
+/* =====================================================
+   LET'S BEGIN
+===================================================== */
 
-function openAwakening() {
+function openAwakening(){
 
   /*
-    Flash button.
+    Button impact.
   */
 
   shine();
 
 
   /*
-    Transition to
-    the second page.
+    Move to second page.
   */
 
   setTimeout(
-    () => {
+    ()=>{
 
       home.classList.remove(
         "active"
@@ -1352,9 +1623,7 @@ function openAwakening() {
     },
     550
   );
-
 }
-
 
 begin.addEventListener(
   "click",
@@ -1362,11 +1631,11 @@ begin.addEventListener(
 );
 
 
-/* =========================================
+/* =====================================================
    BACK ARROW
-========================================= */
+===================================================== */
 
-function goBack() {
+function goBack(){
 
   awakening.classList.remove(
     "active"
@@ -1378,17 +1647,14 @@ function goBack() {
 
 
   /*
-    Restart ray animation.
+    Restart the rays.
   */
 
-  cycleStart =
+  cycleStart=
     performance.now();
 
-  hasShined =
-    false;
-
+  hasShined=false;
 }
-
 
 document
   .getElementById(
@@ -1400,18 +1666,18 @@ document
   );
 
 
-/* =========================================
+/* =====================================================
    CREDITS
-========================================= */
+===================================================== */
 
 function setupCredits(
   button,
   panel
-) {
+){
 
   button.addEventListener(
     "click",
-    event => {
+    event=>{
 
       event.stopPropagation();
 
@@ -1424,34 +1690,32 @@ function setupCredits(
 
 
   /*
-    Close popup when
-    clicking elsewhere.
+    Close credits when
+    clicking somewhere else.
   */
 
   document.addEventListener(
     "click",
-    event => {
+    event=>{
 
-      if (
+      if(
         !panel.contains(
           event.target
         ) &&
-        event.target !== button
-      ) {
+        event.target!==button
+      ){
 
         panel.classList.remove(
           "show"
         );
-
       }
 
     }
   );
-
 }
 
 
-/* Page 1 credits */
+/* Home credits */
 
 setupCredits(
   document.getElementById(
@@ -1463,7 +1727,7 @@ setupCredits(
 );
 
 
-/* Page 2 credits */
+/* Second page credits */
 
 setupCredits(
   document.getElementById(
