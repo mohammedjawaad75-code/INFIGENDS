@@ -4,480 +4,1160 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>INFIGENDS — The Awakening of Ragens</title>
+<title>INFIGENDS</title>
 
 <style>
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 html, body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background: #000;
-    font-family: Arial, Helvetica, sans-serif;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
 body {
-    position: relative;
+  background: #000;
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
 }
 
-/* ---------- TITLE ---------- */
+/* =========================
+   PAGES
+========================= */
 
-.title {
-    position: absolute;
-    top: 7%;
-    left: 50%;
-    transform: translateX(-50%);
-    color: white;
-    text-align: center;
-    z-index: 10;
-    pointer-events: none;
+.page {
+  position: absolute;
+  inset: 0;
+
+  background:
+    radial-gradient(
+      circle at 50% 50%,
+      #10233b 0%,
+      #071321 28%,
+      #020810 64%,
+      #000 100%
+    );
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition:
+    opacity 1s ease,
+    visibility 1s ease;
 }
 
-.title h1 {
-    font-size: clamp(40px, 7vw, 90px);
-    letter-spacing: 0.18em;
-    font-weight: 800;
-    text-shadow:
-        0 0 10px rgba(255,255,255,0.8),
-        0 0 30px rgba(120,180,255,0.7);
+.page.active {
+  opacity: 1;
+  visibility: visible;
 }
 
-.title p {
-    margin-top: 12px;
-    font-size: clamp(11px, 1.5vw, 18px);
-    letter-spacing: 0.45em;
-    color: #b9d9ff;
+/* =========================
+   FIRST PAGE
+========================= */
+
+#home {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* ---------- CENTER ---------- */
+canvas {
+  position: absolute;
+  inset: 0;
 
-.center {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 180px;
-    height: 180px;
-    transform: translate(-50%, -50%);
-    z-index: 20;
+  width: 100%;
+  height: 100%;
+
+  pointer-events: none;
+}
+
+/* =========================
+   CENTER BUTTON
+========================= */
+
+.center-wrap {
+  position: relative;
+
+  width: 180px;
+  height: 180px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 5;
 }
 
 .button {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 130px;
-    height: 130px;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
+  position: relative;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  width: 136px;
+  height: 136px;
 
-    color: white;
-    font-size: 15px;
-    font-weight: bold;
-    letter-spacing: 0.2em;
+  border-radius: 50%;
+  border: 1px solid rgba(150, 210, 255, 0.42);
 
-    background:
-        radial-gradient(circle at 35% 30%,
-        #ffffff 0%,
-        #b8dfff 5%,
-        #3177bd 25%,
-        #071629 65%,
-        #000 100%);
+  background:
+    radial-gradient(
+      circle at 42% 35%,
+      #17385a 0%,
+      #0c223a 45%,
+      #050e19 100%
+    );
 
-    border: 2px solid rgba(180,220,255,0.9);
+  color: white;
 
-    box-shadow:
-        0 0 10px #6eb7ff,
-        0 0 30px rgba(80,160,255,0.7),
-        inset 0 0 25px rgba(150,210,255,0.5);
+  font-size: 14px;
+  letter-spacing: 2px;
+  font-weight: 600;
 
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
-}
+  cursor: pointer;
 
-/* Shine when rays arrive */
-.button.shine {
-    animation: buttonShine 0.8s ease-out;
-}
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-@keyframes buttonShine {
-    0% {
-        box-shadow:
-            0 0 10px #6eb7ff,
-            0 0 30px #6eb7ff;
-    }
+  box-shadow:
+    0 0 20px rgba(65, 150, 255, 0.16),
+    inset 0 0 25px rgba(100, 190, 255, 0.08);
 
-    50% {
-        box-shadow:
-            0 0 35px #fff,
-            0 0 80px #6eb7ff,
-            0 0 140px #2d8cff,
-            inset 0 0 40px #fff;
-    }
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
 
-    100% {
-        box-shadow:
-            0 0 10px #6eb7ff,
-            0 0 30px rgba(80,160,255,0.7);
-    }
-}
-
-/* ---------- HOVER CIRCLE ---------- */
-
-.orbit {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 155px;
-    height: 155px;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    border: 2px solid transparent;
-    border-top-color: #fff;
-    border-right-color: #62b4ff;
-    opacity: 0;
-    pointer-events: none;
-}
-
-.button:hover + .orbit {
-    opacity: 1;
-    animation: orbitSpin 1.2s linear infinite;
+  z-index: 3;
 }
 
 .button:hover {
-    transform: translate(-50%, -50%) scale(1.06);
+  transform: scale(1.045);
+
+  box-shadow:
+    0 0 34px rgba(75, 170, 255, 0.34),
+    inset 0 0 30px rgba(100, 190, 255, 0.12);
 }
 
-@keyframes orbitSpin {
-    from {
-        transform: translate(-50%, -50%) rotate(0deg);
-    }
-    to {
-        transform: translate(-50%, -50%) rotate(360deg);
-    }
+/* =========================
+   BUTTON SHINE
+========================= */
+
+.button.shine {
+  animation: impact 0.8s ease-out;
 }
 
-/* ---------- RAYS ---------- */
+@keyframes impact {
 
-.rays {
-    position: absolute;
-    inset: 0;
-    z-index: 5;
-    pointer-events: none;
-}
-
-.ray {
-    position: absolute;
-    height: 2px;
-    width: 0;
-    background: linear-gradient(
-        to right,
-        transparent,
-        rgba(170,220,255,0.9),
-        white
-    );
-
+  0% {
     box-shadow:
-        0 0 6px #6eb7ff,
-        0 0 14px rgba(80,160,255,0.9);
+      0 0 20px rgba(65, 150, 255, 0.16),
+      inset 0 0 25px rgba(100, 190, 255, 0.08);
+  }
 
-    transform-origin: left center;
+  35% {
+    box-shadow:
+      0 0 85px 25px rgba(150, 220, 255, 0.85),
+      0 0 150px 55px rgba(60, 150, 255, 0.35),
+      inset 0 0 55px white;
+  }
 
-    animation: rayMove 3s ease-in-out infinite;
+  100% {
+    box-shadow:
+      0 0 25px rgba(65, 150, 255, 0.22),
+      inset 0 0 25px rgba(100, 190, 255, 0.08);
+  }
 }
 
-/* Corner rays */
+/* =========================
+   ORBITING BALL
+========================= */
 
-.ray.tl {
-    left: 0;
-    top: 0;
-    transform: rotate(43deg);
-    animation-delay: 0s;
+.orbit {
+  position: absolute;
+
+  width: 162px;
+  height: 162px;
+
+  border-radius: 50%;
+
+  border: 1px solid transparent;
+
+  pointer-events: none;
+
+  opacity: 0;
+
+  transition: opacity 0.2s ease;
 }
 
-.ray.tr {
-    right: 0;
-    top: 0;
-    transform-origin: right center;
-    transform: rotate(-43deg);
-    animation-delay: 0.15s;
+.center-wrap:hover .orbit {
+  opacity: 1;
 }
 
-.ray.bl {
-    left: 0;
-    bottom: 0;
-    transform: rotate(-43deg);
-    animation-delay: 0.3s;
+.orbit::before {
+  content: "";
+
+  position: absolute;
+  inset: -1px;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(130, 205, 255, 0.25);
+
+  border-top-color: rgba(255, 255, 255, 0.75);
+  border-right-color: rgba(90, 175, 255, 0.5);
+
+  animation: spin 2.8s linear infinite;
 }
 
-.ray.br {
-    right: 0;
-    bottom: 0;
-    transform-origin: right center;
-    transform: rotate(43deg);
-    animation-delay: 0.45s;
+.ball {
+  position: absolute;
+
+  width: 10px;
+  height: 10px;
+
+  border-radius: 50%;
+
+  background: white;
+
+  left: 50%;
+  top: -5px;
+
+  transform: translateX(-50%);
+
+  box-shadow:
+    0 0 10px 3px rgba(180, 225, 255, 0.9);
 }
 
-/* Side-center rays */
-
-.ray.left {
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    animation-delay: 0.6s;
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-.ray.right {
-    right: 0;
-    top: 50%;
-    transform-origin: right center;
-    transform: translateY(-50%);
-    animation-delay: 0.75s;
+/* =========================
+   BACK BUTTON
+========================= */
+
+.back {
+  position: absolute;
+
+  top: 24px;
+  left: 24px;
+
+  width: 42px;
+  height: 42px;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(160, 210, 255, 0.28);
+
+  background: rgba(3, 10, 18, 0.55);
+
+  backdrop-filter: blur(8px);
+
+  color: rgba(255, 255, 255, 0.9);
+
+  font-size: 25px;
+  font-weight: 300;
+
+  cursor: pointer;
+
+  transition: 0.3s ease;
+
+  z-index: 20;
 }
 
-.ray.top {
-    left: 50%;
-    top: 0;
-    width: 2px;
-    height: 0;
-    transform-origin: center top;
-    animation: rayVertical 3s ease-in-out infinite;
-    animation-delay: 0.9s;
+.back:hover {
+  border-color: rgba(180, 225, 255, 0.75);
+
+  box-shadow:
+    0 0 22px rgba(70, 160, 255, 0.22);
 }
 
-.ray.bottom {
-    left: 50%;
-    bottom: 0;
-    width: 2px;
-    height: 0;
-    transform-origin: center bottom;
-    animation: rayVerticalBottom 3s ease-in-out infinite;
-    animation-delay: 1.05s;
+/* =========================
+   CREDITS BUTTON
+========================= */
+
+.credits {
+  position: absolute;
+
+  top: 24px;
+  right: 24px;
+
+  padding: 11px 17px;
+
+  border-radius: 20px;
+
+  border: 1px solid rgba(160, 210, 255, 0.28);
+
+  background: rgba(3, 10, 18, 0.55);
+
+  backdrop-filter: blur(8px);
+
+  color: rgba(255, 255, 255, 0.9);
+
+  cursor: pointer;
+
+  font-size: 11px;
+  letter-spacing: 2px;
+
+  transition: 0.3s ease;
+
+  z-index: 20;
 }
 
-/* Horizontal ray movement */
+.credits:hover {
+  border-color: rgba(180, 225, 255, 0.75);
 
-@keyframes rayMove {
-
-    0% {
-        width: 0;
-        opacity: 0;
-    }
-
-    15% {
-        opacity: 1;
-    }
-
-    65% {
-        width: 52%;
-        opacity: 1;
-    }
-
-    82% {
-        width: 52%;
-        opacity: 0;
-    }
-
-    100% {
-        width: 0;
-        opacity: 0;
-    }
+  box-shadow:
+    0 0 22px rgba(70, 160, 255, 0.22);
 }
 
-/* Vertical rays */
+/* =========================
+   CREDITS PANEL
+========================= */
 
-@keyframes rayVertical {
+.credits-panel {
+  position: absolute;
 
-    0% {
-        height: 0;
-        opacity: 0;
-    }
+  top: 78px;
+  right: 24px;
 
-    15% {
-        opacity: 1;
-    }
+  width: min(300px, calc(100vw - 48px));
 
-    65% {
-        height: 42%;
-        opacity: 1;
-    }
+  padding: 22px;
 
-    82% {
-        height: 42%;
-        opacity: 0;
-    }
+  border:
+    1px solid rgba(160, 210, 255, 0.25);
 
-    100% {
-        height: 0;
-        opacity: 0;
-    }
+  border-radius: 14px;
+
+  background: rgba(2, 9, 17, 0.86);
+
+  backdrop-filter: blur(15px);
+
+  text-align: center;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transform: translateY(-8px);
+
+  transition: 0.35s ease;
+
+  z-index: 30;
 }
 
-@keyframes rayVerticalBottom {
-
-    0% {
-        height: 0;
-        opacity: 0;
-    }
-
-    15% {
-        opacity: 1;
-    }
-
-    65% {
-        height: 42%;
-        opacity: 1;
-    }
-
-    82% {
-        height: 42%;
-        opacity: 0;
-    }
-
-    100% {
-        height: 0;
-        opacity: 0;
-    }
+.credits-panel.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
 }
 
-/* ---------- STARS ---------- */
+.credits-panel strong {
+  display: block;
 
-.stars {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
+  font-size: 12px;
+
+  letter-spacing: 3px;
+
+  margin-bottom: 12px;
 }
 
-.star {
-    position: absolute;
-    width: 2px;
-    height: 2px;
-    background: white;
-    border-radius: 50%;
-    opacity: 0.7;
-    animation: twinkle 2s ease-in-out infinite alternate;
+.credits-panel span {
+  font-size: 13px;
+
+  color: rgba(255, 255, 255, 0.75);
 }
 
-@keyframes twinkle {
-    from {
-        opacity: 0.2;
-        transform: scale(0.7);
-    }
+/* =========================
+   SECOND PAGE
+========================= */
 
-    to {
-        opacity: 0.9;
-        transform: scale(1.5);
-    }
+#awakening {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
 }
 
-/* Mobile */
+/* Title starts hidden and fades in */
+
+.title-box {
+  transform: translateY(18px);
+
+  opacity: 0;
+
+  transition:
+    opacity 1.3s ease,
+    transform 1.3s ease;
+}
+
+#awakening.active .title-box {
+  opacity: 1;
+
+  transform: translateY(0);
+}
+
+/* =========================
+   TITLE
+========================= */
+
+h1 {
+  font-size: clamp(48px, 9vw, 105px);
+
+  letter-spacing:
+    clamp(8px, 2.5vw, 28px);
+
+  font-weight: 300;
+
+  margin-left:
+    clamp(8px, 2.5vw, 28px);
+
+  text-shadow:
+    0 0 30px rgba(120, 200, 255, 0.18);
+}
+
+/* =========================
+   STATEMENT
+========================= */
+
+.statement {
+  margin-top: 25px;
+
+  font-size:
+    clamp(12px, 1.5vw, 18px);
+
+  letter-spacing:
+    clamp(4px, 1vw, 11px);
+
+  color:
+    rgba(215, 235, 255, 0.72);
+
+  margin-left:
+    clamp(4px, 1vw, 11px);
+}
+
+/* =========================
+   MOBILE
+========================= */
 
 @media (max-width: 600px) {
 
-    .center {
-        width: 150px;
-        height: 150px;
-    }
+  .back {
+    left: 15px;
+    top: 15px;
+  }
 
-    .button {
-        width: 105px;
-        height: 105px;
-        font-size: 11px;
-    }
+  .credits {
+    right: 15px;
+    top: 15px;
+  }
 
-    .orbit {
-        width: 125px;
-        height: 125px;
-    }
+  .credits-panel {
+    right: 15px;
+    top: 68px;
+  }
 
-    .title {
-        top: 8%;
-    }
-
-    .title p {
-        letter-spacing: 0.25em;
-    }
 }
 </style>
 </head>
 
 <body>
 
-<!-- Stars -->
-<div class="stars">
-    <div class="star" style="left:8%;top:18%;"></div>
-    <div class="star" style="left:17%;top:72%;animation-delay:.5s;"></div>
-    <div class="star" style="left:29%;top:12%;animation-delay:1s;"></div>
-    <div class="star" style="left:41%;top:84%;animation-delay:.3s;"></div>
-    <div class="star" style="left:57%;top:17%;animation-delay:.8s;"></div>
-    <div class="star" style="left:71%;top:76%;animation-delay:1.2s;"></div>
-    <div class="star" style="left:83%;top:24%;animation-delay:.4s;"></div>
-    <div class="star" style="left:93%;top:65%;animation-delay:1.4s;"></div>
-    <div class="star" style="left:5%;top:45%;animation-delay:.9s;"></div>
-    <div class="star" style="left:89%;top:48%;animation-delay:.2s;"></div>
-</div>
+<!-- ==================================================
+     PAGE 1 — AWAKENING BUTTON
+================================================== -->
 
-<!-- Title -->
-<div class="title">
-    <h1>INFIGENDS</h1>
-    <p>THE AWAKENING OF RAGENS</p>
-</div>
+<section id="home" class="page active">
 
-<!-- Rays -->
-<div class="rays">
+  <canvas id="rays"></canvas>
 
-    <!-- Corners -->
-    <div class="ray tl"></div>
-    <div class="ray tr"></div>
-    <div class="ray bl"></div>
-    <div class="ray br"></div>
+  <!-- Back -->
+  <button
+    class="back"
+    id="homeBack"
+    aria-label="Back"
+    style="display:none;"
+  >
+    ←
+  </button>
 
-    <!-- Side centers -->
-    <div class="ray left"></div>
-    <div class="ray right"></div>
-    <div class="ray top"></div>
-    <div class="ray bottom"></div>
+  <!-- Credits -->
+  <button
+    class="credits"
+    id="creditsHome"
+  >
+    CREDITS
+  </button>
 
-</div>
+  <!-- Credits popup -->
+  <div
+    class="credits-panel"
+    id="panelHome"
+  >
+    <strong>INFIGENDS</strong>
+    <span>all credits goes to mdju</span>
+  </div>
 
-<!-- Center -->
-<div class="center">
+  <!-- Center -->
+  <div class="center-wrap">
 
-    <div class="button" id="mainButton">
-        RAGENS
+    <!-- Revolving ball -->
+    <div class="orbit">
+      <div class="ball"></div>
     </div>
 
-    <div class="orbit"></div>
+    <!-- Main button -->
+    <button
+      class="button"
+      id="begin"
+    >
+      LET'S BEGIN
+    </button>
 
-</div>
+  </div>
+
+</section>
+
+
+<!-- ==================================================
+     PAGE 2 — TITLE + STATEMENT
+================================================== -->
+
+<section
+  id="awakening"
+  class="page"
+>
+
+  <!-- Back arrow -->
+  <button
+    class="back"
+    id="backAwakening"
+    aria-label="Back"
+  >
+    ←
+  </button>
+
+  <!-- Credits -->
+  <button
+    class="credits"
+    id="creditsAwakening"
+  >
+    CREDITS
+  </button>
+
+  <!-- Credits popup -->
+  <div
+    class="credits-panel"
+    id="panelAwakening"
+  >
+    <strong>INFIGENDS</strong>
+    <span>all credits goes to mdju</span>
+  </div>
+
+  <!-- TITLE + STATEMENT -->
+  <div class="title-box">
+
+    <h1>
+      INFIGENDS
+    </h1>
+
+    <p class="statement">
+      THE AWAKENING OF RAGENS
+    </p>
+
+  </div>
+
+</section>
+
 
 <script>
 
-/* Make the center button shine in sync with the ray cycle */
+/* ==================================================
+   CANVAS SETUP
+================================================== */
 
-const button = document.getElementById("mainButton");
+const canvas =
+  document.getElementById("rays");
 
-function shine() {
-    button.classList.remove("shine");
+const ctx =
+  canvas.getContext("2d");
 
-    /* Force browser to restart animation */
-    void button.offsetWidth;
+const home =
+  document.getElementById("home");
 
-    button.classList.add("shine");
+const awakening =
+  document.getElementById("awakening");
+
+const begin =
+  document.getElementById("begin");
+
+
+let w;
+let h;
+let dpr;
+
+
+/* ==================================================
+   RAY SETTINGS
+================================================== */
+
+const DURATION = 2800;
+
+const ARRIVAL = 0.62;
+
+const RADIUS = 68;
+
+
+/* Animation clock */
+
+let cycleStart =
+  performance.now();
+
+let hasShined =
+  false;
+
+
+/* ==================================================
+   RESIZE
+================================================== */
+
+function resize() {
+
+  dpr =
+    Math.min(
+      window.devicePixelRatio || 1,
+      2
+    );
+
+  w =
+    window.innerWidth;
+
+  h =
+    window.innerHeight;
+
+  canvas.width =
+    w * dpr;
+
+  canvas.height =
+    h * dpr;
+
+  canvas.style.width =
+    w + "px";
+
+  canvas.style.height =
+    h + "px";
+
+  ctx.setTransform(
+    dpr,
+    0,
+    0,
+    dpr,
+    0,
+    0
+  );
 }
 
-/* Rays take roughly 3 seconds */
-setInterval(shine, 3000);
+window.addEventListener(
+  "resize",
+  resize
+);
 
-/* First activation */
-setTimeout(shine, 1800);
+resize();
+
+
+/* ==================================================
+   FIND POINT WHERE RAY TOUCHES BUTTON
+================================================== */
+
+function endpoint(
+  x,
+  y,
+  cx,
+  cy,
+  r
+) {
+
+  const dx =
+    cx - x;
+
+  const dy =
+    cy - y;
+
+  const len =
+    Math.hypot(dx, dy);
+
+  return {
+
+    x:
+      cx -
+      (dx / len) * r,
+
+    y:
+      cy -
+      (dy / len) * r
+
+  };
+
+}
+
+
+/* ==================================================
+   DRAW RAYS
+================================================== */
+
+function draw(now) {
+
+  ctx.clearRect(
+    0,
+    0,
+    w,
+    h
+  );
+
+
+  /*
+    Don't draw rays on page 2.
+  */
+
+  if (
+    !home.classList.contains("active")
+  ) {
+
+    requestAnimationFrame(draw);
+
+    return;
+
+  }
+
+
+  /* Current animation time */
+
+  let elapsed =
+    now - cycleStart;
+
+
+  /*
+    Restart the ray cycle.
+  */
+
+  if (elapsed >= DURATION) {
+
+    cycleStart =
+      now;
+
+    elapsed = 0;
+
+    hasShined = false;
+
+  }
+
+
+  /*
+    Overall progress.
+  */
+
+  const p =
+    Math.min(
+      elapsed / DURATION,
+      1
+    );
+
+
+  /*
+    Rays travel during first
+    62% of the animation.
+  */
+
+  const travel =
+    Math.min(
+      p / ARRIVAL,
+      1
+    );
+
+
+  /*
+    Rays fade after reaching
+    the center.
+  */
+
+  const fade =
+    p > ARRIVAL
+
+      ? 1 -
+        (p - ARRIVAL) /
+        (1 - ARRIVAL)
+
+      : 1;
+
+
+  /*
+    Shine EXACTLY when rays
+    reach the button.
+  */
+
+  if (
+    p >= ARRIVAL &&
+    !hasShined
+  ) {
+
+    hasShined = true;
+
+    shine();
+
+  }
+
+
+  const cx =
+    w / 2;
+
+  const cy =
+    h / 2;
+
+
+  /*
+    EXACTLY 8 RAYS:
+
+    1. top-left corner
+    2. top-right corner
+    3. bottom-left corner
+    4. bottom-right corner
+
+    5. left-center
+    6. right-center
+    7. top-center
+    8. bottom-center
+  */
+
+  const origins = [
+
+    [0, 0],
+
+    [w, 0],
+
+    [0, h],
+
+    [w, h],
+
+    [0, cy],
+
+    [w, cy],
+
+    [cx, 0],
+
+    [cx, h]
+
+  ];
+
+
+  ctx.lineCap =
+    "round";
+
+
+  origins.forEach(
+    ([ox, oy]) => {
+
+      /*
+        Find exact point on
+        button boundary.
+      */
+
+      const e =
+        endpoint(
+          ox,
+          oy,
+          cx,
+          cy,
+          RADIUS
+        );
+
+
+      /*
+        Current ray position.
+      */
+
+      const x =
+        ox +
+        (e.x - ox) *
+        travel;
+
+      const y =
+        oy +
+        (e.y - oy) *
+        travel;
+
+
+      /*
+        Gradient along the ray.
+      */
+
+      const grad =
+        ctx.createLinearGradient(
+          ox,
+          oy,
+          x,
+          y
+        );
+
+
+      grad.addColorStop(
+        0,
+        `rgba(130,205,255,${0.05 * fade})`
+      );
+
+      grad.addColorStop(
+        0.7,
+        `rgba(180,225,255,${0.45 * fade})`
+      );
+
+      grad.addColorStop(
+        1,
+        `rgba(255,255,255,${0.95 * fade})`
+      );
+
+
+      ctx.strokeStyle =
+        grad;
+
+      ctx.shadowBlur =
+        10;
+
+      ctx.shadowColor =
+        `rgba(110,195,255,${0.5 * fade})`;
+
+      ctx.lineWidth =
+        1.4;
+
+
+      ctx.beginPath();
+
+      ctx.moveTo(
+        ox,
+        oy
+      );
+
+      ctx.lineTo(
+        x,
+        y
+      );
+
+      ctx.stroke();
+
+    }
+  );
+
+
+  ctx.shadowBlur = 0;
+
+
+  requestAnimationFrame(
+    draw
+  );
+
+}
+
+
+/* ==================================================
+   BUTTON SHINE
+================================================== */
+
+function shine() {
+
+  begin.classList.remove(
+    "shine"
+  );
+
+  /*
+    Force browser to restart
+    the animation.
+  */
+
+  void begin.offsetWidth;
+
+  begin.classList.add(
+    "shine"
+  );
+
+
+  setTimeout(
+    () => {
+
+      begin.classList.remove(
+        "shine"
+      );
+
+    },
+    850
+  );
+
+}
+
+
+/* Start animation */
+
+requestAnimationFrame(
+  draw
+);
+
+
+/* ==================================================
+   LET'S BEGIN
+================================================== */
+
+function openAwakening() {
+
+  /*
+    Flash the button as the
+    awakening happens.
+  */
+
+  shine();
+
+
+  /*
+    Then move to the SECOND PAGE.
+  */
+
+  setTimeout(
+    () => {
+
+      home.classList.remove(
+        "active"
+      );
+
+      awakening.classList.add(
+        "active"
+      );
+
+    },
+    550
+  );
+
+}
+
+
+begin.addEventListener(
+  "click",
+  openAwakening
+);
+
+
+/* ==================================================
+   BACK ARROW
+================================================== */
+
+function goBack() {
+
+  awakening.classList.remove(
+    "active"
+  );
+
+  home.classList.add(
+    "active"
+  );
+
+
+  /*
+    Restart rays when returning.
+  */
+
+  cycleStart =
+    performance.now();
+
+  hasShined =
+    false;
+
+}
+
+
+document
+  .getElementById(
+    "backAwakening"
+  )
+  .addEventListener(
+    "click",
+    goBack
+  );
+
+
+/* ==================================================
+   CREDITS
+================================================== */
+
+function setupCredits(
+  button,
+  panel
+) {
+
+  button.addEventListener(
+    "click",
+    event => {
+
+      event.stopPropagation();
+
+      panel.classList.toggle(
+        "show"
+      );
+
+    }
+  );
+
+
+  /*
+    Close credits when
+    clicking elsewhere.
+  */
+
+  document.addEventListener(
+    "click",
+    event => {
+
+      if (
+        !panel.contains(
+          event.target
+        ) &&
+        event.target !== button
+      ) {
+
+        panel.classList.remove(
+          "show"
+        );
+
+      }
+
+    }
+  );
+
+}
+
+
+/* Credits on page 1 */
+
+setupCredits(
+  document.getElementById(
+    "creditsHome"
+  ),
+  document.getElementById(
+    "panelHome"
+  )
+);
+
+
+/* Credits on page 2 */
+
+setupCredits(
+  document.getElementById(
+    "creditsAwakening"
+  ),
+  document.getElementById(
+    "panelAwakening"
+  )
+);
 
 </script>
 
