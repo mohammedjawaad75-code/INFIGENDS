@@ -1,223 +1,486 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>INFIGENDS — The Awakening of Ragens</title>
 
 <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #000;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    position: relative;
+}
+
+/* ---------- TITLE ---------- */
+
+.title {
+    position: absolute;
+    top: 7%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    text-align: center;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.title h1 {
+    font-size: clamp(40px, 7vw, 90px);
+    letter-spacing: 0.18em;
+    font-weight: 800;
+    text-shadow:
+        0 0 10px rgba(255,255,255,0.8),
+        0 0 30px rgba(120,180,255,0.7);
+}
+
+.title p {
+    margin-top: 12px;
+    font-size: clamp(11px, 1.5vw, 18px);
+    letter-spacing: 0.45em;
+    color: #b9d9ff;
+}
+
+/* ---------- CENTER ---------- */
+
+.center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 180px;
+    height: 180px;
+    transform: translate(-50%, -50%);
+    z-index: 20;
+}
+
+.button {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 130px;
+    height: 130px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 0.2em;
+
+    background:
+        radial-gradient(circle at 35% 30%,
+        #ffffff 0%,
+        #b8dfff 5%,
+        #3177bd 25%,
+        #071629 65%,
+        #000 100%);
+
+    border: 2px solid rgba(180,220,255,0.9);
+
+    box-shadow:
+        0 0 10px #6eb7ff,
+        0 0 30px rgba(80,160,255,0.7),
+        inset 0 0 25px rgba(150,210,255,0.5);
+
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+/* Shine when rays arrive */
+.button.shine {
+    animation: buttonShine 0.8s ease-out;
+}
+
+@keyframes buttonShine {
+    0% {
+        box-shadow:
+            0 0 10px #6eb7ff,
+            0 0 30px #6eb7ff;
     }
 
-    html,
-    body {
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
+    50% {
+        box-shadow:
+            0 0 35px #fff,
+            0 0 80px #6eb7ff,
+            0 0 140px #2d8cff,
+            inset 0 0 40px #fff;
     }
 
-    body {
-        position: relative;
-        background:
-            radial-gradient(
-                circle at center,
-                #17285a 0%,
-                #09132f 35%,
-                #030713 72%,
-                #000000 100%
-            );
+    100% {
+        box-shadow:
+            0 0 10px #6eb7ff,
+            0 0 30px rgba(80,160,255,0.7);
+    }
+}
+
+/* ---------- HOVER CIRCLE ---------- */
+
+.orbit {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 155px;
+    height: 155px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 2px solid transparent;
+    border-top-color: #fff;
+    border-right-color: #62b4ff;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.button:hover + .orbit {
+    opacity: 1;
+    animation: orbitSpin 1.2s linear infinite;
+}
+
+.button:hover {
+    transform: translate(-50%, -50%) scale(1.06);
+}
+
+@keyframes orbitSpin {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+/* ---------- RAYS ---------- */
+
+.rays {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.ray {
+    position: absolute;
+    height: 2px;
+    width: 0;
+    background: linear-gradient(
+        to right,
+        transparent,
+        rgba(170,220,255,0.9),
+        white
+    );
+
+    box-shadow:
+        0 0 6px #6eb7ff,
+        0 0 14px rgba(80,160,255,0.9);
+
+    transform-origin: left center;
+
+    animation: rayMove 3s ease-in-out infinite;
+}
+
+/* Corner rays */
+
+.ray.tl {
+    left: 0;
+    top: 0;
+    transform: rotate(43deg);
+    animation-delay: 0s;
+}
+
+.ray.tr {
+    right: 0;
+    top: 0;
+    transform-origin: right center;
+    transform: rotate(-43deg);
+    animation-delay: 0.15s;
+}
+
+.ray.bl {
+    left: 0;
+    bottom: 0;
+    transform: rotate(-43deg);
+    animation-delay: 0.3s;
+}
+
+.ray.br {
+    right: 0;
+    bottom: 0;
+    transform-origin: right center;
+    transform: rotate(43deg);
+    animation-delay: 0.45s;
+}
+
+/* Side-center rays */
+
+.ray.left {
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    animation-delay: 0.6s;
+}
+
+.ray.right {
+    right: 0;
+    top: 50%;
+    transform-origin: right center;
+    transform: translateY(-50%);
+    animation-delay: 0.75s;
+}
+
+.ray.top {
+    left: 50%;
+    top: 0;
+    width: 2px;
+    height: 0;
+    transform-origin: center top;
+    animation: rayVertical 3s ease-in-out infinite;
+    animation-delay: 0.9s;
+}
+
+.ray.bottom {
+    left: 50%;
+    bottom: 0;
+    width: 2px;
+    height: 0;
+    transform-origin: center bottom;
+    animation: rayVerticalBottom 3s ease-in-out infinite;
+    animation-delay: 1.05s;
+}
+
+/* Horizontal ray movement */
+
+@keyframes rayMove {
+
+    0% {
+        width: 0;
+        opacity: 0;
     }
 
-    /* =========================
-       TITLE
-       ========================= */
+    15% {
+        opacity: 1;
+    }
+
+    65% {
+        width: 52%;
+        opacity: 1;
+    }
+
+    82% {
+        width: 52%;
+        opacity: 0;
+    }
+
+    100% {
+        width: 0;
+        opacity: 0;
+    }
+}
+
+/* Vertical rays */
+
+@keyframes rayVertical {
+
+    0% {
+        height: 0;
+        opacity: 0;
+    }
+
+    15% {
+        opacity: 1;
+    }
+
+    65% {
+        height: 42%;
+        opacity: 1;
+    }
+
+    82% {
+        height: 42%;
+        opacity: 0;
+    }
+
+    100% {
+        height: 0;
+        opacity: 0;
+    }
+}
+
+@keyframes rayVerticalBottom {
+
+    0% {
+        height: 0;
+        opacity: 0;
+    }
+
+    15% {
+        opacity: 1;
+    }
+
+    65% {
+        height: 42%;
+        opacity: 1;
+    }
+
+    82% {
+        height: 42%;
+        opacity: 0;
+    }
+
+    100% {
+        height: 0;
+        opacity: 0;
+    }
+}
+
+/* ---------- STARS ---------- */
+
+.stars {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.7;
+    animation: twinkle 2s ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+    from {
+        opacity: 0.2;
+        transform: scale(0.7);
+    }
+
+    to {
+        opacity: 0.9;
+        transform: scale(1.5);
+    }
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    .center {
+        width: 150px;
+        height: 150px;
+    }
+
+    .button {
+        width: 105px;
+        height: 105px;
+        font-size: 11px;
+    }
+
+    .orbit {
+        width: 125px;
+        height: 125px;
+    }
 
     .title {
-        position: absolute;
-        top: 28px;
-        left: 50%;
-
-        transform: translateX(-50%);
-
-        z-index: 50;
-
-        color: #ffffff;
-
-        font-family: Arial, sans-serif;
-        font-size: clamp(28px, 4vw, 44px);
-        font-weight: 700;
-
-        letter-spacing: 6px;
-        white-space: nowrap;
-
-        text-shadow:
-            0 0 10px #4d8dff,
-            0 0 25px #2868ff,
-            0 0 50px #1455ff;
+        top: 8%;
     }
 
-    /* =========================
-       STATEMENT
-       ========================= */
-
-    .statement {
-        position: absolute;
-        top: 85px;
-        left: 50%;
-
-        transform: translateX(-50%);
-
-        z-index: 50;
-
-        color: #dce8ff;
-
-        font-family: Arial, sans-serif;
-        font-size: clamp(14px, 1.7vw, 19px);
-
-        letter-spacing: 2px;
-        white-space: nowrap;
-
-        text-shadow:
-            0 0 8px #4286ff;
+    .title p {
+        letter-spacing: 0.25em;
     }
+}
+</style>
+</head>
 
-    /* =========================
-       RAY LAYER
-       ========================= */
+<body>
 
-    #rayLayer {
-        position: absolute;
-        inset: 0;
+<!-- Stars -->
+<div class="stars">
+    <div class="star" style="left:8%;top:18%;"></div>
+    <div class="star" style="left:17%;top:72%;animation-delay:.5s;"></div>
+    <div class="star" style="left:29%;top:12%;animation-delay:1s;"></div>
+    <div class="star" style="left:41%;top:84%;animation-delay:.3s;"></div>
+    <div class="star" style="left:57%;top:17%;animation-delay:.8s;"></div>
+    <div class="star" style="left:71%;top:76%;animation-delay:1.2s;"></div>
+    <div class="star" style="left:83%;top:24%;animation-delay:.4s;"></div>
+    <div class="star" style="left:93%;top:65%;animation-delay:1.4s;"></div>
+    <div class="star" style="left:5%;top:45%;animation-delay:.9s;"></div>
+    <div class="star" style="left:89%;top:48%;animation-delay:.2s;"></div>
+</div>
 
-        pointer-events: none;
+<!-- Title -->
+<div class="title">
+    <h1>INFIGENDS</h1>
+    <p>THE AWAKENING OF RAGENS</p>
+</div>
 
-        z-index: 10;
-    }
+<!-- Rays -->
+<div class="rays">
 
-    /* =========================
-       RAYS
-       ========================= */
+    <!-- Corners -->
+    <div class="ray tl"></div>
+    <div class="ray tr"></div>
+    <div class="ray bl"></div>
+    <div class="ray br"></div>
 
-    .ray {
-        position: absolute;
+    <!-- Side centers -->
+    <div class="ray left"></div>
+    <div class="ray right"></div>
+    <div class="ray top"></div>
+    <div class="ray bottom"></div>
 
-        height: 3px;
+</div>
 
-        transform-origin: 0 50%;
+<!-- Center -->
+<div class="center">
 
-        border-radius: 999px;
+    <div class="button" id="mainButton">
+        RAGENS
+    </div>
 
-        background:
-            linear-gradient(
-                90deg,
-                rgba(60, 150, 255, 0),
-                rgba(80, 170, 255, 0.65) 35%,
-                rgba(190, 225, 255, 0.95) 85%,
-                #ffffff 100%
-            );
+    <div class="orbit"></div>
 
-        box-shadow:
-            0 0 6px #55aaff,
-            0 0 14px #2588ff,
-            0 0 26px rgba(60, 150, 255, 0.8);
+</div>
 
-        opacity: 0;
+<script>
 
-        will-change: transform, width, opacity;
-    }
+/* Make the center button shine in sync with the ray cycle */
 
-    /*
-       The ray itself is already positioned along its
-       exact path. Its width grows from the boundary
-       toward the center.
-    */
+const button = document.getElementById("mainButton");
 
-    .ray.go {
-        animation:
-            rayTravel 1.8s cubic-bezier(0.2, 0.75, 0.25, 1)
-            forwards;
-    }
+function shine() {
+    button.classList.remove("shine");
 
-    @keyframes rayTravel {
+    /* Force browser to restart animation */
+    void button.offsetWidth;
 
-        0% {
-            width: 0;
-            opacity: 0;
-        }
+    button.classList.add("shine");
+}
 
-        12% {
-            opacity: 1;
-        }
+/* Rays take roughly 3 seconds */
+setInterval(shine, 3000);
 
-        72% {
-            opacity: 1;
-        }
+/* First activation */
+setTimeout(shine, 1800);
 
-        100% {
-            width: var(--ray-length);
-            opacity: 0;
-        }
-    }
+</script>
 
-    /* =========================
-       CENTER BUTTON
-       ========================= */
-
-    #centerButton {
-        position: absolute;
-
-        left: 50%;
-        top: 50%;
-
-        width: 170px;
-        height: 170px;
-
-        transform: translate(-50%, -50%);
-
-        z-index: 30;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        border-radius: 50%;
-
-        border: 3px solid rgba(130, 175, 255, 0.95);
-
-        background:
-            radial-gradient(
-                circle,
-                #3657ff 0%,
-                #1d31c0 42%,
-                #0b1558 72%,
-                #02051e 100%
-            );
-
-        color: #ffffff;
-
-        font-family: Arial, sans-serif;
-        font-size: 18px;
-        font-weight: bold;
-
-        letter-spacing: 2px;
-
-        box-shadow:
-            0 0 15px #3266ff,
-            0 0 40px rgba(40, 90, 255, 0.8),
-            inset 0 0 28px rgba(150, 190, 255, 0.45);
-
-        transition:
-            transform 0.25s ease;
-    }
-
-    /* =========================
-       HOVER EFFECT
-       ========================= */
-
-    #centerButton:hover {
-        tra
+</body>
+</html>
 ```
