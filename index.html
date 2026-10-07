@@ -1,1 +1,1169 @@
-<h1>hi its me</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Favourite Enigma</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --gold: #ffd76a;
+    --gold2: #fff1a8;
+    --purple: #8b5cf6;
+    --pink: #ff4fd8;
+    --cyan: #4deaff;
+    --bg: #05030c;
+    --card: rgba(255,255,255,.08);
+}
+
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    background:
+        radial-gradient(circle at 50% 40%, #25164b 0%, #0b0717 35%, #020207 80%);
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ================= LOGIN ================= */
+
+#loginPage {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.login-glow {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(139,92,246,.25), transparent 68%);
+    animation: breathe 4s ease-in-out infinite;
+}
+
+.login-box {
+    width: min(420px, 90%);
+    padding: 45px 35px;
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 28px;
+    background: rgba(10,7,22,.72);
+    backdrop-filter: blur(25px);
+    box-shadow:
+        0 0 80px rgba(139,92,246,.18),
+        inset 0 0 40px rgba(255,255,255,.025);
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.login-box h1 {
+    font-family: Cinzel, serif;
+    font-size: 27px;
+    letter-spacing: 4px;
+    margin-bottom: 10px;
+}
+
+.login-box p {
+    color: #aaa;
+    margin-bottom: 30px;
+    font-size: 13px;
+    letter-spacing: 2px;
+}
+
+.input-wrap {
+    position: relative;
+    margin: 15px 0;
+}
+
+.input-wrap input {
+    width: 100%;
+    padding: 16px 18px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,.12);
+    outline: none;
+    background: rgba(255,255,255,.06);
+    color: white;
+    transition: .3s;
+}
+
+.input-wrap input:focus {
+    border-color: var(--purple);
+    box-shadow: 0 0 20px rgba(139,92,246,.25);
+}
+
+.start-btn {
+    width: 100%;
+    padding: 16px;
+    margin-top: 15px;
+    border: 0;
+    border-radius: 15px;
+    background: linear-gradient(100deg, #7045d8, #b75cff);
+    color: white;
+    font-weight: 700;
+    letter-spacing: 3px;
+    transition: .3s;
+    box-shadow: 0 0 25px rgba(139,92,246,.25);
+}
+
+.start-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 40px rgba(139,92,246,.5);
+}
+
+.error {
+    color: #ff668f;
+    font-size: 12px;
+    margin-top: 15px;
+    min-height: 15px;
+}
+
+/* ================= COMMON ================= */
+
+.page {
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+.stars,
+.stars::before,
+.stars::after {
+    position: absolute;
+    inset: 0;
+    content: "";
+    pointer-events: none;
+}
+
+.stars {
+    background-image:
+        radial-gradient(circle, rgba(255,255,255,.7) 1px, transparent 1.5px);
+    background-size: 95px 95px;
+    opacity: .18;
+}
+
+.stars::before {
+    background-image:
+        radial-gradient(circle, rgba(255,215,106,.7) 1px, transparent 1.5px);
+    background-size: 150px 150px;
+    transform: translate(30px,50px);
+}
+
+.nav {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    right: 25px;
+    display: flex;
+    justify-content: space-between;
+    z-index: 20;
+}
+
+.nav button {
+    padding: 12px 20px;
+    border: 1px solid rgba(255,255,255,.2);
+    border-radius: 30px;
+    color: white;
+    background: rgba(255,255,255,.07);
+    backdrop-filter: blur(15px);
+    transition: .3s;
+    letter-spacing: 1px;
+}
+
+.nav button:hover {
+    background: rgba(255,255,255,.15);
+    box-shadow: 0 0 25px rgba(255,215,106,.25);
+    transform: translateY(-2px);
+}
+
+/* ================= SURPRISE ================= */
+
+#surprisePage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.surprise-content {
+    text-align: center;
+    position: relative;
+    z-index: 5;
+}
+
+.surprise-title {
+    font-family: Cinzel, serif;
+    font-size: clamp(28px, 6vw, 65px);
+    letter-spacing: 7px;
+    margin-bottom: 65px;
+    color: #fff;
+    text-shadow:
+        0 0 10px rgba(255,255,255,.5),
+        0 0 35px rgba(139,92,246,.6);
+}
+
+.surprise-box {
+    width: 170px;
+    height: 170px;
+    margin: auto;
+    border: 0;
+    position: relative;
+    background: linear-gradient(135deg, #ff4fd8, #7544e8);
+    border-radius: 25px;
+    transform: rotate(-3deg);
+    box-shadow:
+        0 0 25px #ff4fd855,
+        0 0 70px #7544e855;
+    animation: boxFloat 3s ease-in-out infinite;
+    transition: .5s;
+}
+
+.surprise-box::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: -20px;
+    transform: translateX(-50%);
+    width: 190px;
+    height: 45px;
+    border-radius: 12px;
+    background: linear-gradient(90deg, #ff77e5, #9d72ff);
+}
+
+.surprise-box::after {
+    content: "✦";
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-size: 75px;
+    color: white;
+    text-shadow: 0 0 25px white;
+}
+
+.surprise-box:hover {
+    transform: scale(1.12) rotate(0deg);
+    box-shadow:
+        0 0 40px #ff4fd8,
+        0 0 120px #7544e8;
+}
+
+.click-hint {
+    margin-top: 35px;
+    color: #aaa;
+    letter-spacing: 4px;
+    font-size: 12px;
+    animation: pulse 2s infinite;
+}
+
+/* ================= FLASHCARDS ================= */
+
+#cardsPage {
+    padding: 100px 30px 60px;
+}
+
+.cards-heading {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.cards-heading h2 {
+    font-family: Cinzel, serif;
+    font-size: clamp(28px, 5vw, 48px);
+    letter-spacing: 4px;
+}
+
+.cards-heading p {
+    color: #aaa;
+    margin-top: 12px;
+}
+
+.cards-container {
+    max-width: 1100px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 30px;
+    position: relative;
+    z-index: 5;
+}
+
+.flashcard {
+    height: 300px;
+    perspective: 1200px;
+    cursor: pointer;
+}
+
+.card-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: transform .8s cubic-bezier(.2,.8,.2,1);
+    transform-style: preserve-3d;
+}
+
+.flashcard.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    border-radius: 25px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,.15);
+    background:
+        linear-gradient(145deg, rgba(255,255,255,.13), rgba(255,255,255,.035));
+    backdrop-filter: blur(18px);
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.35),
+        inset 0 0 30px rgba(255,255,255,.025);
+}
+
+.card-front {
+    background:
+        radial-gradient(circle at 50% 20%, rgba(255,215,106,.15), transparent 45%),
+        rgba(255,255,255,.06);
+}
+
+.card-back {
+    transform: rotateY(180deg);
+    background:
+        radial-gradient(circle at 50% 80%, rgba(255,79,216,.15), transparent 50%),
+        rgba(255,255,255,.06);
+}
+
+.card-icon {
+    font-size: 42px;
+    margin-bottom: 25px;
+}
+
+.card-face h3 {
+    font-family: Cinzel, serif;
+    color: var(--gold2);
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.card-face p {
+    line-height: 1.7;
+    color: #ddd;
+}
+
+.card-number {
+    position: absolute;
+    top: 18px;
+    right: 20px;
+    color: #777;
+    font-size: 12px;
+}
+
+.card-hint {
+    position: absolute;
+    bottom: 18px;
+    color: #888;
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+/* ================= FINAL ================= */
+
+#finalPage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background:
+        radial-gradient(circle at center, #3d124d 0%, #10061b 40%, #020106 85%);
+}
+
+.final-content {
+    position: relative;
+    z-index: 5;
+    padding: 30px;
+}
+
+.final-image {
+    width: min(330px, 75vw);
+    aspect-ratio: 1;
+    margin: 0 auto 35px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background:
+        radial-gradient(circle, #ffd76a 0 8%, #ff4fd8 20%, #753cff 48%, transparent 70%);
+    box-shadow:
+        0 0 45px #ff4fd8,
+        0 0 120px #753cff;
+    animation: birthdayGlow 2.5s ease-in-out infinite;
+    position: relative;
+}
+
+.final-image::before {
+    content: "🎂";
+    font-size: clamp(90px, 15vw, 150px);
+    filter: drop-shadow(0 0 20px white);
+}
+
+.final-image::after {
+    content: "✦ ✧ ✦ ✧ ✦";
+    position: absolute;
+    inset: -35px;
+    display: grid;
+    place-items: center;
+    color: var(--gold);
+    font-size: 28px;
+    letter-spacing: 40px;
+    animation: spin 12s linear infinite;
+}
+
+.final-title {
+    font-family: Cinzel, serif;
+    font-size: clamp(35px, 8vw, 80px);
+    line-height: 1.1;
+    letter-spacing: 5px;
+    background: linear-gradient(90deg, #fff, #ffd76a, #ff78df, #fff);
+    background-size: 300%;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: gradientMove 5s linear infinite;
+}
+
+.final-subtitle {
+    margin-top: 22px;
+    color: #ddd;
+    font-size: 15px;
+    letter-spacing: 5px;
+}
+
+/* ================= ADMIN ================= */
+
+#adminPage {
+    padding: 110px 25px 60px;
+}
+
+.admin-wrapper {
+    max-width: 1100px;
+    margin: auto;
+}
+
+.admin-title {
+    text-align: center;
+    font-family: Cinzel, serif;
+    font-size: 40px;
+    margin-bottom: 35px;
+}
+
+.admin-panel {
+    padding: 25px;
+    border-radius: 25px;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.12);
+    backdrop-filter: blur(20px);
+    margin-bottom: 30px;
+}
+
+.admin-panel h3 {
+    color: var(--gold);
+    margin-bottom: 20px;
+}
+
+.admin-input,
+.admin-textarea {
+    width: 100%;
+    background: rgba(0,0,0,.25);
+    border: 1px solid rgba(255,255,255,.12);
+    color: white;
+    border-radius: 12px;
+    padding: 14px;
+    outline: none;
+    margin-bottom: 12px;
+}
+
+.admin-textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.admin-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.admin-actions button,
+.save-btn {
+    border: 0;
+    border-radius: 12px;
+    padding: 12px 18px;
+    color: white;
+    background: linear-gradient(100deg, #7544e8, #b85cff);
+    font-weight: 600;
+}
+
+.card-editor {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 12px;
+    align-items: start;
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.card-editor input {
+    width: 100%;
+    background: rgba(0,0,0,.25);
+    color: white;
+    border: 1px solid rgba(255,255,255,.1);
+    padding: 12px;
+    border-radius: 10px;
+}
+
+.delete-btn {
+    background: #c93663 !important;
+}
+
+.logout-btn {
+    background: rgba(255,255,255,.08) !important;
+}
+
+/* ================= ANIMATIONS ================= */
+
+@keyframes breathe {
+    0%,100% { transform: scale(.9); opacity: .5; }
+    50% { transform: scale(1.1); opacity: 1; }
+}
+
+@keyframes boxFloat {
+    0%,100% { transform: translateY(0) rotate(-3deg); }
+    50% { transform: translateY(-15px) rotate(3deg); }
+}
+
+@keyframes pulse {
+    0%,100% { opacity: .35; }
+    50% { opacity: 1; }
+}
+
+@keyframes birthdayGlow {
+    0%,100% {
+        transform: scale(1);
+        filter: brightness(1);
+    }
+    50% {
+        transform: scale(1.05);
+        filter: brightness(1.3);
+    }
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0%; }
+    100% { background-position: 300%; }
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@media(max-width:650px) {
+    .nav {
+        top: 15px;
+        left: 15px;
+        right: 15px;
+    }
+
+    .nav button {
+        padding: 9px 12px;
+        font-size: 11px;
+    }
+
+    .card-editor {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= LOGIN ================= -->
+
+<section id="loginPage">
+    <div class="login-glow"></div>
+
+    <div class="login-box">
+        <h1>THE ENIGMA</h1>
+        <p>ENTER TO BEGIN THE EXPERIENCE</p>
+
+        <div class="input-wrap">
+            <input id="username" type="text" placeholder="Username">
+        </div>
+
+        <div class="input-wrap">
+            <input id="password" type="password" placeholder="Password">
+        </div>
+
+        <button class="start-btn" onclick="login()">START</button>
+
+        <div id="loginError" class="error"></div>
+    </div>
+</section>
+
+
+<!-- ================= SURPRISE PAGE ================= -->
+
+<section id="surprisePage" class="page hidden">
+
+    <div class="stars"></div>
+
+    <div class="surprise-content">
+
+        <h1 class="surprise-title">for my favourite enigma</h1>
+
+        <button class="surprise-box" onclick="openCards()"></button>
+
+        <div class="click-hint">
+            CLICK THE SURPRISE
+        </div>
+
+    </div>
+</section>
+
+
+<!-- ================= FLASHCARD PAGE ================= -->
+
+<section id="cardsPage" class="page hidden">
+
+    <div class="stars"></div>
+
+    <div class="nav">
+        <button onclick="showSurprise()">you and yours</button>
+        <button onclick="showFinal()">dare to click</button>
+    </div>
+
+    <div class="cards-heading">
+        <h2>THE LITTLE SECRETS</h2>
+        <p>Every card has something waiting on the other side.</p>
+    </div>
+
+    <div id="cardsContainer" class="cards-container"></div>
+
+</section>
+
+
+<!-- ================= FINAL PAGE ================= -->
+
+<section id="finalPage" class="page hidden">
+
+    <div class="stars"></div>
+
+    <div class="nav">
+        <button onclick="openCards()">← cards</button>
+    </div>
+
+    <div class="final-content">
+
+        <div class="final-image"></div>
+
+        <h1 class="final-title">
+            HAPPY BIRTHDAY<br>
+            MIND OF MADNESS
+        </h1>
+
+        <p class="final-subtitle">
+            MAY YOUR MADNESS NEVER FADE ✦
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ================= ADMIN PAGE ================= -->
+
+<section id="adminPage" class="page hidden">
+
+    <div class="stars"></div>
+
+    <div class="admin-wrapper">
+
+        <h1 class="admin-title">ENIGMA CONTROL ROOM</h1>
+
+        <div class="admin-panel">
+
+            <h3>Add New Flashcard</h3>
+
+            <input
+                id="newFront"
+                class="admin-input"
+                placeholder="Front of card"
+            >
+
+            <textarea
+                id="newBack"
+                class="admin-textarea"
+                placeholder="Back of card"
+            ></textarea>
+
+            <button class="save-btn" onclick="addCard()">
+                + ADD CARD
+            </button>
+
+        </div>
+
+        <div class="admin-panel">
+
+            <h3>Edit Existing Flashcards</h3>
+
+            <div id="adminCards"></div>
+
+        </div>
+
+        <button
+            class="save-btn logout-btn"
+            onclick="logout()"
+        >
+            LOG OUT
+        </button>
+
+    </div>
+
+</section>
+
+
+<script>
+
+/* =========================================================
+   DATA
+========================================================= */
+
+const defaultCards = [
+    {
+        front: "What makes you unforgettable?",
+        back: "The beautiful chaos you bring wherever you go."
+    },
+    {
+        front: "What kind of madness is this?",
+        back: "The kind that turns ordinary moments into memories."
+    },
+    {
+        front: "Why is this website for you?",
+        back: "Because some people deserve more than an ordinary birthday wish."
+    },
+    {
+        front: "What hides behind the mystery?",
+        back: "A birthday message made especially for my favourite enigma."
+    },
+    {
+        front: "One final question...",
+        back: "Are you ready to dare to click?"
+    }
+];
+
+
+/* =========================================================
+   STORAGE
+========================================================= */
+
+function getCards() {
+    const saved = localStorage.getItem("birthdayCards");
+
+    if (!saved) {
+        localStorage.setItem(
+            "birthdayCards",
+            JSON.stringify(defaultCards)
+        );
+
+        return [...defaultCards];
+    }
+
+    try {
+        return JSON.parse(saved);
+    } catch {
+        localStorage.setItem(
+            "birthdayCards",
+            JSON.stringify(defaultCards)
+        );
+
+        return [...defaultCards];
+    }
+}
+
+function saveCards(cards) {
+    localStorage.setItem(
+        "birthdayCards",
+        JSON.stringify(cards)
+    );
+}
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+function login() {
+
+    const username =
+        document.getElementById("username").value.trim();
+
+    const password =
+        document.getElementById("password").value.trim();
+
+    const error =
+        document.getElementById("loginError");
+
+    if (!username || !password) {
+        error.textContent = "Enter both username and password.";
+        return;
+    }
+
+    /* ADMIN */
+
+    if (
+        username === "mdju6996" &&
+        password === "nor"
+    ) {
+        error.textContent = "";
+        showPage("adminPage");
+        renderAdmin();
+        return;
+    }
+
+    /* FRIEND */
+
+    if (
+        username === "bday m of m" &&
+        password === "666"
+    ) {
+        error.textContent = "";
+        showPage("surprisePage");
+        return;
+    }
+
+    error.textContent =
+        "The username or password is incorrect.";
+}
+
+
+/* =========================================================
+   PAGE CONTROL
+========================================================= */
+
+function showPage(id) {
+
+    document
+        .querySelectorAll("body > section")
+        .forEach(page => {
+            page.classList.add("hidden");
+        });
+
+    document
+        .getElementById(id)
+        .classList.remove("hidden");
+
+    window.scrollTo(0,0);
+}
+
+function showSurprise() {
+    showPage("surprisePage");
+}
+
+function openCards() {
+    showPage("cardsPage");
+    renderCards();
+}
+
+function showFinal() {
+    showPage("finalPage");
+}
+
+
+/* =========================================================
+   FLASHCARDS
+========================================================= */
+
+function renderCards() {
+
+    const container =
+        document.getElementById("cardsContainer");
+
+    const cards = getCards();
+
+    container.innerHTML = "";
+
+    cards.forEach((card, index) => {
+
+        const element =
+            document.createElement("div");
+
+        element.className = "flashcard";
+
+        element.innerHTML = `
+            <div class="card-inner">
+
+                <div class="card-face card-front">
+
+                    <span class="card-number">
+                        ${String(index + 1).padStart(2,"0")}
+                    </span>
+
+                    <div class="card-icon">✦</div>
+
+                    <h3>${escapeHTML(card.front)}</h3>
+
+                    <span class="card-hint">
+                        CLICK TO TURN
+                    </span>
+
+                </div>
+
+                <div class="card-face card-back">
+
+                    <span class="card-number">
+                        ${String(index + 1).padStart(2,"0")}
+                    </span>
+
+                    <div class="card-icon">♡</div>
+
+                    <p>${escapeHTML(card.back)}</p>
+
+                    <span class="card-hint">
+                        CLICK TO TURN BACK
+                    </span>
+
+                </div>
+
+            </div>
+        `;
+
+        element.addEventListener("click", () => {
+            element.classList.toggle("flipped");
+        });
+
+        container.appendChild(element);
+    });
+}
+
+
+/* =========================================================
+   ADMIN
+========================================================= */
+
+function renderAdmin() {
+
+    const container =
+        document.getElementById("adminCards");
+
+    const cards = getCards();
+
+    container.innerHTML = "";
+
+    cards.forEach((card, index) => {
+
+        const row =
+            document.createElement("div");
+
+        row.className = "card-editor";
+
+        row.innerHTML = `
+
+            <input
+                value="${escapeAttribute(card.front)}"
+                id="front-${index}"
+                placeholder="Front"
+            >
+
+            <input
+                value="${escapeAttribute(card.back)}"
+                id="back-${index}"
+                placeholder="Back"
+            >
+
+            <div class="admin-actions">
+
+                <button
+                    onclick="updateCard(${index})"
+                >
+                    SAVE
+                </button>
+
+                <button
+                    class="delete-btn"
+                    onclick="deleteCard(${index})"
+                >
+                    DELETE
+                </button>
+
+            </div>
+        `;
+
+        container.appendChild(row);
+    });
+}
+
+
+function addCard() {
+
+    const front =
+        document.getElementById("newFront")
+        .value.trim();
+
+    const back =
+        document.getElementById("newBack")
+        .value.trim();
+
+    if (!front || !back) {
+        alert("Please fill both sides of the card.");
+        return;
+    }
+
+    const cards = getCards();
+
+    cards.push({
+        front,
+        back
+    });
+
+    saveCards(cards);
+
+    document.getElementById("newFront").value = "";
+    document.getElementById("newBack").value = "";
+
+    renderAdmin();
+}
+
+
+function updateCard(index) {
+
+    const cards = getCards();
+
+    const front =
+        document.getElementById(`front-${index}`)
+        .value.trim();
+
+    const back =
+        document.getElementById(`back-${index}`)
+        .value.trim();
+
+    if (!front || !back) {
+        alert("Both sides need text.");
+        return;
+    }
+
+    cards[index] = {
+        front,
+        back
+    };
+
+    saveCards(cards);
+
+    renderAdmin();
+
+    alert("Card saved!");
+}
+
+
+function deleteCard(index) {
+
+    if (!confirm("Delete this flashcard?")) {
+        return;
+    }
+
+    const cards = getCards();
+
+    cards.splice(index, 1);
+
+    saveCards(cards);
+
+    renderAdmin();
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+function logout() {
+
+    document.getElementById("username").value = "";
+    document.getElementById("password").value = "";
+
+    showPage("loginPage");
+}
+
+
+/* =========================================================
+   SECURITY / HTML ESCAPING
+========================================================= */
+
+function escapeHTML(text) {
+
+    return String(text)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+function escapeAttribute(text) {
+    return escapeHTML(text);
+}
+
+
+/* =========================================================
+   KEYBOARD SUPPORT
+========================================================= */
+
+document.addEventListener("keydown", event => {
+
+    if (
+        event.key === "Enter" &&
+        !document
+            .getElementById("loginPage")
+            .classList.contains("hidden")
+    ) {
+        login();
+    }
+
+});
+
+
+/* =========================================================
+   START
+========================================================= */
+
+getCards();
+
+</script>
+
+</body>
+</html>
