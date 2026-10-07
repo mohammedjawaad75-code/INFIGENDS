@@ -3,12 +3,12 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <title>For My Favourite Enigma</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Montserrat:wght@300;400;500;600&display=swap');
 
 *{
     margin:0;
@@ -16,94 +16,196 @@
     box-sizing:border-box;
 }
 
-html,
-body{
+html,body{
     width:100%;
     height:100%;
 }
 
 body{
     overflow:hidden;
-    font-family:'Montserrat',sans-serif;
+    background:#020204;
     color:#fff;
-    background:#07040d;
+    font-family:'Montserrat',sans-serif;
 }
 
-/* =========================================================
-   BACKGROUND
-========================================================= */
+/* =====================================================
+   SCARY ATMOSPHERE
+===================================================== */
 
 .background{
     position:fixed;
     inset:0;
-    z-index:-2;
+    z-index:-10;
     overflow:hidden;
 
     background:
         radial-gradient(
-            circle at 50% 40%,
-            rgba(89,35,145,.45),
-            transparent 38%
+            ellipse at 50% 45%,
+            rgba(55,12,76,.42),
+            transparent 40%
         ),
         radial-gradient(
-            circle at 10% 10%,
-            rgba(103,43,180,.25),
-            transparent 30%
+            ellipse at 10% 90%,
+            rgba(90,0,20,.18),
+            transparent 35%
         ),
-        radial-gradient(
-            circle at 90% 90%,
-            rgba(188,131,42,.15),
-            transparent 30%
-        ),
-        #07040d;
+        #020204;
 }
 
-.orb{
+/* dark moving fog */
+
+.fog{
     position:absolute;
-    border-radius:50%;
-    filter:blur(90px);
-    opacity:.22;
-    animation:orbFloat 10s ease-in-out infinite alternate;
+    width:120%;
+    height:45%;
+    left:-10%;
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(125,105,145,.08),
+            transparent 70%
+        );
+
+    filter:blur(35px);
+
+    animation:fogMove 18s ease-in-out infinite alternate;
 }
 
-.orb1{
-    width:450px;
-    height:450px;
-    background:#7c32d8;
-    top:-220px;
+.fog.one{
+    top:10%;
+}
+
+.fog.two{
+    bottom:5%;
+    animation-delay:7s;
+    opacity:.5;
+}
+
+@keyframes fogMove{
+    from{
+        transform:translateX(-8%) scale(1);
+    }
+
+    to{
+        transform:translateX(8%) scale(1.12);
+    }
+}
+
+/* purple glow */
+
+.darkGlow{
+    position:absolute;
+    width:420px;
+    height:420px;
+    border-radius:50%;
+
+    background:#3b0b55;
+
+    filter:blur(120px);
+
+    opacity:.25;
+
+    animation:darkPulse 7s ease-in-out infinite alternate;
+}
+
+.darkGlow.one{
+    top:-230px;
     left:-180px;
 }
 
-.orb2{
-    width:400px;
-    height:400px;
-    background:#d69c2d;
-    right:-200px;
-    bottom:-200px;
+.darkGlow.two{
+    bottom:-250px;
+    right:-180px;
     animation-delay:3s;
 }
 
-.orb3{
-    width:300px;
-    height:300px;
-    background:#4b20a0;
-    left:45%;
-    top:40%;
+@keyframes darkPulse{
+    from{
+        opacity:.16;
+        transform:scale(.9);
+    }
+
+    to{
+        opacity:.3;
+        transform:scale(1.15);
+    }
+}
+
+/* =====================================================
+   SUBTLE EYES
+===================================================== */
+
+.eye{
+    position:absolute;
+
+    width:80px;
+    height:35px;
+
+    border-top:2px solid rgba(150,20,35,.16);
+    border-bottom:2px solid rgba(150,20,35,.16);
+
+    border-radius:50%;
+
+    opacity:0;
+
+    animation:
+        eyeAppear 9s ease-in-out infinite;
+}
+
+.eye::after{
+    content:"";
+
+    position:absolute;
+
+    width:9px;
+    height:9px;
+
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,-50%);
+
+    border-radius:50%;
+
+    background:#8c1020;
+
+    box-shadow:
+        0 0 12px #8c1020;
+}
+
+.eye.one{
+    left:13%;
+    top:25%;
+    animation-delay:1s;
+}
+
+.eye.two{
+    right:13%;
+    top:35%;
     animation-delay:5s;
 }
 
-@keyframes orbFloat{
-    from{
-        transform:translate(0,0) scale(1);
+.eye.three{
+    left:48%;
+    bottom:15%;
+    transform:scale(.7);
+    animation-delay:8s;
+}
+
+@keyframes eyeAppear{
+    0%,65%,100%{
+        opacity:0;
     }
-    to{
-        transform:translate(50px,35px) scale(1.15);
+
+    72%,82%{
+        opacity:.5;
     }
 }
 
-/* =========================================================
+/* =====================================================
    PAGES
-========================================================= */
+===================================================== */
 
 .page{
     position:absolute;
@@ -118,12 +220,13 @@ body{
 
     opacity:0;
     visibility:hidden;
-    transform:scale(.96);
+
+    transform:scale(.97);
 
     transition:
-        opacity .45s ease,
-        transform .45s ease,
-        visibility .45s ease;
+        opacity .5s ease,
+        transform .5s ease,
+        visibility .5s;
 }
 
 .page.active{
@@ -132,15 +235,16 @@ body{
     transform:scale(1);
 }
 
-/* =========================================================
-   TOP NAVIGATION
-========================================================= */
+/* =====================================================
+   NAVIGATION
+===================================================== */
 
 .topbar{
     position:absolute;
-    top:22px;
-    left:22px;
-    right:22px;
+
+    top:20px;
+    left:20px;
+    right:20px;
 
     display:flex;
     align-items:center;
@@ -149,51 +253,57 @@ body{
     z-index:100;
 }
 
-.left-navigation{
+.leftNavigation{
     display:flex;
     align-items:center;
     gap:8px;
 }
 
-.nav-button{
-    border:1px solid rgba(255,255,255,.22);
+.navButton{
+    color:#eee;
 
-    background:rgba(255,255,255,.07);
-    backdrop-filter:blur(18px);
+    border:1px solid rgba(255,255,255,.16);
 
-    color:white;
+    background:
+        rgba(10,8,13,.65);
+
+    backdrop-filter:blur(14px);
 
     padding:11px 17px;
 
     border-radius:30px;
 
     font-family:'Montserrat',sans-serif;
-    font-size:.7rem;
-    font-weight:500;
+
+    font-size:.68rem;
 
     letter-spacing:2px;
 
     cursor:pointer;
 
-    transition:.3s;
+    transition:.35s;
 
     box-shadow:
-        0 0 20px rgba(124,50,216,.12);
+        0 0 15px rgba(70,0,80,.15);
 }
 
-.nav-button:hover{
+.navButton:hover{
+    color:#fff;
+
+    border-color:
+        rgba(160,30,60,.65);
+
+    background:
+        rgba(75,5,20,.35);
+
+    box-shadow:
+        0 0 20px rgba(150,15,35,.4),
+        inset 0 0 15px rgba(120,0,30,.15);
+
     transform:translateY(-2px);
-
-    border-color:rgba(238,218,255,.75);
-
-    background:rgba(130,60,210,.2);
-
-    box-shadow:
-        0 0 20px rgba(148,70,255,.5),
-        0 0 45px rgba(148,70,255,.2);
 }
 
-.history-button{
+.historyButton{
     width:43px;
     height:43px;
 
@@ -205,15 +315,14 @@ body{
 
     border-radius:50%;
 
-    font-size:1.25rem;
-    letter-spacing:0;
+    font-size:1.2rem;
 }
 
-/* =========================================================
+/* =====================================================
    TITLES
-========================================================= */
+===================================================== */
 
-.main-title{
+.mainTitle{
     font-family:'Cinzel',serif;
 
     font-size:
@@ -224,27 +333,27 @@ body{
     text-align:center;
 
     text-shadow:
-        0 0 12px rgba(255,255,255,.65),
-        0 0 35px rgba(157,74,255,.7);
+        0 0 8px rgba(255,255,255,.55),
+        0 0 30px rgba(115,30,145,.55);
 }
 
-.sub-title{
-    margin-top:15px;
+.subTitle{
+    margin-top:14px;
 
-    color:#c9bdd5;
+    color:#aaa0ae;
 
-    font-size:.75rem;
+    font-size:.72rem;
 
     letter-spacing:3px;
 
     text-align:center;
 }
 
-/* =========================================================
+/* =====================================================
    SURPRISE BOX
-========================================================= */
+===================================================== */
 
-.surprise-box{
+.surpriseBox{
     position:relative;
 
     width:210px;
@@ -255,19 +364,20 @@ body{
     cursor:pointer;
 
     animation:
-        surpriseFloat 3s ease-in-out infinite;
+        boxFloat 3s ease-in-out infinite;
 
     filter:
-        drop-shadow(0 0 30px rgba(147,66,255,.55));
+        drop-shadow(0 0 30px rgba(90,10,120,.55));
 }
 
-@keyframes surpriseFloat{
+@keyframes boxFloat{
+
     0%,100%{
         transform:translateY(0);
     }
 
     50%{
-        transform:translateY(-12px);
+        transform:translateY(-10px);
     }
 }
 
@@ -280,21 +390,23 @@ body{
     width:170px;
     height:110px;
 
-    border-radius:8px 8px 18px 18px;
+    border-radius:
+        8px 8px 18px 18px;
 
     background:
         linear-gradient(
             135deg,
-            #291044,
-            #6d2ab2,
-            #321354
+            #100611,
+            #40134e,
+            #17091c
         );
 
-    border:2px solid rgba(255,255,255,.25);
+    border:
+        1px solid rgba(180,90,210,.35);
 
     box-shadow:
-        inset 0 0 25px rgba(255,255,255,.08),
-        0 0 30px rgba(123,50,220,.5);
+        inset 0 0 30px rgba(130,20,160,.12),
+        0 0 35px rgba(90,10,120,.5);
 }
 
 .lid{
@@ -311,17 +423,18 @@ body{
     background:
         linear-gradient(
             135deg,
-            #51218a,
-            #aa5dff,
-            #432064
+            #24102b,
+            #6d1d70,
+            #24102d
         );
 
-    border:2px solid rgba(255,255,255,.3);
+    border:
+        1px solid rgba(220,120,230,.3);
 
     z-index:3;
 }
 
-.ribbon-vertical{
+.ribbonVertical{
     position:absolute;
 
     left:75px;
@@ -333,13 +446,15 @@ body{
     background:
         linear-gradient(
             90deg,
-            #b87919,
-            #ffe99a,
-            #c28a23
+            #5e151f,
+            #d18c55,
+            #55111b
         );
+
+    opacity:.8;
 }
 
-.ribbon-horizontal{
+.ribbonHorizontal{
     position:absolute;
 
     left:0;
@@ -351,9 +466,9 @@ body{
     background:
         linear-gradient(
             90deg,
-            #b87919,
-            #ffe99a,
-            #c28a23
+            #5e151f,
+            #d18c55,
+            #55111b
         );
 }
 
@@ -378,9 +493,11 @@ body{
     width:35px;
     height:22px;
 
-    border:3px solid #ffe89a;
+    border:
+        3px solid #b97950;
 
-    border-radius:50% 50% 50% 10%;
+    border-radius:
+        50% 50% 50% 10%;
 }
 
 .bow::before{
@@ -390,10 +507,12 @@ body{
 
 .bow::after{
     right:-3px;
-    transform:scaleX(-1) rotate(-25deg);
+    transform:
+        scaleX(-1)
+        rotate(-25deg);
 }
 
-.bow-center{
+.bowCenter{
     position:absolute;
 
     left:22px;
@@ -404,13 +523,13 @@ body{
 
     border-radius:50%;
 
-    background:#fff0a3;
+    background:#d6945e;
 
     box-shadow:
-        0 0 15px #ffe98e;
+        0 0 15px #a84d48;
 }
 
-.box-label{
+.boxLabel{
     position:absolute;
 
     bottom:-35px;
@@ -421,18 +540,19 @@ body{
 
     font-family:'Cinzel',serif;
 
-    font-size:.72rem;
+    font-size:.7rem;
 
     letter-spacing:3px;
 
-    color:#e5d6f5;
+    color:#b9aab9;
 }
 
-/* =========================================================
+/* =====================================================
    FLASHCARDS
-========================================================= */
+   IMPORTANT: SAME FLASHCARDS / SAME CONTENT
+===================================================== */
 
-.cards-wrapper{
+.cardsWrapper{
     width:min(1050px,94vw);
 
     margin-top:45px;
@@ -451,18 +571,16 @@ body{
     padding:12px;
 }
 
-.cards-wrapper::-webkit-scrollbar,
-.mystery-grid::-webkit-scrollbar{
+.cardsWrapper::-webkit-scrollbar{
     width:4px;
 }
 
-.cards-wrapper::-webkit-scrollbar-thumb,
-.mystery-grid::-webkit-scrollbar-thumb{
-    background:#8e48d9;
+.cardsWrapper::-webkit-scrollbar-thumb{
+    background:#67236d;
     border-radius:20px;
 }
 
-.flip-card{
+.flipCard{
     height:260px;
 
     perspective:1000px;
@@ -470,7 +588,7 @@ body{
     cursor:pointer;
 }
 
-.flip-inner{
+.flipInner{
     position:relative;
 
     width:100%;
@@ -483,11 +601,11 @@ body{
         cubic-bezier(.2,.7,.2,1);
 }
 
-.flip-card.flipped .flip-inner{
+.flipCard.flipped .flipInner{
     transform:rotateY(180deg);
 }
 
-.card-side{
+.cardSide{
     position:absolute;
 
     inset:0;
@@ -496,7 +614,8 @@ body{
 
     border-radius:22px;
 
-    border:1px solid rgba(255,255,255,.18);
+    border:
+        1px solid rgba(255,255,255,.18);
 
     background:
         rgba(255,255,255,.065);
@@ -520,15 +639,16 @@ body{
     transition:.3s;
 }
 
-.card-side:hover{
-    border-color:rgba(220,190,255,.65);
+.cardSide:hover{
+    border-color:
+        rgba(220,190,255,.65);
 
     box-shadow:
         0 0 30px rgba(140,65,255,.35),
         0 15px 40px rgba(0,0,0,.4);
 }
 
-.card-back{
+.cardBack{
     transform:rotateY(180deg);
 
     background:
@@ -539,7 +659,7 @@ body{
         );
 }
 
-.card-icon{
+.cardIcon{
     font-size:3.2rem;
 
     margin-bottom:18px;
@@ -548,7 +668,7 @@ body{
         0 0 25px rgba(222,182,255,.8);
 }
 
-.card-title{
+.cardTitle{
     font-family:'Cinzel',serif;
 
     font-size:1rem;
@@ -556,7 +676,7 @@ body{
     letter-spacing:2px;
 }
 
-.card-hint{
+.cardHint{
     margin-top:13px;
 
     font-size:.65rem;
@@ -566,7 +686,7 @@ body{
     letter-spacing:2px;
 }
 
-.card-back p{
+.cardBack p{
     color:#d9cde4;
 
     font-size:.78rem;
@@ -574,11 +694,11 @@ body{
     line-height:1.8;
 }
 
-/* =========================================================
-   MYSTERY PAGE
-========================================================= */
+/* =====================================================
+   YOUR MYSTERY
+===================================================== */
 
-.mystery-title{
+.mysteryTitle{
     font-family:'Cinzel',serif;
 
     font-size:
@@ -586,16 +706,18 @@ body{
 
     letter-spacing:6px;
 
+    color:#eee;
+
     text-shadow:
-        0 0 15px rgba(255,255,255,.6),
-        0 0 40px rgba(150,70,255,.8);
+        0 0 8px rgba(255,255,255,.35),
+        0 0 25px rgba(120,20,145,.7);
 }
 
-.mystery-description{
+.mysteryDescription{
     margin-top:12px;
     margin-bottom:28px;
 
-    color:#bdb0c9;
+    color:#887e8e;
 
     font-size:.7rem;
 
@@ -604,7 +726,7 @@ body{
     text-align:center;
 }
 
-.mystery-grid{
+.mysteryGrid{
     width:min(1080px,94vw);
 
     display:grid;
@@ -621,9 +743,18 @@ body{
     padding:10px;
 }
 
-/* Mystery visual panels */
+.mysteryGrid::-webkit-scrollbar{
+    width:4px;
+}
 
-.mystery-card{
+.mysteryGrid::-webkit-scrollbar-thumb{
+    background:#6e1525;
+    border-radius:20px;
+}
+
+/* scary cards */
+
+.mysteryCard{
     position:relative;
 
     min-height:225px;
@@ -634,21 +765,15 @@ body{
 
     border-radius:22px;
 
-    border:1px solid rgba(255,255,255,.17);
+    border:
+        1px solid rgba(130,20,40,.35);
 
     background:
         linear-gradient(
             145deg,
-            rgba(255,255,255,.09),
-            rgba(255,255,255,.025)
+            rgba(25,8,30,.92),
+            rgba(6,5,8,.92)
         );
-
-    backdrop-filter:blur(15px);
-
-    transition:
-        transform .4s,
-        border-color .4s,
-        box-shadow .4s;
 
     display:flex;
 
@@ -657,21 +782,11 @@ body{
     align-items:center;
 
     justify-content:center;
+
+    transition:.45s;
 }
 
-.mystery-card:hover{
-    transform:
-        translateY(-8px)
-        scale(1.02);
-
-    border-color:
-        rgba(225,200,255,.7);
-
-    box-shadow:
-        0 0 35px rgba(131,58,230,.4);
-}
-
-.mystery-card::before{
+.mysteryCard::before{
     content:"";
 
     position:absolute;
@@ -682,20 +797,31 @@ body{
     border-radius:50%;
 
     background:
-        rgba(143,63,255,.2);
+        rgba(115,10,35,.15);
 
     filter:blur(45px);
 
     transition:.5s;
 }
 
-.mystery-card:hover::before{
-    transform:scale(1.5);
+.mysteryCard:hover{
+    transform:
+        translateY(-8px)
+        scale(1.02);
+
+    border-color:
+        rgba(160,30,55,.75);
+
+    box-shadow:
+        0 0 35px rgba(130,10,35,.35);
 }
 
-/* Visual symbol */
+.mysteryCard:hover::before{
+    transform:scale(1.5);
+    background:rgba(150,10,35,.25);
+}
 
-.mystery-visual{
+.mysteryVisual{
     position:relative;
     z-index:2;
 
@@ -713,28 +839,40 @@ body{
     background:
         radial-gradient(
             circle,
-            rgba(255,255,255,.08),
-            rgba(0,0,0,.18)
+            rgba(80,10,30,.2),
+            rgba(0,0,0,.5)
         );
 
     border:
-        1px solid rgba(255,255,255,.2);
+        1px solid rgba(150,30,50,.25);
 
     box-shadow:
-        inset 0 0 25px rgba(255,255,255,.04),
-        0 0 25px rgba(131,57,226,.25);
+        inset 0 0 30px rgba(100,10,30,.15),
+        0 0 25px rgba(100,10,30,.15);
 }
 
-/* Eye */
+.pyramid{
+    width:0;
+    height:0;
 
-.eye-symbol{
+    border-left:43px solid transparent;
+    border-right:43px solid transparent;
+    border-bottom:78px solid #8e623b;
+
+    filter:
+        drop-shadow(
+            0 0 12px rgba(150,40,40,.5)
+        );
+}
+
+.eyeSymbol{
     position:relative;
 
     width:72px;
     height:48px;
 
     border:
-        3px solid #e5c66e;
+        3px solid #9e6c48;
 
     border-radius:
         80% 10% 80% 10%;
@@ -742,10 +880,10 @@ body{
     transform:rotate(45deg);
 
     box-shadow:
-        0 0 18px rgba(229,198,110,.5);
+        0 0 18px rgba(150,50,50,.45);
 }
 
-.eye-symbol::after{
+.eyeSymbol::after{
     content:"";
 
     position:absolute;
@@ -758,64 +896,44 @@ body{
 
     border-radius:50%;
 
-    background:#e7c66b;
+    background:#8d1425;
 
     box-shadow:
-        0 0 15px #e7c66b;
+        0 0 15px #8d1425;
 }
-
-/* Pyramid */
-
-.pyramid{
-    width:0;
-    height:0;
-
-    border-left:43px solid transparent;
-    border-right:43px solid transparent;
-    border-bottom:78px solid #d5ad55;
-
-    filter:
-        drop-shadow(0 0 15px rgba(221,180,83,.55));
-}
-
-/* 666 */
 
 .number666{
     font-family:'Cinzel',serif;
 
     font-size:2.2rem;
 
-    color:#e2bf65;
+    color:#9c3038;
 
     text-shadow:
-        0 0 15px rgba(226,191,101,.8);
+        0 0 18px rgba(150,20,40,.75);
 }
 
-/* Ancient eye */
+.ancientEye{
+    font-size:4rem;
 
-.ancient-eye{
-    font-size:4.2rem;
-
-    color:#d7b45e;
+    color:#956742;
 
     text-shadow:
-        0 0 20px rgba(220,180,70,.7);
+        0 0 18px rgba(140,40,40,.6);
 }
 
-/* Question */
-
-.question-symbol{
+.questionSymbol{
     font-size:4.5rem;
 
     font-family:'Cinzel',serif;
 
-    color:#c99bff;
+    color:#9c4b8e;
 
     text-shadow:
-        0 0 25px rgba(170,90,255,.8);
+        0 0 25px rgba(140,20,100,.7);
 }
 
-.mystery-name{
+.mysteryName{
     position:relative;
     z-index:2;
 
@@ -826,7 +944,7 @@ body{
     letter-spacing:2px;
 }
 
-.mystery-small{
+.mysterySmall{
     position:relative;
     z-index:2;
 
@@ -834,22 +952,22 @@ body{
 
     font-size:.6rem;
 
-    color:#a99caf;
+    color:#766b78;
 
     letter-spacing:1px;
 }
 
-/* =========================================================
+/* =====================================================
    BIRTHDAY PAGE
-========================================================= */
+===================================================== */
 
-.birthday-content{
+.birthdayContent{
     text-align:center;
 
     max-width:800px;
 }
 
-.birthday-crown{
+.birthdayCrown{
     font-size:3.5rem;
 
     margin-bottom:20px;
@@ -859,16 +977,21 @@ body{
 }
 
 @keyframes crownFloat{
+
     0%,100%{
-        transform:translateY(0) rotate(-3deg);
+        transform:
+            translateY(0)
+            rotate(-3deg);
     }
 
     50%{
-        transform:translateY(-10px) rotate(3deg);
+        transform:
+            translateY(-10px)
+            rotate(3deg);
     }
 }
 
-.birthday-title{
+.birthdayTitle{
     font-family:'Cinzel',serif;
 
     font-size:
@@ -877,26 +1000,26 @@ body{
     letter-spacing:5px;
 
     text-shadow:
-        0 0 15px white,
-        0 0 35px #bd75ff,
-        0 0 70px rgba(180,80,255,.7);
+        0 0 12px white,
+        0 0 30px #9d54bd,
+        0 0 60px rgba(150,30,100,.6);
 }
 
-.birthday-subtitle{
+.birthdaySubtitle{
     margin-top:15px;
 
     font-size:
         clamp(1rem,2vw,1.3rem);
 
-    color:#dbcde7;
+    color:#c8bbc9;
 
     letter-spacing:3px;
 }
 
-.birthday-message{
+.birthdayMessage{
     margin-top:30px;
 
-    color:#c4b5cf;
+    color:#a99daa;
 
     line-height:2;
 
@@ -905,20 +1028,21 @@ body{
     letter-spacing:.5px;
 }
 
-.birthday-button{
+.birthdayButton{
     margin-top:30px;
 
     padding:15px 30px;
 
-    border:1px solid rgba(255,255,255,.25);
+    border:
+        1px solid rgba(160,50,70,.4);
 
     border-radius:40px;
 
     background:
         linear-gradient(
             135deg,
-            #7136b5,
-            #bb72ff
+            #401027,
+            #7d294e
         );
 
     color:white;
@@ -932,21 +1056,21 @@ body{
     cursor:pointer;
 
     box-shadow:
-        0 0 30px rgba(177,91,255,.5);
+        0 0 25px rgba(130,20,60,.35);
 
     transition:.3s;
 }
 
-.birthday-button:hover{
+.birthdayButton:hover{
     transform:scale(1.06);
 
     box-shadow:
-        0 0 50px rgba(190,120,255,.85);
+        0 0 45px rgba(170,30,70,.6);
 }
 
-/* =========================================================
-   MYSTERY POPUP
-========================================================= */
+/* =====================================================
+   POPUP
+===================================================== */
 
 .popup{
     position:fixed;
@@ -963,7 +1087,7 @@ body{
     padding:25px;
 
     background:
-        rgba(0,0,0,.72);
+        rgba(0,0,0,.78);
 
     backdrop-filter:blur(10px);
 
@@ -978,7 +1102,7 @@ body{
     visibility:visible;
 }
 
-.popup-box{
+.popupBox{
     width:min(500px,92vw);
 
     padding:35px;
@@ -990,54 +1114,58 @@ body{
     background:
         linear-gradient(
             145deg,
-            rgba(53,20,82,.96),
-            rgba(15,7,25,.97)
+            rgba(35,8,20,.98),
+            rgba(7,5,9,.98)
         );
 
     border:
-        1px solid rgba(230,210,255,.3);
+        1px solid rgba(160,30,50,.4);
 
     box-shadow:
-        0 0 60px rgba(125,50,230,.45);
+        0 0 60px rgba(130,10,35,.35);
 }
 
-.popup-title{
+.popupTitle{
     font-family:'Cinzel',serif;
 
     font-size:1.5rem;
 
     letter-spacing:3px;
+
+    color:#ddd;
 }
 
-.popup-text{
+.popupText{
     margin-top:18px;
 
-    color:#d4c7dd;
+    color:#b9aab5;
 
     line-height:1.8;
 
     font-size:.82rem;
 }
 
-.close-popup{
+.closePopup{
     margin-top:25px;
 
     padding:10px 22px;
 
     border-radius:25px;
 
-    border:1px solid rgba(255,255,255,.25);
+    border:
+        1px solid rgba(150,30,50,.4);
 
-    background:rgba(255,255,255,.08);
+    background:
+        rgba(80,10,25,.35);
 
     color:white;
 
     cursor:pointer;
 }
 
-/* =========================================================
+/* =====================================================
    MOBILE
-========================================================= */
+===================================================== */
 
 @media(max-width:600px){
 
@@ -1047,40 +1175,40 @@ body{
         right:12px;
     }
 
-    .nav-button{
+    .navButton{
         padding:9px 11px;
         font-size:.58rem;
     }
 
-    .history-button{
+    .historyButton{
         width:39px;
         height:39px;
     }
 
-    .cards-wrapper{
+    .cardsWrapper{
         grid-template-columns:1fr 1fr;
         gap:12px;
     }
 
-    .flip-card{
+    .flipCard{
         height:220px;
     }
 
-    .mystery-grid{
+    .mysteryGrid{
         grid-template-columns:1fr 1fr;
         gap:12px;
     }
 
-    .mystery-card{
+    .mysteryCard{
         min-height:190px;
     }
 
-    .mystery-visual{
+    .mysteryVisual{
         width:90px;
         height:90px;
     }
 
-    .mystery-name{
+    .mysteryName{
         font-size:.7rem;
     }
 }
@@ -1089,22 +1217,28 @@ body{
 
 <body>
 
-<!-- =========================================================
-     BACKGROUND
-========================================================= -->
+<!-- =====================================================
+     SCARY BACKGROUND
+===================================================== -->
 
 <div class="background">
 
-    <div class="orb orb1"></div>
-    <div class="orb orb2"></div>
-    <div class="orb orb3"></div>
+    <div class="darkGlow one"></div>
+    <div class="darkGlow two"></div>
+
+    <div class="fog one"></div>
+    <div class="fog two"></div>
+
+    <div class="eye one"></div>
+    <div class="eye two"></div>
+    <div class="eye three"></div>
 
 </div>
 
 
-<!-- =========================================================
+<!-- =====================================================
      HOME
-========================================================= -->
+===================================================== -->
 
 <section
     id="home"
@@ -1113,17 +1247,17 @@ body{
 
     <div class="topbar">
 
-        <div class="left-navigation">
+        <div class="leftNavigation">
 
             <button
-                class="nav-button"
+                class="navButton"
                 onclick="navigateTo('mystery')"
             >
                 your mystery
             </button>
 
             <button
-                class="nav-button history-button"
+                class="navButton historyButton"
                 onclick="goBack()"
                 title="History"
             >
@@ -1135,37 +1269,33 @@ body{
     </div>
 
 
-    <h1 class="main-title">
+    <h1 class="mainTitle">
         for my favourite enigma
     </h1>
 
-    <p class="sub-title">
-        some secrets are meant to be discovered...
+    <p class="subTitle">
+        some secrets are better left undiscovered...
     </p>
 
 
     <div
-        class="surprise-box"
+        class="surpriseBox"
         onclick="navigateTo('cards')"
     >
 
         <div class="bow">
-            <div class="bow-center"></div>
+            <div class="bowCenter"></div>
         </div>
 
         <div class="lid">
-
-            <div class="ribbon-horizontal"></div>
-
+            <div class="ribbonHorizontal"></div>
         </div>
 
         <div class="box">
-
-            <div class="ribbon-vertical"></div>
-
+            <div class="ribbonVertical"></div>
         </div>
 
-        <div class="box-label">
+        <div class="boxLabel">
             click to unlock
         </div>
 
@@ -1174,9 +1304,10 @@ body{
 </section>
 
 
-<!-- =========================================================
+<!-- =====================================================
      FLASHCARDS
-========================================================= -->
+     CONTENT IS UNCHANGED
+===================================================== -->
 
 <section
     id="cards"
@@ -1185,17 +1316,17 @@ body{
 
     <div class="topbar">
 
-        <div class="left-navigation">
+        <div class="leftNavigation">
 
             <button
-                class="nav-button"
+                class="navButton"
                 onclick="navigateTo('mystery')"
             >
                 your mystery
             </button>
 
             <button
-                class="nav-button history-button"
+                class="navButton historyButton"
                 onclick="goBack()"
                 title="History"
             >
@@ -1206,7 +1337,7 @@ body{
 
 
         <button
-            class="nav-button"
+            class="navButton"
             onclick="navigateTo('birthday')"
         >
             dare to click
@@ -1215,43 +1346,43 @@ body{
     </div>
 
 
-    <h1 class="main-title">
+    <h1 class="mainTitle">
         the little secrets
     </h1>
 
-    <p class="sub-title">
+    <p class="subTitle">
         click the cards... if you dare
     </p>
 
 
-    <div class="cards-wrapper">
+    <div class="cardsWrapper">
 
 
         <div
-            class="flip-card"
+            class="flipCard"
             onclick="flipCard(this)"
         >
 
-            <div class="flip-inner">
+            <div class="flipInner">
 
-                <div class="card-side">
+                <div class="cardSide">
 
-                    <div class="card-icon">
+                    <div class="cardIcon">
                         ✦
                     </div>
 
-                    <div class="card-title">
+                    <div class="cardTitle">
                         ENIGMA
                     </div>
 
-                    <div class="card-hint">
+                    <div class="cardHint">
                         click me
                     </div>
 
                 </div>
 
 
-                <div class="card-side card-back">
+                <div class="cardSide cardBack">
 
                     <p>
                         Every mystery becomes more
@@ -1267,30 +1398,30 @@ body{
 
 
         <div
-            class="flip-card"
+            class="flipCard"
             onclick="flipCard(this)"
         >
 
-            <div class="flip-inner">
+            <div class="flipInner">
 
-                <div class="card-side">
+                <div class="cardSide">
 
-                    <div class="card-icon">
+                    <div class="cardIcon">
                         ☾
                     </div>
 
-                    <div class="card-title">
+                    <div class="cardTitle">
                         THE UNKNOWN
                     </div>
 
-                    <div class="card-hint">
+                    <div class="cardHint">
                         turn me
                     </div>
 
                 </div>
 
 
-                <div class="card-side card-back">
+                <div class="cardSide cardBack">
 
                     <p>
                         Some answers are hidden inside
@@ -1306,30 +1437,30 @@ body{
 
 
         <div
-            class="flip-card"
+            class="flipCard"
             onclick="flipCard(this)"
         >
 
-            <div class="flip-inner">
+            <div class="flipInner">
 
-                <div class="card-side">
+                <div class="cardSide">
 
-                    <div class="card-icon">
+                    <div class="cardIcon">
                         ∞
                     </div>
 
-                    <div class="card-title">
+                    <div class="cardTitle">
                         INFINITE
                     </div>
 
-                    <div class="card-hint">
+                    <div class="cardHint">
                         discover
                     </div>
 
                 </div>
 
 
-                <div class="card-side card-back">
+                <div class="cardSide cardBack">
 
                     <p>
                         Not every mystery needs an ending.
@@ -1345,30 +1476,30 @@ body{
 
 
         <div
-            class="flip-card"
+            class="flipCard"
             onclick="flipCard(this)"
         >
 
-            <div class="flip-inner">
+            <div class="flipInner">
 
-                <div class="card-side">
+                <div class="cardSide">
 
-                    <div class="card-icon">
+                    <div class="cardIcon">
                         ♢
                     </div>
 
-                    <div class="card-title">
+                    <div class="cardTitle">
                         SECRET
                     </div>
 
-                    <div class="card-hint">
+                    <div class="cardHint">
                         click
                     </div>
 
                 </div>
 
 
-                <div class="card-side card-back">
+                <div class="cardSide cardBack">
 
                     <p>
                         A secret becomes special when
@@ -1387,9 +1518,9 @@ body{
 </section>
 
 
-<!-- =========================================================
+<!-- =====================================================
      YOUR MYSTERY
-========================================================= -->
+===================================================== -->
 
 <section
     id="mystery"
@@ -1398,17 +1529,17 @@ body{
 
     <div class="topbar">
 
-        <div class="left-navigation">
+        <div class="leftNavigation">
 
             <button
-                class="nav-button"
+                class="navButton"
                 onclick="navigateTo('cards')"
             >
                 ← cards
             </button>
 
             <button
-                class="nav-button history-button"
+                class="navButton historyButton"
                 onclick="goBack()"
                 title="History"
             >
@@ -1420,39 +1551,39 @@ body{
     </div>
 
 
-    <h1 class="mystery-title">
+    <h1 class="mysteryTitle">
         your mystery
     </h1>
 
-    <p class="mystery-description">
+    <p class="mysteryDescription">
         symbols • legends • secrets • unanswered questions
     </p>
 
 
-    <div class="mystery-grid">
+    <div class="mysteryGrid">
 
 
         <!-- ILLUMINATI -->
 
         <div
-            class="mystery-card"
+            class="mysteryCard"
             onclick="showMystery(
                 'ILLUMINATI',
-                'The Illuminati is associated with many modern conspiracy theories. The historical Bavarian Illuminati was a real secret society founded in 1776, while many later claims surrounding it are unverified or fictional.'
+                'The historical Bavarian Illuminati was a real secret society founded in 1776. Many modern stories surrounding it are conspiracy theories or speculation.'
             )"
         >
 
-            <div class="mystery-visual">
+            <div class="mysteryVisual">
 
                 <div class="pyramid"></div>
 
             </div>
 
-            <div class="mystery-name">
+            <div class="mysteryName">
                 ILLUMINATI
             </div>
 
-            <div class="mystery-small">
+            <div class="mysterySmall">
                 hidden societies
             </div>
 
@@ -1462,14 +1593,14 @@ body{
         <!-- 666 -->
 
         <div
-            class="mystery-card"
+            class="mysteryCard"
             onclick="showMystery(
                 '666',
-                '666 is known as the number of the beast in the Book of Revelation. It has been interpreted in many different ways throughout history and became one of the most recognizable mysterious numbers.'
+                '666 is the famous number of the beast from the Book of Revelation. It has inspired centuries of interpretations, symbolism and mystery.'
             )"
         >
 
-            <div class="mystery-visual">
+            <div class="mysteryVisual">
 
                 <div class="number666">
                     666
@@ -1477,11 +1608,11 @@ body{
 
             </div>
 
-            <div class="mystery-name">
+            <div class="mysteryName">
                 666
             </div>
 
-            <div class="mystery-small">
+            <div class="mysterySmall">
                 the mysterious number
             </div>
 
@@ -1491,24 +1622,24 @@ body{
         <!-- ALL SEEING EYE -->
 
         <div
-            class="mystery-card"
+            class="mysteryCard"
             onclick="showMystery(
                 'THE ALL-SEEING EYE',
-                'The eye is an ancient and widespread symbol. Depending on the culture, it can represent protection, awareness, knowledge, observation or divine vision.'
+                'The eye is an ancient symbol associated with protection, awareness, knowledge and divine observation across different cultures.'
             )"
         >
 
-            <div class="mystery-visual">
+            <div class="mysteryVisual">
 
-                <div class="eye-symbol"></div>
+                <div class="eyeSymbol"></div>
 
             </div>
 
-            <div class="mystery-name">
+            <div class="mysteryName">
                 ALL-SEEING EYE
             </div>
 
-            <div class="mystery-small">
+            <div class="mysterySmall">
                 vision & knowledge
             </div>
 
@@ -1518,26 +1649,26 @@ body{
         <!-- SECRET SOCIETIES -->
 
         <div
-            class="mystery-card"
+            class="mysteryCard"
             onclick="showMystery(
                 'SECRET SOCIETIES',
-                'Secret societies have existed throughout history. Some were genuine organizations, while many legends about hidden groups became mixed with speculation and conspiracy stories.'
+                'Secret societies have existed throughout history. Some were genuine organizations, while others became surrounded by legends and speculation.'
             )"
         >
 
-            <div class="mystery-visual">
+            <div class="mysteryVisual">
 
-                <div class="ancient-eye">
+                <div class="ancientEye">
                     ♜
                 </div>
 
             </div>
 
-            <div class="mystery-name">
+            <div class="mysteryName">
                 SECRET SOCIETIES
             </div>
 
-            <div class="mystery-small">
+            <div class="mysterySmall">
                 hidden history
             </div>
 
@@ -1547,26 +1678,26 @@ body{
         <!-- ANCIENT MYSTERIES -->
 
         <div
-            class="mystery-card"
+            class="mysteryCard"
             onclick="showMystery(
                 'ANCIENT MYSTERIES',
-                'Ancient civilizations left behind symbols, monuments and writings whose meanings are still studied today. Some questions remain open because evidence is incomplete.'
+                'Ancient civilizations left behind symbols, monuments and writings that continue to be studied and debated today.'
             )"
         >
 
-            <div class="mystery-visual">
+            <div class="mysteryVisual">
 
-                <div class="ancient-eye">
+                <div class="ancientEye">
                     𓂀
                 </div>
 
             </div>
 
-            <div class="mystery-name">
+            <div class="mysteryName">
                 ANCIENT MYSTERIES
             </div>
 
-            <div class="mystery-small">
+            <div class="mysterySmall">
                 forgotten meanings
             </div>
 
@@ -1576,26 +1707,26 @@ body{
         <!-- UNKNOWN -->
 
         <div
-            class="mystery-card"
+            class="mysteryCard"
             onclick="showMystery(
                 'THE UNKNOWN',
-                'The most fascinating mysteries are the ones where we do not yet have enough evidence to know the complete answer.'
+                'The most fascinating mystery is sometimes the one for which there is still no complete answer.'
             )"
         >
 
-            <div class="mystery-visual">
+            <div class="mysteryVisual">
 
-                <div class="question-symbol">
+                <div class="questionSymbol">
                     ?
                 </div>
 
             </div>
 
-            <div class="mystery-name">
+            <div class="mysteryName">
                 THE UNKNOWN
             </div>
 
-            <div class="mystery-small">
+            <div class="mysterySmall">
                 no answer yet
             </div>
 
@@ -1607,9 +1738,9 @@ body{
 </section>
 
 
-<!-- =========================================================
-     BIRTHDAY / DARE PAGE
-========================================================= -->
+<!-- =====================================================
+     BIRTHDAY
+===================================================== -->
 
 <section
     id="birthday"
@@ -1618,17 +1749,17 @@ body{
 
     <div class="topbar">
 
-        <div class="left-navigation">
+        <div class="leftNavigation">
 
             <button
-                class="nav-button"
+                class="navButton"
                 onclick="navigateTo('cards')"
             >
                 ← cards
             </button>
 
             <button
-                class="nav-button history-button"
+                class="navButton historyButton"
                 onclick="goBack()"
                 title="History"
             >
@@ -1640,24 +1771,24 @@ body{
     </div>
 
 
-    <div class="birthday-content">
+    <div class="birthdayContent">
 
-        <div class="birthday-crown">
+        <div class="birthdayCrown">
             👑
         </div>
 
 
-        <h1 class="birthday-title">
+        <h1 class="birthdayTitle">
             HAPPY BIRTHDAY
         </h1>
 
 
-        <div class="birthday-subtitle">
+        <div class="birthdaySubtitle">
             mind of madness ✦
         </div>
 
 
-        <p class="birthday-message">
+        <p class="birthdayMessage">
 
             To someone who is impossible to completely
             figure out...<br>
@@ -1682,7 +1813,7 @@ body{
 
 
         <button
-            class="birthday-button"
+            class="birthdayButton"
             onclick="birthdayMagic()"
         >
             ✦ ONE MORE SECRET ✦
@@ -1693,33 +1824,29 @@ body{
 </section>
 
 
-<!-- =========================================================
+<!-- =====================================================
      MYSTERY POPUP
-========================================================= -->
+===================================================== -->
 
 <div
     id="popup"
     class="popup"
 >
 
-    <div class="popup-box">
+    <div class="popupBox">
 
         <div
             id="popupTitle"
-            class="popup-title"
-        >
-        </div>
-
+            class="popupTitle"
+        ></div>
 
         <div
             id="popupText"
-            class="popup-text"
-        >
-        </div>
-
+            class="popupText"
+        ></div>
 
         <button
-            class="close-popup"
+            class="closePopup"
             onclick="closeMystery()"
         >
             close mystery
@@ -1732,9 +1859,9 @@ body{
 
 <script>
 
-/* =========================================================
-   PAGE HISTORY
-========================================================= */
+/* =====================================================
+   HISTORY
+===================================================== */
 
 let currentPage = "home";
 
@@ -1747,9 +1874,7 @@ function navigateTo(nextPage){
         return;
     }
 
-
     pageHistory.push(currentPage);
-
 
     switchPage(nextPage);
 }
@@ -1757,29 +1882,25 @@ function navigateTo(nextPage){
 
 function switchPage(pageId){
 
-    const pages =
-        document.querySelectorAll(".page");
+    document
+        .querySelectorAll(".page")
+        .forEach(page => {
+            page.classList.remove("active");
+        });
 
 
-    pages.forEach(page => {
-        page.classList.remove("active");
-    });
-
-
-    const target =
+    const page =
         document.getElementById(pageId);
 
 
-    if(!target){
+    if(!page){
         return;
     }
 
 
-    target.classList.add("active");
+    page.classList.add("active");
 
     currentPage = pageId;
-
-    window.scrollTo(0,0);
 }
 
 
@@ -1795,17 +1916,17 @@ function goBack(){
     }
 
 
-    const previousPage =
+    const previous =
         pageHistory.pop();
 
 
-    switchPage(previousPage);
+    switchPage(previous);
 }
 
 
-/* =========================================================
-   FLIP CARDS
-========================================================= */
+/* =====================================================
+   FLASHCARD FLIP
+===================================================== */
 
 function flipCard(card){
 
@@ -1814,54 +1935,64 @@ function flipCard(card){
 }
 
 
-/* =========================================================
+/* =====================================================
    MYSTERY POPUP
-========================================================= */
+===================================================== */
 
 function showMystery(title,text){
 
-    document.getElementById("popupTitle")
+    document
+        .getElementById("popupTitle")
         .textContent = title;
 
-    document.getElementById("popupText")
+
+    document
+        .getElementById("popupText")
         .textContent = text;
 
-    document.getElementById("popup")
+
+    document
+        .getElementById("popup")
         .classList.add("show");
 }
 
 
 function closeMystery(){
 
-    document.getElementById("popup")
+    document
+        .getElementById("popup")
         .classList.remove("show");
 }
 
 
-/* Close popup when clicking outside */
+/* close popup outside */
 
-document.getElementById("popup")
-    .addEventListener("click",function(event){
+document
+    .getElementById("popup")
+    .addEventListener(
+        "click",
+        function(event){
 
-        if(event.target === this){
-            closeMystery();
+            if(event.target === this){
+                closeMystery();
+            }
+
         }
+    );
 
-    });
 
-
-/* =========================================================
-   BIRTHDAY BUTTON
-========================================================= */
+/* =====================================================
+   BIRTHDAY SECRET
+===================================================== */
 
 function birthdayMagic(){
 
     const button =
-        document.querySelector(".birthday-button");
+        document.querySelector(".birthdayButton");
 
 
     button.textContent =
-        "✦ YOU FOUND IT ✦";
+        "✦ YOU FOUND THE SECRET ✦";
 
 
     button.style.transform =
@@ -1877,7 +2008,6 @@ function birthdayMagic(){
             "";
 
     },1800);
-
 }
 
 </script>
