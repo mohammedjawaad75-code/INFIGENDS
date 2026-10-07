@@ -3,602 +3,403 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For My Favourite Enigma</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Montserrat:wght@300;400;500;600&display=swap');
-
 *{
+    box-sizing:border-box;
     margin:0;
     padding:0;
-    box-sizing:border-box;
 }
 
 html,body{
     width:100%;
     height:100%;
+    overflow:hidden;
+    font-family:Georgia, "Times New Roman", serif;
+    background:#030003;
+    color:#eee;
 }
+
+/* =========================
+   HORROR BACKGROUND
+========================= */
 
 body{
-    overflow:hidden;
-    background:#020204;
-    color:#fff;
-    font-family:'Montserrat',sans-serif;
+    background:
+        radial-gradient(circle at 50% 45%, rgba(90,0,20,.18), transparent 25%),
+        radial-gradient(circle at 15% 80%, rgba(50,0,70,.18), transparent 30%),
+        radial-gradient(circle at 85% 15%, rgba(90,0,0,.15), transparent 30%),
+        #020002;
 }
-
-/* =====================================================
-   SCARY ATMOSPHERE
-===================================================== */
 
 .background{
     position:fixed;
     inset:0;
-    z-index:-10;
     overflow:hidden;
-
-    background:
-        radial-gradient(
-            ellipse at 50% 45%,
-            rgba(55,12,76,.42),
-            transparent 40%
-        ),
-        radial-gradient(
-            ellipse at 10% 90%,
-            rgba(90,0,20,.18),
-            transparent 35%
-        ),
-        #020204;
+    pointer-events:none;
+    z-index:0;
 }
 
-/* dark moving fog */
+/* moving fog */
 
 .fog{
     position:absolute;
-    width:120%;
+    width:160%;
     height:45%;
-    left:-10%;
-
+    left:-30%;
+    bottom:-10%;
     background:
-        radial-gradient(
-            ellipse,
-            rgba(125,105,145,.08),
-            transparent 70%
-        );
-
+        radial-gradient(ellipse, rgba(130,130,150,.06), transparent 60%);
     filter:blur(35px);
-
     animation:fogMove 18s ease-in-out infinite alternate;
 }
 
-.fog.one{
-    top:10%;
-}
-
 .fog.two{
-    bottom:5%;
-    animation-delay:7s;
-    opacity:.5;
+    bottom:15%;
+    opacity:.45;
+    animation-duration:25s;
+    animation-direction:alternate-reverse;
 }
 
 @keyframes fogMove{
-    from{
-        transform:translateX(-8%) scale(1);
-    }
-
-    to{
-        transform:translateX(8%) scale(1.12);
-    }
+    from{transform:translateX(-8%) scale(1);}
+    to{transform:translateX(12%) scale(1.2);}
 }
 
-/* purple glow */
+/* red pulse */
 
-.darkGlow{
+.redPulse{
     position:absolute;
-    width:420px;
-    height:420px;
+    width:500px;
+    height:500px;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
     border-radius:50%;
-
-    background:#3b0b55;
-
-    filter:blur(120px);
-
-    opacity:.25;
-
-    animation:darkPulse 7s ease-in-out infinite alternate;
+    background:rgba(100,0,15,.06);
+    filter:blur(70px);
+    animation:redBreath 4s infinite;
 }
 
-.darkGlow.one{
-    top:-230px;
-    left:-180px;
+@keyframes redBreath{
+    0%,100%{opacity:.25;transform:translate(-50%,-50%) scale(.8);}
+    50%{opacity:.75;transform:translate(-50%,-50%) scale(1.2);}
 }
 
-.darkGlow.two{
-    bottom:-250px;
-    right:-180px;
-    animation-delay:3s;
+/* film scratches */
+
+.scratch{
+    position:absolute;
+    width:1px;
+    height:100%;
+    background:rgba(255,255,255,.035);
+    animation:scratchMove 7s linear infinite;
 }
 
-@keyframes darkPulse{
-    from{
-        opacity:.16;
-        transform:scale(.9);
-    }
+.scratch:nth-child(4){left:17%;animation-delay:1s;}
+.scratch:nth-child(5){left:39%;animation-delay:4s;}
+.scratch:nth-child(6){left:68%;animation-delay:2s;}
+.scratch:nth-child(7){left:88%;animation-delay:5s;}
 
-    to{
-        opacity:.3;
-        transform:scale(1.15);
-    }
+@keyframes scratchMove{
+    from{transform:translateY(-100%);}
+    to{transform:translateY(100%);}
 }
 
-/* =====================================================
-   SUBTLE EYES
-===================================================== */
+/* =========================
+   EYES
+========================= */
 
 .eye{
     position:absolute;
-
-    width:80px;
-    height:35px;
-
-    border-top:2px solid rgba(150,20,35,.16);
-    border-bottom:2px solid rgba(150,20,35,.16);
-
+    width:70px;
+    height:38px;
     border-radius:50%;
-
+    background:#080008;
+    border:1px solid rgba(160,0,20,.25);
+    box-shadow:0 0 20px rgba(130,0,20,.12);
     opacity:0;
-
-    animation:
-        eyeAppear 9s ease-in-out infinite;
+    animation:eyeAppear 9s infinite;
 }
 
-.eye::after{
+.eye::before{
     content:"";
-
     position:absolute;
-
-    width:9px;
-    height:9px;
-
-    left:50%;
-    top:50%;
-
-    transform:translate(-50%,-50%);
-
+    width:14px;
+    height:14px;
+    background:#8d0018;
     border-radius:50%;
-
-    background:#8c1020;
-
-    box-shadow:
-        0 0 12px #8c1020;
+    top:11px;
+    left:27px;
+    box-shadow:0 0 18px #b00020;
+    animation:eyeLook 4s infinite;
 }
 
-.eye.one{
-    left:13%;
-    top:25%;
-    animation-delay:1s;
-}
-
-.eye.two{
-    right:13%;
-    top:35%;
-    animation-delay:5s;
-}
-
-.eye.three{
-    left:48%;
-    bottom:15%;
-    transform:scale(.7);
-    animation-delay:8s;
-}
+.eye.one{top:17%;left:7%;animation-delay:2s;}
+.eye.two{top:72%;right:8%;animation-delay:5s;}
+.eye.three{top:35%;right:16%;animation-delay:7s;}
 
 @keyframes eyeAppear{
-    0%,65%,100%{
-        opacity:0;
-    }
-
-    72%,82%{
-        opacity:.5;
-    }
+    0%,75%,100%{opacity:0;}
+    78%,88%{opacity:.7;}
 }
 
-/* =====================================================
-   PAGES
-===================================================== */
+@keyframes eyeLook{
+    0%,100%{transform:translateX(-5px);}
+    50%{transform:translateX(6px);}
+}
+
+/* =========================
+   PAGE SYSTEM
+========================= */
 
 .page{
     position:absolute;
     inset:0;
-
-    display:flex;
+    z-index:2;
+    display:none;
     flex-direction:column;
     align-items:center;
     justify-content:center;
-
-    padding:30px;
-
-    opacity:0;
-    visibility:hidden;
-
-    transform:scale(.97);
-
-    transition:
-        opacity .5s ease,
-        transform .5s ease,
-        visibility .5s;
+    animation:pageIn .8s ease;
 }
 
 .page.active{
-    opacity:1;
-    visibility:visible;
-    transform:scale(1);
+    display:flex;
 }
 
-/* =====================================================
-   NAVIGATION
-===================================================== */
+@keyframes pageIn{
+    from{
+        opacity:0;
+        transform:scale(1.04);
+        filter:blur(10px);
+    }
+    to{
+        opacity:1;
+        transform:scale(1);
+        filter:blur(0);
+    }
+}
+
+/* =========================
+   TOP BAR
+========================= */
 
 .topbar{
     position:absolute;
-
-    top:20px;
-    left:20px;
-    right:20px;
-
+    top:22px;
+    left:25px;
+    right:25px;
     display:flex;
-    align-items:center;
     justify-content:space-between;
-
-    z-index:100;
+    align-items:center;
+    z-index:20;
 }
 
 .leftNavigation{
     display:flex;
-    align-items:center;
     gap:8px;
 }
 
-.navButton{
-    color:#eee;
-
-    border:1px solid rgba(255,255,255,.16);
-
-    background:
-        rgba(10,8,13,.65);
-
-    backdrop-filter:blur(14px);
-
-    padding:11px 17px;
-
-    border-radius:30px;
-
-    font-family:'Montserrat',sans-serif;
-
-    font-size:.68rem;
-
+.navButton,
+.historyButton{
+    border:1px solid rgba(170,0,30,.55);
+    background:rgba(8,0,8,.8);
+    color:#ddd;
+    padding:11px 18px;
+    border-radius:4px;
     letter-spacing:2px;
-
     cursor:pointer;
-
-    transition:.35s;
-
-    box-shadow:
-        0 0 15px rgba(70,0,80,.15);
+    font-family:Georgia,serif;
+    transition:.3s;
+    box-shadow:0 0 15px rgba(130,0,25,.15);
 }
 
-.navButton:hover{
-    color:#fff;
-
-    border-color:
-        rgba(160,30,60,.65);
-
-    background:
-        rgba(75,5,20,.35);
-
+.navButton:hover,
+.historyButton:hover{
+    color:white;
+    background:#250009;
+    border-color:#c00025;
     box-shadow:
-        0 0 20px rgba(150,15,35,.4),
-        inset 0 0 15px rgba(120,0,30,.15);
-
+        0 0 10px #800018,
+        0 0 30px rgba(170,0,30,.5);
     transform:translateY(-2px);
 }
 
 .historyButton{
-    width:43px;
-    height:43px;
-
-    padding:0;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border-radius:50%;
-
-    font-size:1.2rem;
+    font-size:20px;
+    padding:7px 15px;
 }
 
-/* =====================================================
-   TITLES
-===================================================== */
+/* =========================
+   HOME
+========================= */
 
 .mainTitle{
-    font-family:'Cinzel',serif;
-
-    font-size:
-        clamp(2rem,5vw,4.5rem);
-
-    letter-spacing:6px;
-
-    text-align:center;
-
+    font-size:clamp(38px,7vw,85px);
+    text-transform:lowercase;
+    letter-spacing:8px;
+    color:#eee;
     text-shadow:
-        0 0 8px rgba(255,255,255,.55),
-        0 0 30px rgba(115,30,145,.55);
+        0 0 8px #fff,
+        0 0 25px rgba(180,0,25,.4);
+    animation:titleFlicker 6s infinite;
+    text-align:center;
 }
 
 .subTitle{
-    margin-top:14px;
-
-    color:#aaa0ae;
-
-    font-size:.72rem;
-
-    letter-spacing:3px;
-
-    text-align:center;
+    margin-top:15px;
+    color:#777;
+    letter-spacing:5px;
+    font-size:12px;
+    text-transform:uppercase;
 }
 
-/* =====================================================
+@keyframes titleFlicker{
+    0%,92%,100%{opacity:1;}
+    93%{opacity:.4;}
+    94%{opacity:1;}
+    96%{opacity:.7;}
+    97%{opacity:1;}
+}
+
+/* =========================
    SURPRISE BOX
-===================================================== */
+========================= */
 
 .surpriseBox{
-    position:relative;
-
-    width:210px;
-    height:190px;
-
-    margin-top:45px;
-
+    margin-top:60px;
     cursor:pointer;
-
-    animation:
-        boxFloat 3s ease-in-out infinite;
-
-    filter:
-        drop-shadow(0 0 30px rgba(90,10,120,.55));
-}
-
-@keyframes boxFloat{
-
-    0%,100%{
-        transform:translateY(0);
-    }
-
-    50%{
-        transform:translateY(-10px);
-    }
+    position:relative;
 }
 
 .box{
-    position:absolute;
-
-    left:20px;
-    bottom:15px;
-
-    width:170px;
-    height:110px;
-
-    border-radius:
-        8px 8px 18px 18px;
-
+    width:210px;
+    height:150px;
+    position:relative;
     background:
-        linear-gradient(
-            135deg,
-            #100611,
-            #40134e,
-            #17091c
-        );
-
-    border:
-        1px solid rgba(180,90,210,.35);
-
+        linear-gradient(135deg,#250006,#090006 60%,#1c0005);
+    border:1px solid #730016;
     box-shadow:
-        inset 0 0 30px rgba(130,20,160,.12),
-        0 0 35px rgba(90,10,120,.5);
+        0 0 15px rgba(150,0,25,.5),
+        inset 0 0 35px rgba(0,0,0,.9);
+    transition:.5s;
+}
+
+.surpriseBox:hover .box{
+    transform:translateY(-10px) scale(1.04);
+    box-shadow:
+        0 0 20px #8e001d,
+        0 0 60px rgba(150,0,30,.7),
+        inset 0 0 40px #000;
 }
 
 .lid{
     position:absolute;
-
-    left:10px;
-    top:45px;
-
-    width:190px;
-    height:38px;
-
-    border-radius:8px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #24102b,
-            #6d1d70,
-            #24102d
-        );
-
-    border:
-        1px solid rgba(220,120,230,.3);
-
-    z-index:3;
+    width:220px;
+    height:35px;
+    left:-5px;
+    top:-25px;
+    background:linear-gradient(90deg,#170003,#52000d,#170003);
+    border:1px solid #9c001f;
 }
 
 .ribbonVertical{
     position:absolute;
-
-    left:75px;
-    top:0;
-
-    width:40px;
+    width:24px;
     height:100%;
-
-    background:
-        linear-gradient(
-            90deg,
-            #5e151f,
-            #d18c55,
-            #55111b
-        );
-
-    opacity:.8;
+    left:50%;
+    transform:translateX(-50%);
+    background:linear-gradient(90deg,#4b000c,#b00023,#4b000c);
 }
 
 .ribbonHorizontal{
     position:absolute;
-
-    left:0;
-    top:12px;
-
     width:100%;
-    height:13px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #5e151f,
-            #d18c55,
-            #55111b
-        );
+    height:22px;
+    top:50%;
+    transform:translateY(-50%);
+    background:linear-gradient(#4b000c,#b00023,#4b000c);
 }
 
 .bow{
     position:absolute;
-
-    left:76px;
-    top:12px;
-
-    width:58px;
+    width:70px;
     height:35px;
-
-    z-index:10;
+    top:-55px;
+    left:50%;
+    transform:translateX(-50%);
 }
 
 .bow::before,
 .bow::after{
     content:"";
-
     position:absolute;
-
     width:35px;
-    height:22px;
-
-    border:
-        3px solid #b97950;
-
-    border-radius:
-        50% 50% 50% 10%;
+    height:28px;
+    background:#780018;
+    border:1px solid #c00028;
+    border-radius:50% 10% 50% 10%;
 }
 
 .bow::before{
-    left:-3px;
-    transform:rotate(-25deg);
+    transform:rotate(35deg);
+    left:0;
 }
 
 .bow::after{
-    right:-3px;
-    transform:
-        scaleX(-1)
-        rotate(-25deg);
+    transform:rotate(-35deg);
+    right:0;
 }
 
 .bowCenter{
     position:absolute;
-
-    left:22px;
-    top:9px;
-
-    width:16px;
-    height:16px;
-
+    width:15px;
+    height:15px;
+    background:#b00025;
     border-radius:50%;
-
-    background:#d6945e;
-
-    box-shadow:
-        0 0 15px #a84d48;
+    left:50%;
+    top:8px;
+    transform:translateX(-50%);
+    z-index:2;
 }
 
 .boxLabel{
     position:absolute;
-
-    bottom:-35px;
-
     width:100%;
-
     text-align:center;
-
-    font-family:'Cinzel',serif;
-
-    font-size:.7rem;
-
-    letter-spacing:3px;
-
-    color:#b9aab9;
+    bottom:20px;
+    letter-spacing:4px;
+    font-size:13px;
+    color:#aaa;
 }
 
-/* =====================================================
+/* =========================
    FLASHCARDS
-   IMPORTANT: SAME FLASHCARDS / SAME CONTENT
-===================================================== */
+========================= */
 
 .cardsWrapper{
-    width:min(1050px,94vw);
-
-    margin-top:45px;
-
     display:grid;
-
-    grid-template-columns:
-        repeat(auto-fit,minmax(205px,1fr));
-
-    gap:22px;
-
-    max-height:68vh;
-
-    overflow-y:auto;
-
-    padding:12px;
-}
-
-.cardsWrapper::-webkit-scrollbar{
-    width:4px;
-}
-
-.cardsWrapper::-webkit-scrollbar-thumb{
-    background:#67236d;
-    border-radius:20px;
+    grid-template-columns:repeat(2, minmax(220px,330px));
+    gap:25px;
+    margin-top:70px;
+    perspective:1200px;
 }
 
 .flipCard{
-    height:260px;
-
-    perspective:1000px;
-
+    height:220px;
     cursor:pointer;
+    perspective:1000px;
 }
 
 .flipInner{
     position:relative;
-
     width:100%;
     height:100%;
-
+    transition:transform .8s;
     transform-style:preserve-3d;
-
-    transition:
-        transform .8s
-        cubic-bezier(.2,.7,.2,1);
 }
 
 .flipCard.flipped .flipInner{
@@ -607,609 +408,367 @@ body{
 
 .cardSide{
     position:absolute;
-
     inset:0;
-
     backface-visibility:hidden;
-
-    border-radius:22px;
-
-    border:
-        1px solid rgba(255,255,255,.18);
-
+    border:1px solid rgba(130,0,30,.7);
     background:
-        rgba(255,255,255,.065);
-
-    backdrop-filter:blur(20px);
-
+        linear-gradient(145deg,rgba(30,0,12,.96),rgba(3,0,5,.98));
     box-shadow:
-        0 15px 40px rgba(0,0,0,.4),
-        inset 0 0 30px rgba(255,255,255,.03);
-
+        0 0 18px rgba(100,0,25,.2),
+        inset 0 0 35px rgba(0,0,0,.8);
+    border-radius:5px;
     display:flex;
     flex-direction:column;
-
-    align-items:center;
     justify-content:center;
-
-    text-align:center;
-
-    padding:25px;
-
-    transition:.3s;
+    align-items:center;
+    overflow:hidden;
 }
 
-.cardSide:hover{
-    border-color:
-        rgba(220,190,255,.65);
+.cardSide::before{
+    content:"";
+    position:absolute;
+    inset:8px;
+    border:1px solid rgba(130,0,30,.18);
+}
 
-    box-shadow:
-        0 0 30px rgba(140,65,255,.35),
-        0 15px 40px rgba(0,0,0,.4);
+.cardSide::after{
+    content:"";
+    position:absolute;
+    width:100%;
+    height:1px;
+    background:rgba(190,0,30,.18);
+    top:50%;
+    animation:cardScan 4s linear infinite;
+}
+
+@keyframes cardScan{
+    from{transform:translateY(-100px);}
+    to{transform:translateY(100px);}
 }
 
 .cardBack{
     transform:rotateY(180deg);
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(123,48,190,.25),
-            rgba(255,255,255,.05)
-        );
+    padding:25px;
+    text-align:center;
+    color:#bbb;
+    line-height:1.7;
 }
 
 .cardIcon{
-    font-size:3.2rem;
-
-    margin-bottom:18px;
-
-    text-shadow:
-        0 0 25px rgba(222,182,255,.8);
+    font-size:42px;
+    color:#8c001c;
+    text-shadow:0 0 20px #8c001c;
 }
 
 .cardTitle{
-    font-family:'Cinzel',serif;
-
-    font-size:1rem;
-
-    letter-spacing:2px;
+    margin-top:15px;
+    letter-spacing:4px;
+    font-size:18px;
 }
 
 .cardHint{
-    margin-top:13px;
-
-    font-size:.65rem;
-
-    color:#aaa0b8;
-
-    letter-spacing:2px;
+    margin-top:12px;
+    color:#555;
+    font-size:11px;
+    letter-spacing:3px;
 }
 
-.cardBack p{
-    color:#d9cde4;
+/* creepy card hover */
 
-    font-size:.78rem;
-
-    line-height:1.8;
+.flipCard:hover{
+    filter:brightness(1.3);
 }
 
-/* =====================================================
-   YOUR MYSTERY
-===================================================== */
+.flipCard:hover .cardSide{
+    border-color:#d0002c;
+    box-shadow:
+        0 0 15px rgba(180,0,30,.5),
+        0 0 45px rgba(130,0,20,.3),
+        inset 0 0 40px #000;
+}
+
+/* =========================
+   MYSTERY PAGE
+========================= */
 
 .mysteryTitle{
-    font-family:'Cinzel',serif;
-
-    font-size:
-        clamp(2rem,5vw,4rem);
-
-    letter-spacing:6px;
-
-    color:#eee;
-
-    text-shadow:
-        0 0 8px rgba(255,255,255,.35),
-        0 0 25px rgba(120,20,145,.7);
+    font-size:50px;
+    letter-spacing:9px;
+    color:#ddd;
+    text-shadow:0 0 15px #800018;
 }
 
 .mysteryDescription{
-    margin-top:12px;
-    margin-bottom:28px;
-
-    color:#887e8e;
-
-    font-size:.7rem;
-
-    letter-spacing:2px;
-
-    text-align:center;
+    color:#666;
+    margin:12px 0 35px;
+    letter-spacing:3px;
 }
 
 .mysteryGrid{
-    width:min(1080px,94vw);
-
     display:grid;
-
-    grid-template-columns:
-        repeat(auto-fit,minmax(180px,1fr));
-
-    gap:20px;
-
-    max-height:67vh;
-
-    overflow-y:auto;
-
-    padding:10px;
+    grid-template-columns:repeat(3,190px);
+    gap:18px;
 }
-
-.mysteryGrid::-webkit-scrollbar{
-    width:4px;
-}
-
-.mysteryGrid::-webkit-scrollbar-thumb{
-    background:#6e1525;
-    border-radius:20px;
-}
-
-/* scary cards */
 
 .mysteryCard{
-    position:relative;
-
-    min-height:225px;
-
-    overflow:hidden;
-
+    height:180px;
+    background:#070007;
+    border:1px solid #40000e;
     cursor:pointer;
-
-    border-radius:22px;
-
-    border:
-        1px solid rgba(130,20,40,.35);
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(25,8,30,.92),
-            rgba(6,5,8,.92)
-        );
-
+    position:relative;
     display:flex;
-
     flex-direction:column;
-
-    align-items:center;
-
     justify-content:center;
-
-    transition:.45s;
-}
-
-.mysteryCard::before{
-    content:"";
-
-    position:absolute;
-
-    width:150px;
-    height:150px;
-
-    border-radius:50%;
-
-    background:
-        rgba(115,10,35,.15);
-
-    filter:blur(45px);
-
-    transition:.5s;
+    align-items:center;
+    transition:.4s;
+    overflow:hidden;
 }
 
 .mysteryCard:hover{
-    transform:
-        translateY(-8px)
-        scale(1.02);
-
-    border-color:
-        rgba(160,30,55,.75);
-
-    box-shadow:
-        0 0 35px rgba(130,10,35,.35);
-}
-
-.mysteryCard:hover::before{
-    transform:scale(1.5);
-    background:rgba(150,10,35,.25);
+    transform:scale(1.06);
+    border-color:#b00025;
+    box-shadow:0 0 30px rgba(160,0,30,.45);
 }
 
 .mysteryVisual{
-    position:relative;
-    z-index:2;
-
-    width:115px;
-    height:115px;
-
+    height:85px;
     display:flex;
     align-items:center;
     justify-content:center;
-
-    margin-bottom:18px;
-
-    border-radius:50%;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(80,10,30,.2),
-            rgba(0,0,0,.5)
-        );
-
-    border:
-        1px solid rgba(150,30,50,.25);
-
-    box-shadow:
-        inset 0 0 30px rgba(100,10,30,.15),
-        0 0 25px rgba(100,10,30,.15);
 }
 
 .pyramid{
     width:0;
     height:0;
-
-    border-left:43px solid transparent;
-    border-right:43px solid transparent;
-    border-bottom:78px solid #8e623b;
-
-    filter:
-        drop-shadow(
-            0 0 12px rgba(150,40,40,.5)
-        );
+    border-left:45px solid transparent;
+    border-right:45px solid transparent;
+    border-bottom:75px solid #25000a;
+    filter:drop-shadow(0 0 10px #8c001c);
 }
 
 .eyeSymbol{
-    position:relative;
-
-    width:72px;
-    height:48px;
-
-    border:
-        3px solid #9e6c48;
-
-    border-radius:
-        80% 10% 80% 10%;
-
-    transform:rotate(45deg);
-
-    box-shadow:
-        0 0 18px rgba(150,50,50,.45);
-}
-
-.eyeSymbol::after{
-    content:"";
-
-    position:absolute;
-
-    width:22px;
-    height:22px;
-
-    left:22px;
-    top:10px;
-
-    border-radius:50%;
-
-    background:#8d1425;
-
-    box-shadow:
-        0 0 15px #8d1425;
+    font-size:65px;
+    color:#8c001c;
+    text-shadow:0 0 20px #b00025;
 }
 
 .number666{
-    font-family:'Cinzel',serif;
-
-    font-size:2.2rem;
-
-    color:#9c3038;
-
-    text-shadow:
-        0 0 18px rgba(150,20,40,.75);
+    font-size:52px;
+    color:#8c001c;
+    text-shadow:0 0 20px #b00025;
+    letter-spacing:4px;
 }
 
 .ancientEye{
-    font-size:4rem;
-
-    color:#956742;
-
-    text-shadow:
-        0 0 18px rgba(140,40,40,.6);
+    font-size:60px;
+    color:#666;
 }
 
 .questionSymbol{
-    font-size:4.5rem;
-
-    font-family:'Cinzel',serif;
-
-    color:#9c4b8e;
-
-    text-shadow:
-        0 0 25px rgba(140,20,100,.7);
+    font-size:75px;
+    color:#600014;
 }
 
 .mysteryName{
-    position:relative;
-    z-index:2;
-
-    font-family:'Cinzel',serif;
-
-    font-size:.9rem;
-
-    letter-spacing:2px;
+    letter-spacing:3px;
+    font-size:13px;
 }
 
 .mysterySmall{
-    position:relative;
-    z-index:2;
-
-    margin-top:7px;
-
-    font-size:.6rem;
-
-    color:#766b78;
-
-    letter-spacing:1px;
+    color:#555;
+    font-size:9px;
+    margin-top:8px;
+    letter-spacing:2px;
 }
 
-/* =====================================================
-   BIRTHDAY PAGE
-===================================================== */
+/* =========================
+   BIRTHDAY
+========================= */
 
 .birthdayContent{
+    max-width:700px;
     text-align:center;
-
-    max-width:800px;
+    padding:40px;
+    background:rgba(5,0,6,.7);
+    border:1px solid rgba(130,0,30,.4);
+    box-shadow:
+        0 0 50px rgba(100,0,20,.15),
+        inset 0 0 50px #000;
 }
 
 .birthdayCrown{
-    font-size:3.5rem;
-
-    margin-bottom:20px;
-
-    animation:
-        crownFloat 2s ease-in-out infinite;
-}
-
-@keyframes crownFloat{
-
-    0%,100%{
-        transform:
-            translateY(0)
-            rotate(-3deg);
-    }
-
-    50%{
-        transform:
-            translateY(-10px)
-            rotate(3deg);
-    }
+    font-size:55px;
+    filter:drop-shadow(0 0 15px #900020);
 }
 
 .birthdayTitle{
-    font-family:'Cinzel',serif;
-
-    font-size:
-        clamp(2.3rem,7vw,6rem);
-
-    letter-spacing:5px;
-
-    text-shadow:
-        0 0 12px white,
-        0 0 30px #9d54bd,
-        0 0 60px rgba(150,30,100,.6);
+    margin-top:15px;
+    font-size:55px;
+    letter-spacing:8px;
+    text-shadow:0 0 20px #900020;
 }
 
 .birthdaySubtitle{
-    margin-top:15px;
-
-    font-size:
-        clamp(1rem,2vw,1.3rem);
-
-    color:#c8bbc9;
-
-    letter-spacing:3px;
+    color:#8b001d;
+    letter-spacing:6px;
+    margin-top:8px;
 }
 
 .birthdayMessage{
     margin-top:30px;
-
-    color:#a99daa;
-
     line-height:2;
-
-    font-size:.9rem;
-
-    letter-spacing:.5px;
+    color:#bbb;
 }
 
 .birthdayButton{
     margin-top:30px;
-
-    padding:15px 30px;
-
-    border:
-        1px solid rgba(160,50,70,.4);
-
-    border-radius:40px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #401027,
-            #7d294e
-        );
-
-    color:white;
-
-    font-family:'Montserrat',sans-serif;
-
-    font-weight:600;
-
-    letter-spacing:2px;
-
+    padding:14px 25px;
+    background:#090006;
+    border:1px solid #900020;
+    color:#ddd;
     cursor:pointer;
-
-    box-shadow:
-        0 0 25px rgba(130,20,60,.35);
-
+    letter-spacing:3px;
     transition:.3s;
 }
 
 .birthdayButton:hover{
-    transform:scale(1.06);
-
-    box-shadow:
-        0 0 45px rgba(170,30,70,.6);
+    background:#300009;
+    box-shadow:0 0 25px #900020;
 }
 
-/* =====================================================
+/* =========================
    POPUP
-===================================================== */
+========================= */
 
 .popup{
     position:fixed;
-
     inset:0;
-
-    z-index:500;
-
-    display:flex;
-
-    align-items:center;
+    background:rgba(0,0,0,.85);
+    display:none;
     justify-content:center;
-
-    padding:25px;
-
-    background:
-        rgba(0,0,0,.78);
-
-    backdrop-filter:blur(10px);
-
-    opacity:0;
-    visibility:hidden;
-
-    transition:.3s;
+    align-items:center;
+    z-index:100;
+    backdrop-filter:blur(7px);
 }
 
 .popup.show{
-    opacity:1;
-    visibility:visible;
+    display:flex;
 }
 
 .popupBox{
-    width:min(500px,92vw);
-
-    padding:35px;
-
-    border-radius:25px;
-
-    text-align:center;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(35,8,20,.98),
-            rgba(7,5,9,.98)
-        );
-
-    border:
-        1px solid rgba(160,30,50,.4);
-
+    width:min(520px,90%);
+    padding:40px;
+    background:#070007;
+    border:1px solid #900020;
     box-shadow:
-        0 0 60px rgba(130,10,35,.35);
+        0 0 25px #700016,
+        0 0 80px rgba(100,0,20,.5);
+    text-align:center;
+    animation:popupIn .4s ease;
+}
+
+@keyframes popupIn{
+    from{
+        opacity:0;
+        transform:scale(.7);
+    }
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
 }
 
 .popupTitle{
-    font-family:'Cinzel',serif;
-
-    font-size:1.5rem;
-
-    letter-spacing:3px;
-
-    color:#ddd;
+    color:#c00028;
+    letter-spacing:5px;
+    font-size:24px;
 }
 
 .popupText{
-    margin-top:18px;
-
-    color:#b9aab5;
-
+    color:#aaa;
     line-height:1.8;
-
-    font-size:.82rem;
+    margin-top:20px;
 }
 
 .closePopup{
     margin-top:25px;
-
-    padding:10px 22px;
-
-    border-radius:25px;
-
-    border:
-        1px solid rgba(150,30,50,.4);
-
-    background:
-        rgba(80,10,25,.35);
-
-    color:white;
-
+    padding:9px 20px;
+    background:transparent;
+    border:1px solid #700018;
+    color:#aaa;
     cursor:pointer;
 }
 
-/* =====================================================
-   MOBILE
-===================================================== */
+/* =========================
+   RESPONSIVE
+========================= */
 
-@media(max-width:600px){
-
-    .topbar{
-        top:12px;
-        left:12px;
-        right:12px;
-    }
-
-    .navButton{
-        padding:9px 11px;
-        font-size:.58rem;
-    }
-
-    .historyButton{
-        width:39px;
-        height:39px;
-    }
-
+@media(max-width:800px){
     .cardsWrapper{
-        grid-template-columns:1fr 1fr;
+        grid-template-columns:repeat(2,145px);
         gap:12px;
     }
 
     .flipCard{
-        height:220px;
+        height:190px;
     }
 
     .mysteryGrid{
-        grid-template-columns:1fr 1fr;
-        gap:12px;
+        grid-template-columns:repeat(2,145px);
+        gap:10px;
     }
 
     .mysteryCard{
-        min-height:190px;
+        height:150px;
     }
 
-    .mysteryVisual{
-        width:90px;
-        height:90px;
+    .mainTitle{
+        font-size:40px;
+        letter-spacing:4px;
     }
 
-    .mysteryName{
-        font-size:.7rem;
+    .birthdayTitle{
+        font-size:38px;
+    }
+}
+
+@media(max-width:500px){
+    .cardsWrapper{
+        grid-template-columns:1fr 1fr;
+        width:92%;
+    }
+
+    .flipCard{
+        height:170px;
+    }
+
+    .cardTitle{
+        font-size:13px;
+    }
+
+    .cardHint{
+        font-size:8px;
+    }
+
+    .mysteryGrid{
+        width:90%;
+        grid-template-columns:1fr 1fr;
+    }
+
+    .mysteryCard{
+        width:100%;
+    }
+
+    .topbar{
+        top:12px;
+        left:10px;
+        right:10px;
+    }
+
+    .navButton,
+    .historyButton{
+        padding:8px 10px;
+        font-size:9px;
     }
 }
 </style>
@@ -1217,86 +776,65 @@ body{
 
 <body>
 
-<!-- =====================================================
-     SCARY BACKGROUND
-===================================================== -->
+<!-- =========================
+     BACKGROUND
+========================= -->
 
 <div class="background">
-
-    <div class="darkGlow one"></div>
-    <div class="darkGlow two"></div>
-
-    <div class="fog one"></div>
+    <div class="fog"></div>
     <div class="fog two"></div>
+    <div class="redPulse"></div>
+
+    <div class="scratch"></div>
+    <div class="scratch"></div>
+    <div class="scratch"></div>
+    <div class="scratch"></div>
 
     <div class="eye one"></div>
     <div class="eye two"></div>
     <div class="eye three"></div>
-
 </div>
 
 
-<!-- =====================================================
-     HOME
-===================================================== -->
+<!-- =========================
+     HOME PAGE
+========================= -->
 
-<section
-    id="home"
-    class="page active"
->
+<section id="home" class="page active">
 
     <div class="topbar">
+        <div></div>
 
-        <div class="leftNavigation">
-
-            <button
-                class="navButton"
-                onclick="navigateTo('mystery')"
-            >
-                your mystery
-            </button>
-
-            <button
-                class="navButton historyButton"
-                onclick="goBack()"
-                title="History"
-            >
-                ←
-            </button>
-
-        </div>
-
+        <button class="navButton" onclick="navigateTo('mystery')">
+            your mystery
+        </button>
     </div>
-
 
     <h1 class="mainTitle">
         for my favourite enigma
     </h1>
 
     <p class="subTitle">
-        some secrets are better left undiscovered...
+        something is waiting inside...
     </p>
 
-
-    <div
-        class="surpriseBox"
-        onclick="navigateTo('cards')"
-    >
-
-        <div class="bow">
-            <div class="bowCenter"></div>
-        </div>
-
-        <div class="lid">
-            <div class="ribbonHorizontal"></div>
-        </div>
+    <div class="surpriseBox" onclick="navigateTo('cards')">
 
         <div class="box">
-            <div class="ribbonVertical"></div>
-        </div>
 
-        <div class="boxLabel">
-            click to unlock
+            <div class="ribbonVertical"></div>
+            <div class="ribbonHorizontal"></div>
+
+            <div class="lid"></div>
+
+            <div class="bow">
+                <div class="bowCenter"></div>
+            </div>
+
+            <div class="boxLabel">
+                OPEN IF YOU DARE
+            </div>
+
         </div>
 
     </div>
@@ -1304,213 +842,110 @@ body{
 </section>
 
 
-<!-- =====================================================
-     FLASHCARDS
-     CONTENT IS UNCHANGED
-===================================================== -->
+<!-- =========================
+     FLASHCARD PAGE
+========================= -->
 
-<section
-    id="cards"
-    class="page"
->
+<section id="cards" class="page">
 
     <div class="topbar">
 
         <div class="leftNavigation">
 
-            <button
-                class="navButton"
-                onclick="navigateTo('mystery')"
-            >
+            <button class="navButton"
+                    onclick="navigateTo('mystery')">
                 your mystery
             </button>
 
-            <button
-                class="navButton historyButton"
-                onclick="goBack()"
-                title="History"
-            >
+            <button class="historyButton"
+                    onclick="goBack()">
                 ←
             </button>
 
         </div>
 
-
-        <button
-            class="navButton"
-            onclick="navigateTo('birthday')"
-        >
+        <button class="navButton"
+                onclick="navigateTo('birthday')">
             dare to click
         </button>
 
     </div>
 
-
-    <h1 class="mainTitle">
-        the little secrets
-    </h1>
-
-    <p class="subTitle">
-        click the cards... if you dare
-    </p>
-
-
     <div class="cardsWrapper">
 
+        <!-- FLASHCARD 1 — UNCHANGED -->
 
-        <div
-            class="flipCard"
-            onclick="flipCard(this)"
-        >
-
+        <div class="flipCard" onclick="flipCard(this)">
             <div class="flipInner">
 
                 <div class="cardSide">
-
-                    <div class="cardIcon">
-                        ✦
-                    </div>
-
-                    <div class="cardTitle">
-                        ENIGMA
-                    </div>
-
-                    <div class="cardHint">
-                        click me
-                    </div>
-
+                    <div class="cardIcon">✦</div>
+                    <div class="cardTitle">ENIGMA</div>
+                    <div class="cardHint">click me</div>
                 </div>
 
-
                 <div class="cardSide cardBack">
-
-                    <p>
-                        Every mystery becomes more
-                        interesting when someone refuses
-                        to stop looking.
-                    </p>
-
+                    Every mystery becomes more interesting when someone refuses to stop looking.
                 </div>
 
             </div>
-
         </div>
 
 
-        <div
-            class="flipCard"
-            onclick="flipCard(this)"
-        >
+        <!-- FLASHCARD 2 — UNCHANGED -->
 
+        <div class="flipCard" onclick="flipCard(this)">
             <div class="flipInner">
 
                 <div class="cardSide">
-
-                    <div class="cardIcon">
-                        ☾
-                    </div>
-
-                    <div class="cardTitle">
-                        THE UNKNOWN
-                    </div>
-
-                    <div class="cardHint">
-                        turn me
-                    </div>
-
+                    <div class="cardIcon">☾</div>
+                    <div class="cardTitle">THE UNKNOWN</div>
+                    <div class="cardHint">turn me</div>
                 </div>
 
-
                 <div class="cardSide cardBack">
-
-                    <p>
-                        Some answers are hidden inside
-                        the questions we are brave enough
-                        to ask.
-                    </p>
-
+                    Some answers are hidden inside the questions we are brave enough to ask.
                 </div>
 
             </div>
-
         </div>
 
 
-        <div
-            class="flipCard"
-            onclick="flipCard(this)"
-        >
+        <!-- FLASHCARD 3 — UNCHANGED -->
 
+        <div class="flipCard" onclick="flipCard(this)">
             <div class="flipInner">
 
                 <div class="cardSide">
-
-                    <div class="cardIcon">
-                        ∞
-                    </div>
-
-                    <div class="cardTitle">
-                        INFINITE
-                    </div>
-
-                    <div class="cardHint">
-                        discover
-                    </div>
-
+                    <div class="cardIcon">∞</div>
+                    <div class="cardTitle">INFINITE</div>
+                    <div class="cardHint">discover</div>
                 </div>
 
-
                 <div class="cardSide cardBack">
-
-                    <p>
-                        Not every mystery needs an ending.
-                        Some are beautiful simply because
-                        they remain unknown.
-                    </p>
-
+                    Not every mystery needs an ending. Some are beautiful simply because they remain unknown.
                 </div>
 
             </div>
-
         </div>
 
 
-        <div
-            class="flipCard"
-            onclick="flipCard(this)"
-        >
+        <!-- FLASHCARD 4 — UNCHANGED -->
 
+        <div class="flipCard" onclick="flipCard(this)">
             <div class="flipInner">
 
                 <div class="cardSide">
-
-                    <div class="cardIcon">
-                        ♢
-                    </div>
-
-                    <div class="cardTitle">
-                        SECRET
-                    </div>
-
-                    <div class="cardHint">
-                        click
-                    </div>
-
+                    <div class="cardIcon">♢</div>
+                    <div class="cardTitle">SECRET</div>
+                    <div class="cardHint">click</div>
                 </div>
 
-
                 <div class="cardSide cardBack">
-
-                    <p>
-                        A secret becomes special when
-                        only the right person knows where
-                        to look.
-                    </p>
-
+                    A secret becomes special when only the right person knows where to look.
                 </div>
 
             </div>
-
         </div>
 
     </div>
@@ -1518,31 +953,18 @@ body{
 </section>
 
 
-<!-- =====================================================
-     YOUR MYSTERY
-===================================================== -->
+<!-- =========================
+     MYSTERY PAGE
+========================= -->
 
-<section
-    id="mystery"
-    class="page"
->
+<section id="mystery" class="page">
 
     <div class="topbar">
 
         <div class="leftNavigation">
 
-            <button
-                class="navButton"
-                onclick="navigateTo('cards')"
-            >
-                ← cards
-            </button>
-
-            <button
-                class="navButton historyButton"
-                onclick="goBack()"
-                title="History"
-            >
+            <button class="historyButton"
+                    onclick="goBack()">
                 ←
             </button>
 
@@ -1550,219 +972,133 @@ body{
 
     </div>
 
-
     <h1 class="mysteryTitle">
-        your mystery
+        YOUR MYSTERY
     </h1>
 
     <p class="mysteryDescription">
-        symbols • legends • secrets • unanswered questions
+        SOME THINGS WERE NEVER MEANT TO BE EXPLAINED
     </p>
-
 
     <div class="mysteryGrid">
 
-
-        <!-- ILLUMINATI -->
-
-        <div
-            class="mysteryCard"
-            onclick="showMystery(
-                'ILLUMINATI',
-                'The historical Bavarian Illuminati was a real secret society founded in 1776. Many modern stories surrounding it are conspiracy theories or speculation.'
-            )"
-        >
+        <div class="mysteryCard"
+             onclick="showMystery(
+             'THE ILLUMINATI',
+             'A legendary name associated with secret societies, hidden influence and conspiracy theories. The mystery is where history ends and imagination begins.'
+             )">
 
             <div class="mysteryVisual">
-
                 <div class="pyramid"></div>
-
             </div>
 
-            <div class="mysteryName">
-                ILLUMINATI
-            </div>
-
-            <div class="mysterySmall">
-                hidden societies
-            </div>
+            <div class="mysteryName">ILLUMINATI</div>
+            <div class="mysterySmall">THE WATCHER</div>
 
         </div>
 
 
-        <!-- 666 -->
-
-        <div
-            class="mysteryCard"
-            onclick="showMystery(
-                '666',
-                '666 is the famous number of the beast from the Book of Revelation. It has inspired centuries of interpretations, symbolism and mystery.'
-            )"
-        >
+        <div class="mysteryCard"
+             onclick="showMystery(
+             '666',
+             'Known as the number of the beast in the Book of Revelation. Across centuries it has become one of the most recognizable symbols of fear and mystery.'
+             )">
 
             <div class="mysteryVisual">
-
-                <div class="number666">
-                    666
-                </div>
-
+                <div class="number666">666</div>
             </div>
 
-            <div class="mysteryName">
-                666
-            </div>
-
-            <div class="mysterySmall">
-                the mysterious number
-            </div>
+            <div class="mysteryName">666</div>
+            <div class="mysterySmall">THE NUMBER</div>
 
         </div>
 
 
-        <!-- ALL SEEING EYE -->
-
-        <div
-            class="mysteryCard"
-            onclick="showMystery(
-                'THE ALL-SEEING EYE',
-                'The eye is an ancient symbol associated with protection, awareness, knowledge and divine observation across different cultures.'
-            )"
-        >
+        <div class="mysteryCard"
+             onclick="showMystery(
+             'THE ALL-SEEING EYE',
+             'An ancient symbol associated with observation, knowledge and divine awareness. But perhaps the unsettling question is not what the eye sees... but who is watching.'
+             )">
 
             <div class="mysteryVisual">
-
-                <div class="eyeSymbol"></div>
-
+                <div class="eyeSymbol">◉</div>
             </div>
 
-            <div class="mysteryName">
-                ALL-SEEING EYE
-            </div>
-
-            <div class="mysterySmall">
-                vision & knowledge
-            </div>
+            <div class="mysteryName">THE EYE</div>
+            <div class="mysterySmall">IT SEES</div>
 
         </div>
 
 
-        <!-- SECRET SOCIETIES -->
-
-        <div
-            class="mysteryCard"
-            onclick="showMystery(
-                'SECRET SOCIETIES',
-                'Secret societies have existed throughout history. Some were genuine organizations, while others became surrounded by legends and speculation.'
-            )"
-        >
+        <div class="mysteryCard"
+             onclick="showMystery(
+             'SECRET SOCIETIES',
+             'Stories of hidden organizations have existed for centuries. Some were real. Some became legends. The frightening part is never knowing where the boundary lies.'
+             )">
 
             <div class="mysteryVisual">
-
-                <div class="ancientEye">
-                    ♜
-                </div>
-
+                <div class="questionSymbol">?</div>
             </div>
 
-            <div class="mysteryName">
-                SECRET SOCIETIES
-            </div>
-
-            <div class="mysterySmall">
-                hidden history
-            </div>
+            <div class="mysteryName">SECRET SOCIETIES</div>
+            <div class="mysterySmall">WHO KNOWS?</div>
 
         </div>
 
 
-        <!-- ANCIENT MYSTERIES -->
-
-        <div
-            class="mysteryCard"
-            onclick="showMystery(
-                'ANCIENT MYSTERIES',
-                'Ancient civilizations left behind symbols, monuments and writings that continue to be studied and debated today.'
-            )"
-        >
+        <div class="mysteryCard"
+             onclick="showMystery(
+             'ANCIENT MYSTERIES',
+             'Ancient civilizations left behind structures, symbols and stories that continue to create questions. Some mysteries survive because nobody knows the complete answer.'
+             )">
 
             <div class="mysteryVisual">
-
-                <div class="ancientEye">
-                    𓂀
-                </div>
-
+                <div class="ancientEye">𓂀</div>
             </div>
 
-            <div class="mysteryName">
-                ANCIENT MYSTERIES
-            </div>
-
-            <div class="mysterySmall">
-                forgotten meanings
-            </div>
+            <div class="mysteryName">ANCIENT</div>
+            <div class="mysterySmall">LOST KNOWLEDGE</div>
 
         </div>
 
 
-        <!-- UNKNOWN -->
-
-        <div
-            class="mysteryCard"
-            onclick="showMystery(
-                'THE UNKNOWN',
-                'The most fascinating mystery is sometimes the one for which there is still no complete answer.'
-            )"
-        >
+        <div class="mysteryCard"
+             onclick="showMystery(
+             'THE UNKNOWN',
+             'The most terrifying mystery is the one that has no explanation. Sometimes the imagination creates a monster simply because it cannot tolerate an empty answer.'
+             )">
 
             <div class="mysteryVisual">
-
-                <div class="questionSymbol">
-                    ?
-                </div>
-
+                <div class="questionSymbol">?</div>
             </div>
 
-            <div class="mysteryName">
-                THE UNKNOWN
-            </div>
-
-            <div class="mysterySmall">
-                no answer yet
-            </div>
+            <div class="mysteryName">UNKNOWN</div>
+            <div class="mysterySmall">DO NOT LOOK BACK</div>
 
         </div>
-
 
     </div>
 
 </section>
 
 
-<!-- =====================================================
-     BIRTHDAY
-===================================================== -->
+<!-- =========================
+     BIRTHDAY PAGE
+========================= -->
 
-<section
-    id="birthday"
-    class="page"
->
+<section id="birthday" class="page">
 
     <div class="topbar">
 
         <div class="leftNavigation">
 
-            <button
-                class="navButton"
-                onclick="navigateTo('cards')"
-            >
-                ← cards
+            <button class="navButton"
+                    onclick="navigateTo('mystery')">
+                your mystery
             </button>
 
-            <button
-                class="navButton historyButton"
-                onclick="goBack()"
-                title="History"
-            >
+            <button class="historyButton"
+                    onclick="goBack()">
                 ←
             </button>
 
@@ -1777,46 +1113,41 @@ body{
             👑
         </div>
 
-
         <h1 class="birthdayTitle">
             HAPPY BIRTHDAY
         </h1>
-
 
         <div class="birthdaySubtitle">
             mind of madness ✦
         </div>
 
+        <div class="birthdayMessage">
 
-        <p class="birthdayMessage">
-
-            To someone who is impossible to completely
-            figure out...<br>
-
-            may your next chapter be filled with
-            unforgettable moments,<br>
-
-            unexpected happiness, endless laughter,
-            and a little bit of beautiful madness.
+            To someone who is impossible to completely figure out...
 
             <br><br>
 
-            Stay mysterious.
-            Stay extraordinary.
+            may your next chapter be filled with unforgettable moments,
+            unexpected happiness, endless laughter, and a little bit of
+            beautiful madness.
+
+            <br><br>
+
+            Stay mysterious.<br>
+            Stay extraordinary.<br>
             Stay you.
 
             <br><br>
 
             ✦ Happy Birthday ✦
 
-        </p>
+        </div>
 
+        <button class="birthdayButton"
+                onclick="birthdayMagic()">
 
-        <button
-            class="birthdayButton"
-            onclick="birthdayMagic()"
-        >
             ✦ ONE MORE SECRET ✦
+
         </button>
 
     </div>
@@ -1824,32 +1155,21 @@ body{
 </section>
 
 
-<!-- =====================================================
-     MYSTERY POPUP
-===================================================== -->
+<!-- =========================
+     POPUP
+========================= -->
 
-<div
-    id="popup"
-    class="popup"
->
+<div id="popup" class="popup">
 
     <div class="popupBox">
 
-        <div
-            id="popupTitle"
-            class="popupTitle"
-        ></div>
+        <div id="popupTitle" class="popupTitle"></div>
 
-        <div
-            id="popupText"
-            class="popupText"
-        ></div>
+        <div id="popupText" class="popupText"></div>
 
-        <button
-            class="closePopup"
-            onclick="closeMystery()"
-        >
-            close mystery
+        <button class="closePopup"
+                onclick="closeMystery()">
+            CLOSE THE FILE
         </button>
 
     </div>
@@ -1859,12 +1179,11 @@ body{
 
 <script>
 
-/* =====================================================
-   HISTORY
-===================================================== */
+/* =========================
+   PAGE HISTORY
+========================= */
 
 let currentPage = "home";
-
 const pageHistory = [];
 
 
@@ -1882,51 +1201,40 @@ function navigateTo(nextPage){
 
 function switchPage(pageId){
 
-    document
-        .querySelectorAll(".page")
-        .forEach(page => {
-            page.classList.remove("active");
-        });
+    document.querySelectorAll(".page")
+        .forEach(page => page.classList.remove("active"));
 
+    const target = document.getElementById(pageId);
 
-    const page =
-        document.getElementById(pageId);
-
-
-    if(!page){
-        return;
+    if(target){
+        target.classList.add("active");
+        currentPage = pageId;
     }
 
-
-    page.classList.add("active");
-
-    currentPage = pageId;
 }
 
 
 function goBack(){
 
-    if(pageHistory.length === 0){
+    if(pageHistory.length > 0){
 
-        if(currentPage !== "home"){
-            switchPage("home");
-        }
+        const previousPage =
+            pageHistory.pop();
 
-        return;
+        switchPage(previousPage);
+
+    }else{
+
+        switchPage("home");
+
     }
 
-
-    const previous =
-        pageHistory.pop();
-
-
-    switchPage(previous);
 }
 
 
-/* =====================================================
+/* =========================
    FLASHCARD FLIP
-===================================================== */
+========================= */
 
 function flipCard(card){
 
@@ -1935,80 +1243,125 @@ function flipCard(card){
 }
 
 
-/* =====================================================
-   MYSTERY POPUP
-===================================================== */
+/* =========================
+   MYSTERY POPUPS
+========================= */
 
 function showMystery(title,text){
 
-    document
-        .getElementById("popupTitle")
+    document.getElementById("popupTitle")
         .textContent = title;
 
-
-    document
-        .getElementById("popupText")
+    document.getElementById("popupText")
         .textContent = text;
 
-
-    document
-        .getElementById("popup")
+    document.getElementById("popup")
         .classList.add("show");
+
 }
 
 
 function closeMystery(){
 
-    document
-        .getElementById("popup")
+    document.getElementById("popup")
         .classList.remove("show");
+
 }
 
 
-/* close popup outside */
-
-document
-    .getElementById("popup")
-    .addEventListener(
-        "click",
-        function(event){
-
-            if(event.target === this){
-                closeMystery();
-            }
-
-        }
-    );
-
-
-/* =====================================================
+/* =========================
    BIRTHDAY SECRET
-===================================================== */
+========================= */
 
 function birthdayMagic(){
 
     const button =
         document.querySelector(".birthdayButton");
 
-
     button.textContent =
         "✦ YOU FOUND THE SECRET ✦";
 
-
-    button.style.transform =
-        "scale(1.08)";
-
+    button.style.boxShadow =
+        "0 0 20px #c00028, 0 0 60px rgba(190,0,30,.7)";
 
     setTimeout(() => {
 
         button.textContent =
             "✦ ONE MORE SECRET ✦";
 
-        button.style.transform =
-            "";
+        button.style.boxShadow = "";
 
-    },1800);
+    },2500);
+
 }
+
+
+/* =========================
+   RANDOM HORROR FLICKER
+========================= */
+
+setInterval(() => {
+
+    if(Math.random() > .94){
+
+        document.body.style.filter =
+            "brightness(.55)";
+
+        setTimeout(() => {
+
+            document.body.style.filter =
+                "brightness(1)";
+
+        },70);
+
+    }
+
+},700);
+
+
+/* =========================
+   RANDOM EYE MOVEMENT
+========================= */
+
+document.addEventListener("mousemove", e => {
+
+    document.querySelectorAll(".eye")
+        .forEach(eye => {
+
+            const rect =
+                eye.getBoundingClientRect();
+
+            const x =
+                e.clientX - rect.left;
+
+            const y =
+                e.clientY - rect.top;
+
+            const moveX =
+                Math.max(-7,Math.min(7,x/20));
+
+            const moveY =
+                Math.max(-4,Math.min(4,y/20));
+
+            eye.style.transform =
+                `translate(${moveX}px,${moveY}px)`;
+
+        });
+
+});
+
+
+/* =========================
+   ESC CLOSE
+========================= */
+
+document.addEventListener("keydown",e => {
+
+    if(e.key === "Escape"){
+        closeMystery();
+    }
+
+});
 
 </script>
 
