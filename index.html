@@ -8,30 +8,31 @@
 
 <style>
 *{
-    box-sizing:border-box;
     margin:0;
     padding:0;
+    box-sizing:border-box;
 }
 
 html,body{
     width:100%;
     height:100%;
     overflow:hidden;
-    font-family:Georgia, "Times New Roman", serif;
-    background:#030003;
+    background:#020002;
     color:#eee;
+    font-family:Georgia,"Times New Roman",serif;
 }
 
-/* =========================
-   HORROR BACKGROUND
-========================= */
+button,input{
+    font:inherit;
+}
+
+/* =====================================================
+   HORROR ATMOSPHERE
+===================================================== */
 
 body{
     background:
-        radial-gradient(circle at 50% 45%, rgba(90,0,20,.18), transparent 25%),
-        radial-gradient(circle at 15% 80%, rgba(50,0,70,.18), transparent 30%),
-        radial-gradient(circle at 85% 15%, rgba(90,0,0,.15), transparent 30%),
-        #020002;
+        radial-gradient(circle at 50% 50%,#17000a 0%,#060006 32%,#010001 75%);
 }
 
 .background{
@@ -42,53 +43,57 @@ body{
     z-index:0;
 }
 
-/* moving fog */
-
 .fog{
     position:absolute;
-    width:160%;
+    width:170%;
     height:45%;
-    left:-30%;
-    bottom:-10%;
+    left:-35%;
+    bottom:-15%;
     background:
-        radial-gradient(ellipse, rgba(130,130,150,.06), transparent 60%);
+        radial-gradient(ellipse,
+        rgba(150,150,150,.055),
+        transparent 65%);
     filter:blur(35px);
     animation:fogMove 18s ease-in-out infinite alternate;
 }
 
 .fog.two{
-    bottom:15%;
-    opacity:.45;
-    animation-duration:25s;
+    bottom:20%;
+    opacity:.5;
+    animation-duration:28s;
     animation-direction:alternate-reverse;
 }
 
 @keyframes fogMove{
-    from{transform:translateX(-8%) scale(1);}
-    to{transform:translateX(12%) scale(1.2);}
+    from{transform:translateX(-10%) scale(1);}
+    to{transform:translateX(12%) scale(1.25);}
 }
-
-/* red pulse */
 
 .redPulse{
     position:absolute;
-    width:500px;
-    height:500px;
+    width:650px;
+    height:650px;
     left:50%;
     top:50%;
     transform:translate(-50%,-50%);
     border-radius:50%;
-    background:rgba(100,0,15,.06);
-    filter:blur(70px);
+    background:rgba(120,0,20,.07);
+    filter:blur(80px);
     animation:redBreath 4s infinite;
 }
 
 @keyframes redBreath{
-    0%,100%{opacity:.25;transform:translate(-50%,-50%) scale(.8);}
-    50%{opacity:.75;transform:translate(-50%,-50%) scale(1.2);}
+    0%,100%{
+        opacity:.25;
+        transform:translate(-50%,-50%) scale(.75);
+    }
+    50%{
+        opacity:.75;
+        transform:translate(-50%,-50%) scale(1.2);
+    }
 }
 
-/* film scratches */
+/* scratches */
 
 .scratch{
     position:absolute;
@@ -98,30 +103,29 @@ body{
     animation:scratchMove 7s linear infinite;
 }
 
-.scratch:nth-child(4){left:17%;animation-delay:1s;}
-.scratch:nth-child(5){left:39%;animation-delay:4s;}
-.scratch:nth-child(6){left:68%;animation-delay:2s;}
-.scratch:nth-child(7){left:88%;animation-delay:5s;}
+.scratch:nth-child(4){left:12%;animation-delay:1s}
+.scratch:nth-child(5){left:31%;animation-delay:4s}
+.scratch:nth-child(6){left:58%;animation-delay:2s}
+.scratch:nth-child(7){left:84%;animation-delay:5s}
 
 @keyframes scratchMove{
-    from{transform:translateY(-100%);}
-    to{transform:translateY(100%);}
+    from{transform:translateY(-100%)}
+    to{transform:translateY(100%)}
 }
 
-/* =========================
-   EYES
-========================= */
+/* =====================================================
+   CREEPY EYES
+===================================================== */
 
 .eye{
     position:absolute;
-    width:70px;
-    height:38px;
+    width:75px;
+    height:40px;
     border-radius:50%;
-    background:#080008;
-    border:1px solid rgba(160,0,20,.25);
-    box-shadow:0 0 20px rgba(130,0,20,.12);
+    background:#050005;
+    border:1px solid rgba(180,0,30,.28);
     opacity:0;
-    animation:eyeAppear 9s infinite;
+    animation:eyeAppear 10s infinite;
 }
 
 .eye::before{
@@ -129,51 +133,91 @@ body{
     position:absolute;
     width:14px;
     height:14px;
-    background:#8d0018;
     border-radius:50%;
-    top:11px;
-    left:27px;
-    box-shadow:0 0 18px #b00020;
-    animation:eyeLook 4s infinite;
+    background:#b00020;
+    box-shadow:0 0 20px #b00020;
+    left:30px;
+    top:12px;
+    animation:pupilMove 3s infinite;
 }
 
-.eye.one{top:17%;left:7%;animation-delay:2s;}
-.eye.two{top:72%;right:8%;animation-delay:5s;}
-.eye.three{top:35%;right:16%;animation-delay:7s;}
+.eye.one{
+    top:15%;
+    left:6%;
+    animation-delay:1s;
+}
+
+.eye.two{
+    right:8%;
+    bottom:17%;
+    animation-delay:5s;
+}
+
+.eye.three{
+    right:13%;
+    top:34%;
+    animation-delay:7s;
+}
 
 @keyframes eyeAppear{
-    0%,75%,100%{opacity:0;}
-    78%,88%{opacity:.7;}
+    0%,76%,100%{opacity:0}
+    79%,88%{opacity:.7}
 }
 
-@keyframes eyeLook{
-    0%,100%{transform:translateX(-5px);}
-    50%{transform:translateX(6px);}
+@keyframes pupilMove{
+    0%,100%{transform:translateX(-6px)}
+    50%{transform:translateX(7px)}
 }
 
-/* =========================
-   PAGE SYSTEM
-========================= */
+/* =====================================================
+   LOGIN SCREEN
+===================================================== */
 
-.page{
+#loginPage{
     position:absolute;
     inset:0;
-    z-index:2;
-    display:none;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    animation:pageIn .8s ease;
-}
-
-.page.active{
+    z-index:50;
     display:flex;
+    justify-content:center;
+    align-items:center;
+    background:
+        radial-gradient(circle at center,
+        rgba(80,0,20,.18),
+        transparent 40%),
+        #020002;
 }
 
-@keyframes pageIn{
+.loginBox{
+    width:min(430px,90%);
+    padding:45px 35px;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(20,0,10,.96),
+            rgba(2,0,4,.98)
+        );
+    border:1px solid #720018;
+    box-shadow:
+        0 0 25px rgba(150,0,30,.3),
+        0 0 100px rgba(100,0,20,.2),
+        inset 0 0 50px #000;
+    text-align:center;
+    position:relative;
+    animation:loginAppear 1.2s ease;
+}
+
+.loginBox::before{
+    content:"";
+    position:absolute;
+    inset:9px;
+    border:1px solid rgba(150,0,30,.2);
+    pointer-events:none;
+}
+
+@keyframes loginAppear{
     from{
         opacity:0;
-        transform:scale(1.04);
+        transform:scale(.85);
         filter:blur(10px);
     }
     to{
@@ -183,15 +227,130 @@ body{
     }
 }
 
-/* =========================
+.loginWarning{
+    color:#80001b;
+    font-size:11px;
+    letter-spacing:5px;
+    margin-bottom:20px;
+    animation:warningFlicker 4s infinite;
+}
+
+@keyframes warningFlicker{
+    0%,90%,100%{opacity:1}
+    92%{opacity:.2}
+    94%{opacity:1}
+}
+
+.loginTitle{
+    font-size:38px;
+    letter-spacing:6px;
+    text-transform:lowercase;
+    text-shadow:0 0 20px rgba(190,0,35,.6);
+}
+
+.loginSub{
+    margin-top:12px;
+    color:#666;
+    font-size:11px;
+    letter-spacing:3px;
+}
+
+.inputGroup{
+    margin-top:30px;
+    text-align:left;
+}
+
+.inputGroup label{
+    display:block;
+    color:#777;
+    font-size:10px;
+    letter-spacing:3px;
+    margin-bottom:8px;
+}
+
+.inputGroup input{
+    width:100%;
+    padding:14px;
+    background:#050005;
+    border:1px solid #3e0010;
+    color:#eee;
+    outline:none;
+    transition:.3s;
+}
+
+.inputGroup input:focus{
+    border-color:#a00022;
+    box-shadow:0 0 18px rgba(160,0,35,.25);
+}
+
+.loginButton{
+    width:100%;
+    margin-top:25px;
+    padding:14px;
+    background:#100006;
+    color:#ddd;
+    border:1px solid #900020;
+    letter-spacing:4px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.loginButton:hover{
+    background:#35000c;
+    box-shadow:
+        0 0 15px #900020,
+        0 0 40px rgba(150,0,30,.4);
+}
+
+.loginError{
+    min-height:18px;
+    margin-top:14px;
+    color:#b00025;
+    font-size:11px;
+    letter-spacing:1px;
+}
+
+/* =====================================================
+   MAIN PAGES
+===================================================== */
+
+.page{
+    position:absolute;
+    inset:0;
+    z-index:2;
+    display:none;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    animation:pageIn .7s ease;
+}
+
+.page.active{
+    display:flex;
+}
+
+@keyframes pageIn{
+    from{
+        opacity:0;
+        transform:scale(1.03);
+        filter:blur(8px);
+    }
+    to{
+        opacity:1;
+        transform:scale(1);
+        filter:blur(0);
+    }
+}
+
+/* =====================================================
    TOP BAR
-========================= */
+===================================================== */
 
 .topbar{
     position:absolute;
-    top:22px;
-    left:25px;
-    right:25px;
+    top:20px;
+    left:22px;
+    right:22px;
     display:flex;
     justify-content:space-between;
     align-items:center;
@@ -200,79 +359,70 @@ body{
 
 .leftNavigation{
     display:flex;
-    gap:8px;
+    gap:7px;
 }
 
 .navButton,
 .historyButton{
-    border:1px solid rgba(170,0,30,.55);
-    background:rgba(8,0,8,.8);
-    color:#ddd;
-    padding:11px 18px;
-    border-radius:4px;
-    letter-spacing:2px;
+    padding:10px 16px;
+    background:rgba(5,0,7,.9);
+    color:#aaa;
+    border:1px solid #580013;
     cursor:pointer;
-    font-family:Georgia,serif;
+    letter-spacing:2px;
     transition:.3s;
-    box-shadow:0 0 15px rgba(130,0,25,.15);
 }
 
 .navButton:hover,
 .historyButton:hover{
     color:white;
-    background:#250009;
-    border-color:#c00025;
-    box-shadow:
-        0 0 10px #800018,
-        0 0 30px rgba(170,0,30,.5);
-    transform:translateY(-2px);
+    background:#280008;
+    border-color:#c0002b;
+    box-shadow:0 0 25px rgba(180,0,35,.45);
 }
 
 .historyButton{
     font-size:20px;
-    padding:7px 15px;
+    padding:5px 14px;
 }
 
-/* =========================
+/* =====================================================
    HOME
-========================= */
+===================================================== */
 
 .mainTitle{
-    font-size:clamp(38px,7vw,85px);
-    text-transform:lowercase;
-    letter-spacing:8px;
-    color:#eee;
-    text-shadow:
-        0 0 8px #fff,
-        0 0 25px rgba(180,0,25,.4);
-    animation:titleFlicker 6s infinite;
+    font-size:clamp(38px,7vw,82px);
+    letter-spacing:7px;
     text-align:center;
+    text-transform:lowercase;
+    text-shadow:
+        0 0 10px white,
+        0 0 30px rgba(160,0,30,.4);
+    animation:titleFlicker 6s infinite;
 }
 
 .subTitle{
-    margin-top:15px;
-    color:#777;
+    margin-top:14px;
+    color:#666;
+    font-size:11px;
     letter-spacing:5px;
-    font-size:12px;
-    text-transform:uppercase;
 }
 
 @keyframes titleFlicker{
-    0%,92%,100%{opacity:1;}
-    93%{opacity:.4;}
-    94%{opacity:1;}
-    96%{opacity:.7;}
-    97%{opacity:1;}
+    0%,92%,100%{opacity:1}
+    93%{opacity:.35}
+    94%{opacity:1}
+    96%{opacity:.6}
+    97%{opacity:1}
 }
 
-/* =========================
+/* =====================================================
    SURPRISE BOX
-========================= */
+===================================================== */
 
 .surpriseBox{
     margin-top:60px;
     cursor:pointer;
-    position:relative;
 }
 
 .box{
@@ -280,20 +430,20 @@ body{
     height:150px;
     position:relative;
     background:
-        linear-gradient(135deg,#250006,#090006 60%,#1c0005);
-    border:1px solid #730016;
+        linear-gradient(135deg,#280006,#090006 60%,#1b0005);
+    border:1px solid #780018;
     box-shadow:
-        0 0 15px rgba(150,0,25,.5),
-        inset 0 0 35px rgba(0,0,0,.9);
+        0 0 20px rgba(150,0,30,.5),
+        inset 0 0 40px #000;
     transition:.5s;
 }
 
 .surpriseBox:hover .box{
-    transform:translateY(-10px) scale(1.04);
+    transform:translateY(-10px) scale(1.05);
     box-shadow:
-        0 0 20px #8e001d,
-        0 0 60px rgba(150,0,30,.7),
-        inset 0 0 40px #000;
+        0 0 25px #a00025,
+        0 0 70px rgba(160,0,35,.6),
+        inset 0 0 45px #000;
 }
 
 .lid{
@@ -302,8 +452,8 @@ body{
     height:35px;
     left:-5px;
     top:-25px;
-    background:linear-gradient(90deg,#170003,#52000d,#170003);
-    border:1px solid #9c001f;
+    background:linear-gradient(90deg,#170003,#60000f,#170003);
+    border:1px solid #a00025;
 }
 
 .ribbonVertical{
@@ -312,7 +462,7 @@ body{
     height:100%;
     left:50%;
     transform:translateX(-50%);
-    background:linear-gradient(90deg,#4b000c,#b00023,#4b000c);
+    background:linear-gradient(90deg,#47000b,#b00025,#47000b);
 }
 
 .ribbonHorizontal{
@@ -321,7 +471,7 @@ body{
     height:22px;
     top:50%;
     transform:translateY(-50%);
-    background:linear-gradient(#4b000c,#b00023,#4b000c);
+    background:linear-gradient(#47000b,#b00025,#47000b);
 }
 
 .bow{
@@ -345,48 +495,50 @@ body{
 }
 
 .bow::before{
-    transform:rotate(35deg);
     left:0;
+    transform:rotate(35deg);
 }
 
 .bow::after{
-    transform:rotate(-35deg);
     right:0;
+    transform:rotate(-35deg);
 }
 
 .bowCenter{
     position:absolute;
     width:15px;
     height:15px;
-    background:#b00025;
-    border-radius:50%;
     left:50%;
     top:8px;
     transform:translateX(-50%);
+    border-radius:50%;
+    background:#c00028;
     z-index:2;
 }
 
 .boxLabel{
     position:absolute;
     width:100%;
-    text-align:center;
     bottom:20px;
-    letter-spacing:4px;
-    font-size:13px;
+    text-align:center;
     color:#aaa;
+    font-size:12px;
+    letter-spacing:4px;
 }
 
-/* =========================
+/* =====================================================
    FLASHCARDS
-========================= */
+===================================================== */
 
 .cardsWrapper{
     display:grid;
-    grid-template-columns:repeat(2, minmax(220px,330px));
+    grid-template-columns:repeat(2,minmax(220px,330px));
     gap:25px;
     margin-top:70px;
     perspective:1200px;
 }
+
+/* FOUR FLASHCARDS KEPT EXACTLY AS REQUESTED */
 
 .flipCard{
     height:220px;
@@ -412,7 +564,9 @@ body{
     backface-visibility:hidden;
     border:1px solid rgba(130,0,30,.7);
     background:
-        linear-gradient(145deg,rgba(30,0,12,.96),rgba(3,0,5,.98));
+        linear-gradient(145deg,
+        rgba(30,0,12,.96),
+        rgba(3,0,5,.98));
     box-shadow:
         0 0 18px rgba(100,0,25,.2),
         inset 0 0 35px rgba(0,0,0,.8);
@@ -442,8 +596,8 @@ body{
 }
 
 @keyframes cardScan{
-    from{transform:translateY(-100px);}
-    to{transform:translateY(100px);}
+    from{transform:translateY(-100px)}
+    to{transform:translateY(100px)}
 }
 
 .cardBack{
@@ -473,34 +627,28 @@ body{
     letter-spacing:3px;
 }
 
-/* creepy card hover */
-
-.flipCard:hover{
-    filter:brightness(1.3);
-}
-
 .flipCard:hover .cardSide{
     border-color:#d0002c;
     box-shadow:
-        0 0 15px rgba(180,0,30,.5),
-        0 0 45px rgba(130,0,20,.3),
+        0 0 20px rgba(180,0,30,.55),
+        0 0 50px rgba(130,0,20,.3),
         inset 0 0 40px #000;
 }
 
-/* =========================
-   MYSTERY PAGE
-========================= */
+/* =====================================================
+   MYSTERY
+===================================================== */
 
 .mysteryTitle{
     font-size:50px;
     letter-spacing:9px;
     color:#ddd;
-    text-shadow:0 0 15px #800018;
+    text-shadow:0 0 20px #900020;
 }
 
 .mysteryDescription{
-    color:#666;
     margin:12px 0 35px;
+    color:#666;
     letter-spacing:3px;
 }
 
@@ -515,7 +663,6 @@ body{
     background:#070007;
     border:1px solid #40000e;
     cursor:pointer;
-    position:relative;
     display:flex;
     flex-direction:column;
     justify-content:center;
@@ -556,7 +703,6 @@ body{
     font-size:52px;
     color:#8c001c;
     text-shadow:0 0 20px #b00025;
-    letter-spacing:4px;
 }
 
 .ancientEye{
@@ -581,15 +727,15 @@ body{
     letter-spacing:2px;
 }
 
-/* =========================
+/* =====================================================
    BIRTHDAY
-========================= */
+===================================================== */
 
 .birthdayContent{
     max-width:700px;
     text-align:center;
     padding:40px;
-    background:rgba(5,0,6,.7);
+    background:rgba(5,0,6,.75);
     border:1px solid rgba(130,0,30,.4);
     box-shadow:
         0 0 50px rgba(100,0,20,.15),
@@ -636,19 +782,19 @@ body{
     box-shadow:0 0 25px #900020;
 }
 
-/* =========================
+/* =====================================================
    POPUP
-========================= */
+===================================================== */
 
 .popup{
     position:fixed;
     inset:0;
-    background:rgba(0,0,0,.85);
+    background:rgba(0,0,0,.88);
     display:none;
     justify-content:center;
     align-items:center;
     z-index:100;
-    backdrop-filter:blur(7px);
+    backdrop-filter:blur(8px);
 }
 
 .popup.show{
@@ -661,8 +807,8 @@ body{
     background:#070007;
     border:1px solid #900020;
     box-shadow:
-        0 0 25px #700016,
-        0 0 80px rgba(100,0,20,.5);
+        0 0 30px #700016,
+        0 0 90px rgba(100,0,20,.5);
     text-align:center;
     animation:popupIn .4s ease;
 }
@@ -699,11 +845,12 @@ body{
     cursor:pointer;
 }
 
-/* =========================
+/* =====================================================
    RESPONSIVE
-========================= */
+===================================================== */
 
 @media(max-width:800px){
+
     .cardsWrapper{
         grid-template-columns:repeat(2,145px);
         gap:12px;
@@ -733,6 +880,7 @@ body{
 }
 
 @media(max-width:500px){
+
     .cardsWrapper{
         grid-template-columns:1fr 1fr;
         width:92%;
@@ -752,17 +900,12 @@ body{
 
     .mysteryGrid{
         width:90%;
-        grid-template-columns:1fr 1fr;
-    }
-
-    .mysteryCard{
-        width:100%;
     }
 
     .topbar{
-        top:12px;
-        left:10px;
-        right:10px;
+        top:10px;
+        left:8px;
+        right:8px;
     }
 
     .navButton,
@@ -776,11 +919,12 @@ body{
 
 <body>
 
-<!-- =========================
+<!-- =====================================================
      BACKGROUND
-========================= -->
+===================================================== -->
 
 <div class="background">
+
     <div class="fog"></div>
     <div class="fog two"></div>
     <div class="redPulse"></div>
@@ -793,21 +937,92 @@ body{
     <div class="eye one"></div>
     <div class="eye two"></div>
     <div class="eye three"></div>
+
 </div>
 
 
-<!-- =========================
-     HOME PAGE
-========================= -->
+<!-- =====================================================
+     LOGIN
+===================================================== -->
 
-<section id="home" class="page active">
+<section id="loginPage">
+
+    <div class="loginBox">
+
+        <div class="loginWarning">
+            ⚠ RESTRICTED ARCHIVE ⚠
+        </div>
+
+        <h1 class="loginTitle">
+            enter the unknown
+        </h1>
+
+        <div class="loginSub">
+            only the chosen may enter
+        </div>
+
+        <div class="inputGroup">
+
+            <label for="username">
+                IDENTIFICATION
+            </label>
+
+            <input
+                id="username"
+                type="text"
+                autocomplete="off"
+                placeholder="enter username"
+            >
+
+        </div>
+
+        <div class="inputGroup">
+
+            <label for="password">
+                ACCESS CODE
+            </label>
+
+            <input
+                id="password"
+                type="password"
+                placeholder="enter password"
+            >
+
+        </div>
+
+        <button class="loginButton"
+                onclick="login()">
+
+            ENTER THE UNKNOWN
+
+        </button>
+
+        <div id="loginError"
+             class="loginError">
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     HOME
+===================================================== -->
+
+<section id="home" class="page">
 
     <div class="topbar">
+
         <div></div>
 
-        <button class="navButton" onclick="navigateTo('mystery')">
+        <button class="navButton"
+                onclick="navigateTo('mystery')">
+
             your mystery
+
         </button>
+
     </div>
 
     <h1 class="mainTitle">
@@ -818,13 +1033,13 @@ body{
         something is waiting inside...
     </p>
 
-    <div class="surpriseBox" onclick="navigateTo('cards')">
+    <div class="surpriseBox"
+         onclick="navigateTo('cards')">
 
         <div class="box">
 
             <div class="ribbonVertical"></div>
             <div class="ribbonHorizontal"></div>
-
             <div class="lid"></div>
 
             <div class="bow">
@@ -842,9 +1057,9 @@ body{
 </section>
 
 
-<!-- =========================
-     FLASHCARD PAGE
-========================= -->
+<!-- =====================================================
+     FLASHCARDS
+===================================================== -->
 
 <section id="cards" class="page">
 
@@ -871,81 +1086,142 @@ body{
 
     </div>
 
+
     <div class="cardsWrapper">
 
-        <!-- FLASHCARD 1 — UNCHANGED -->
+        <!-- CARD 1 -->
 
-        <div class="flipCard" onclick="flipCard(this)">
+        <div class="flipCard"
+             onclick="flipCard(this)">
+
             <div class="flipInner">
 
                 <div class="cardSide">
-                    <div class="cardIcon">✦</div>
-                    <div class="cardTitle">ENIGMA</div>
-                    <div class="cardHint">click me</div>
+
+                    <div class="cardIcon">
+                        ✦
+                    </div>
+
+                    <div class="cardTitle">
+                        ENIGMA
+                    </div>
+
+                    <div class="cardHint">
+                        click me
+                    </div>
+
                 </div>
 
                 <div class="cardSide cardBack">
+
                     Every mystery becomes more interesting when someone refuses to stop looking.
+
                 </div>
 
             </div>
+
         </div>
 
 
-        <!-- FLASHCARD 2 — UNCHANGED -->
+        <!-- CARD 2 -->
 
-        <div class="flipCard" onclick="flipCard(this)">
+        <div class="flipCard"
+             onclick="flipCard(this)">
+
             <div class="flipInner">
 
                 <div class="cardSide">
-                    <div class="cardIcon">☾</div>
-                    <div class="cardTitle">THE UNKNOWN</div>
-                    <div class="cardHint">turn me</div>
+
+                    <div class="cardIcon">
+                        ☾
+                    </div>
+
+                    <div class="cardTitle">
+                        THE UNKNOWN
+                    </div>
+
+                    <div class="cardHint">
+                        turn me
+                    </div>
+
                 </div>
 
                 <div class="cardSide cardBack">
+
                     Some answers are hidden inside the questions we are brave enough to ask.
+
                 </div>
 
             </div>
+
         </div>
 
 
-        <!-- FLASHCARD 3 — UNCHANGED -->
+        <!-- CARD 3 -->
 
-        <div class="flipCard" onclick="flipCard(this)">
+        <div class="flipCard"
+             onclick="flipCard(this)">
+
             <div class="flipInner">
 
                 <div class="cardSide">
-                    <div class="cardIcon">∞</div>
-                    <div class="cardTitle">INFINITE</div>
-                    <div class="cardHint">discover</div>
+
+                    <div class="cardIcon">
+                        ∞
+                    </div>
+
+                    <div class="cardTitle">
+                        INFINITE
+                    </div>
+
+                    <div class="cardHint">
+                        discover
+                    </div>
+
                 </div>
 
                 <div class="cardSide cardBack">
+
                     Not every mystery needs an ending. Some are beautiful simply because they remain unknown.
+
                 </div>
 
             </div>
+
         </div>
 
 
-        <!-- FLASHCARD 4 — UNCHANGED -->
+        <!-- CARD 4 -->
 
-        <div class="flipCard" onclick="flipCard(this)">
+        <div class="flipCard"
+             onclick="flipCard(this)">
+
             <div class="flipInner">
 
                 <div class="cardSide">
-                    <div class="cardIcon">♢</div>
-                    <div class="cardTitle">SECRET</div>
-                    <div class="cardHint">click</div>
+
+                    <div class="cardIcon">
+                        ♢
+                    </div>
+
+                    <div class="cardTitle">
+                        SECRET
+                    </div>
+
+                    <div class="cardHint">
+                        click
+                    </div>
+
                 </div>
 
                 <div class="cardSide cardBack">
+
                     A secret becomes special when only the right person knows where to look.
+
                 </div>
 
             </div>
+
         </div>
 
     </div>
@@ -953,9 +1229,9 @@ body{
 </section>
 
 
-<!-- =========================
+<!-- =====================================================
      MYSTERY PAGE
-========================= -->
+===================================================== -->
 
 <section id="mystery" class="page">
 
@@ -992,8 +1268,13 @@ body{
                 <div class="pyramid"></div>
             </div>
 
-            <div class="mysteryName">ILLUMINATI</div>
-            <div class="mysterySmall">THE WATCHER</div>
+            <div class="mysteryName">
+                ILLUMINATI
+            </div>
+
+            <div class="mysterySmall">
+                THE WATCHER
+            </div>
 
         </div>
 
@@ -1005,11 +1286,18 @@ body{
              )">
 
             <div class="mysteryVisual">
-                <div class="number666">666</div>
+                <div class="number666">
+                    666
+                </div>
             </div>
 
-            <div class="mysteryName">666</div>
-            <div class="mysterySmall">THE NUMBER</div>
+            <div class="mysteryName">
+                666
+            </div>
+
+            <div class="mysterySmall">
+                THE NUMBER
+            </div>
 
         </div>
 
@@ -1021,11 +1309,18 @@ body{
              )">
 
             <div class="mysteryVisual">
-                <div class="eyeSymbol">◉</div>
+                <div class="eyeSymbol">
+                    ◉
+                </div>
             </div>
 
-            <div class="mysteryName">THE EYE</div>
-            <div class="mysterySmall">IT SEES</div>
+            <div class="mysteryName">
+                THE EYE
+            </div>
+
+            <div class="mysterySmall">
+                IT SEES
+            </div>
 
         </div>
 
@@ -1037,11 +1332,18 @@ body{
              )">
 
             <div class="mysteryVisual">
-                <div class="questionSymbol">?</div>
+                <div class="questionSymbol">
+                    ?
+                </div>
             </div>
 
-            <div class="mysteryName">SECRET SOCIETIES</div>
-            <div class="mysterySmall">WHO KNOWS?</div>
+            <div class="mysteryName">
+                SECRET SOCIETIES
+            </div>
+
+            <div class="mysterySmall">
+                WHO KNOWS?
+            </div>
 
         </div>
 
@@ -1053,11 +1355,18 @@ body{
              )">
 
             <div class="mysteryVisual">
-                <div class="ancientEye">𓂀</div>
+                <div class="ancientEye">
+                    𓂀
+                </div>
             </div>
 
-            <div class="mysteryName">ANCIENT</div>
-            <div class="mysterySmall">LOST KNOWLEDGE</div>
+            <div class="mysteryName">
+                ANCIENT
+            </div>
+
+            <div class="mysterySmall">
+                LOST KNOWLEDGE
+            </div>
 
         </div>
 
@@ -1069,11 +1378,18 @@ body{
              )">
 
             <div class="mysteryVisual">
-                <div class="questionSymbol">?</div>
+                <div class="questionSymbol">
+                    ?
+                </div>
             </div>
 
-            <div class="mysteryName">UNKNOWN</div>
-            <div class="mysterySmall">DO NOT LOOK BACK</div>
+            <div class="mysteryName">
+                UNKNOWN
+            </div>
+
+            <div class="mysterySmall">
+                DO NOT LOOK BACK
+            </div>
 
         </div>
 
@@ -1082,9 +1398,9 @@ body{
 </section>
 
 
-<!-- =========================
-     BIRTHDAY PAGE
-========================= -->
+<!-- =====================================================
+     BIRTHDAY
+===================================================== -->
 
 <section id="birthday" class="page">
 
@@ -1155,21 +1471,27 @@ body{
 </section>
 
 
-<!-- =========================
-     POPUP
-========================= -->
+<!-- =====================================================
+     MYSTERY POPUP
+===================================================== -->
 
 <div id="popup" class="popup">
 
     <div class="popupBox">
 
-        <div id="popupTitle" class="popupTitle"></div>
+        <div id="popupTitle"
+             class="popupTitle">
+        </div>
 
-        <div id="popupText" class="popupText"></div>
+        <div id="popupText"
+             class="popupText">
+        </div>
 
         <button class="closePopup"
                 onclick="closeMystery()">
+
             CLOSE THE FILE
+
         </button>
 
     </div>
@@ -1179,9 +1501,98 @@ body{
 
 <script>
 
-/* =========================
+/* =====================================================
+   LOGIN
+===================================================== */
+
+let userRole = "";
+
+/*
+   LOGIN ACCOUNTS
+
+   ADMIN
+   username: mdju6996
+   password: nor
+
+   FRIEND
+   username: bday m of m
+   password: 666
+*/
+
+function login(){
+
+    const username =
+        document.getElementById("username")
+        .value.trim();
+
+    const password =
+        document.getElementById("password")
+        .value;
+
+    const error =
+        document.getElementById("loginError");
+
+
+    if(
+        username === "mdju6996" &&
+        password === "nor"
+    ){
+
+        userRole = "admin";
+
+        enterWebsite();
+
+        return;
+
+    }
+
+
+    if(
+        username === "bday m of m" &&
+        password === "666"
+    ){
+
+        userRole = "friend";
+
+        enterWebsite();
+
+        return;
+
+    }
+
+
+    error.textContent =
+        "ACCESS DENIED — THE ARCHIVE DOES NOT RECOGNIZE YOU.";
+
+}
+
+
+/* =====================================================
+   ENTER WEBSITE
+===================================================== */
+
+function enterWebsite(){
+
+    const loginPage =
+        document.getElementById("loginPage");
+
+    loginPage.style.animation =
+        "loginDisappear .8s forwards";
+
+    setTimeout(() => {
+
+        loginPage.style.display = "none";
+
+        switchPage("home");
+
+    },700);
+
+}
+
+
+/* =====================================================
    PAGE HISTORY
-========================= */
+===================================================== */
 
 let currentPage = "home";
 const pageHistory = [];
@@ -1196,19 +1607,27 @@ function navigateTo(nextPage){
     pageHistory.push(currentPage);
 
     switchPage(nextPage);
+
 }
 
 
 function switchPage(pageId){
 
-    document.querySelectorAll(".page")
-        .forEach(page => page.classList.remove("active"));
+    document
+        .querySelectorAll(".page")
+        .forEach(page =>
+            page.classList.remove("active")
+        );
 
-    const target = document.getElementById(pageId);
+    const target =
+        document.getElementById(pageId);
 
     if(target){
+
         target.classList.add("active");
+
         currentPage = pageId;
+
     }
 
 }
@@ -1232,9 +1651,9 @@ function goBack(){
 }
 
 
-/* =========================
+/* =====================================================
    FLASHCARD FLIP
-========================= */
+===================================================== */
 
 function flipCard(card){
 
@@ -1243,9 +1662,9 @@ function flipCard(card){
 }
 
 
-/* =========================
-   MYSTERY POPUPS
-========================= */
+/* =====================================================
+   MYSTERY POPUP
+===================================================== */
 
 function showMystery(title,text){
 
@@ -1269,9 +1688,9 @@ function closeMystery(){
 }
 
 
-/* =========================
+/* =====================================================
    BIRTHDAY SECRET
-========================= */
+===================================================== */
 
 function birthdayMagic(){
 
@@ -1282,7 +1701,7 @@ function birthdayMagic(){
         "✦ YOU FOUND THE SECRET ✦";
 
     button.style.boxShadow =
-        "0 0 20px #c00028, 0 0 60px rgba(190,0,30,.7)";
+        "0 0 20px #c00028,0 0 60px rgba(190,0,30,.7)";
 
     setTimeout(() => {
 
@@ -1296,34 +1715,34 @@ function birthdayMagic(){
 }
 
 
-/* =========================
+/* =====================================================
    RANDOM HORROR FLICKER
-========================= */
+===================================================== */
 
 setInterval(() => {
 
     if(Math.random() > .94){
 
         document.body.style.filter =
-            "brightness(.55)";
+            "brightness(.45)";
 
         setTimeout(() => {
 
             document.body.style.filter =
                 "brightness(1)";
 
-        },70);
+        },80);
 
     }
 
 },700);
 
 
-/* =========================
-   RANDOM EYE MOVEMENT
-========================= */
+/* =====================================================
+   EYES FOLLOW CURSOR
+===================================================== */
 
-document.addEventListener("mousemove", e => {
+document.addEventListener("mousemove",event => {
 
     document.querySelectorAll(".eye")
         .forEach(eye => {
@@ -1332,33 +1751,38 @@ document.addEventListener("mousemove", e => {
                 eye.getBoundingClientRect();
 
             const x =
-                e.clientX - rect.left;
-
-            const y =
-                e.clientY - rect.top;
+                event.clientX - rect.left;
 
             const moveX =
-                Math.max(-7,Math.min(7,x/20));
-
-            const moveY =
-                Math.max(-4,Math.min(4,y/20));
+                Math.max(-7,Math.min(7,x / 20));
 
             eye.style.transform =
-                `translate(${moveX}px,${moveY}px)`;
+                `translateX(${moveX}px)`;
 
         });
 
 });
 
 
-/* =========================
-   ESC CLOSE
-========================= */
+/* =====================================================
+   ENTER KEY LOGIN
+===================================================== */
 
-document.addEventListener("keydown",e => {
+document.addEventListener("keydown",event => {
 
-    if(e.key === "Escape"){
+    if(
+        event.key === "Enter" &&
+        document.getElementById("loginPage").style.display !== "none"
+    ){
+
+        login();
+
+    }
+
+    if(event.key === "Escape"){
+
         closeMystery();
+
     }
 
 });
